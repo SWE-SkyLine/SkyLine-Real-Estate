@@ -2,7 +2,7 @@
 import { useState } from "react";
 import myStyle from "./page.module.css"
 import style from "../page.module.css"
-// import { Link, useHistory } from 'react-router-dom';
+import { loginRequest } from "../Services/LoginService"
 
 const LoginForm = () => {
   // popup window functions
@@ -26,15 +26,19 @@ const LoginForm = () => {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [selectedOption, setSelectedOption] = useState('');
+  const [loginResult, setLoginResult] = useState(false);
 
   // on submit handler
-  const handleLogin = () => {
-    console.log("login submit buton")
-  };
+  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log("login buton")
+    console.log(email)
+    console.log(password)
+    console.log(selectedOption)
+    const res = await loginRequest(email, password, selectedOption);
+    setLoginResult(res);
+    console.log(loginResult)
 
-  // user type radio button handler
-  const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedOption(event.target.value);
   };
 
   return (
@@ -47,16 +51,16 @@ const LoginForm = () => {
         <div className={style.logo}></div>
         <h2 className={style.header_text}>Login</h2>
         {/* login form  */}
-        <form className={myStyle.loginForm}>
-
+        <form className={myStyle.loginForm} onSubmit={handleLogin}>
+          {/* add gmail button */}
           <label className={myStyle.lable}>Email</label>
           <div>
-            <input className={myStyle.textBox} type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input className={myStyle.textBox} type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           </div>
 
           <label className={myStyle.lable}>Password</label>
           <div>
-            <input className={myStyle.textBox} type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <input className={myStyle.textBox} type="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
           </div>
 
           {/* user type */}
@@ -67,7 +71,9 @@ const LoginForm = () => {
                 type="radio"
                 value="Personal"
                 checked={selectedOption === 'Personal'}
-                onChange={handleOptionChange}
+                required
+                name="userType"
+                onChange={(e) => setSelectedOption(e.target.value)}
               />
               Personal
             </label>
@@ -78,13 +84,15 @@ const LoginForm = () => {
                 type="radio"
                 value="company"
                 checked={selectedOption === 'company'}
-                onChange={handleOptionChange}
+                required
+                name="userType"
+                onChange={(e) => setSelectedOption(e.target.value)}
               />
               company
             </label>
           </div>
 
-          <button className={myStyle.loginBtn} type="button" onClick={handleLogin}>
+          <button className={myStyle.loginBtn} type="submit">
             Login
           </button>
 

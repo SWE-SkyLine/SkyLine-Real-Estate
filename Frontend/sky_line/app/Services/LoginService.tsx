@@ -1,18 +1,19 @@
 // api.ts
 
-const apiUrl = 'https://your-backend-api.com';
+const apiUrl = 'http://localhost:8082';
 
 interface LoginResponse {
   success: boolean;
   // Add other fields based on your backend response
 }
 
-const login = async (email: string, password: string): Promise<LoginResponse> => {
+const loginRequest = async (email: string, password: string, type: string): Promise<boolean> => {
   const loginUrl = `${apiUrl}/login`;
 
   const requestBody = {
     email: email,
     password: password,
+    type: type,
   };
 
   try {
@@ -29,11 +30,11 @@ const login = async (email: string, password: string): Promise<LoginResponse> =>
     }
 
     const data: LoginResponse = await response.json();
-    return data;
+    return data.success;
   } catch (error) {
     console.error('Error during login:', error);
     throw error;
   }
 };
 
-export { login };
+export { loginRequest };
