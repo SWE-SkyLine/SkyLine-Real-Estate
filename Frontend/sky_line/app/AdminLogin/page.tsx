@@ -25,8 +25,6 @@ const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [selectedOption, setSelectedOption] = useState('');
-  const [loginResult, setLoginResult] = useState(false);
 
   // on submit handler
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -34,11 +32,6 @@ const LoginForm = () => {
     console.log("login buton")
     console.log(email)
     console.log(password)
-    console.log(selectedOption)
-    const res = await loginRequest(email, password, selectedOption);
-    setLoginResult(res);
-    console.log(loginResult)
-
   };
 
   return (
@@ -49,7 +42,7 @@ const LoginForm = () => {
 
       <div className={style.right}>
         <div className={style.logo}></div>
-        <h2 className={style.header_text}>Login</h2>
+        <h2 className={style.header_text}>Admin Login</h2>
         {/* login form  */}
         <form className={myStyle.loginForm} onSubmit={handleLogin}>
           {/* add gmail button */}
@@ -61,35 +54,6 @@ const LoginForm = () => {
           <label className={myStyle.lable}>Password</label>
           <div>
             <input className={myStyle.textBox} type="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
-          </div>
-
-          {/* user type */}
-          <div>
-            <label className={myStyle.lable}>
-              <input
-                className={myStyle.radio}
-                type="radio"
-                value="Personal"
-                checked={selectedOption === 'Personal'}
-                required
-                name="userType"
-                onChange={(e) => setSelectedOption(e.target.value)}
-              />
-              Personal
-            </label>
-
-            <label className={myStyle.lable}>
-              <input
-                className={myStyle.radio}
-                type="radio"
-                value="company"
-                checked={selectedOption === 'company'}
-                required
-                name="userType"
-                onChange={(e) => setSelectedOption(e.target.value)}
-              />
-              company
-            </label>
           </div>
 
           <button className={myStyle.loginBtn} type="submit">

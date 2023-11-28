@@ -7,13 +7,8 @@ interface LoginResponse {
   // Add other fields based on your backend response
 }
 
-const loginRequest = async (email: string, password: string, type: string): Promise<boolean> => {
-  var loginUrl = ''
-  if(type === "company")
-    loginUrl = `${apiUrl}/login/company`;
-  else
-    loginUrl = `${apiUrl}/login/user`;
-
+const loginRequest = async (email: string, password: string): Promise<boolean> => {
+  var loginUrl = `${apiUrl}/login/admin`
   const requestBody = {
     email: email,
     password: password,
