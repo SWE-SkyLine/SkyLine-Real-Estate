@@ -1,0 +1,23 @@
+.box{
+    width: 8vw;
+    height: 15vh;
+    border: 2px solid gray;
+    margin-left: 1rem;
+    border-radius: 25px;
+    box-shadow: 1ch;
+    font-weight: 550;
+    font-size: 5vw;
+    text-align: center;
+    color: darkslategray;
+    
+  }
+  .boxs{
+    width: 100vw;
+    height: 20vh;
+  
+  }
+  .main{
+    height: 100vh;
+    background-color:white;   
+  
+  }
