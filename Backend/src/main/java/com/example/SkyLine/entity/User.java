@@ -3,7 +3,7 @@ package com.example.SkyLine.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
     @Id
     @Column(name = "user_id")
@@ -13,6 +13,10 @@ public class User {
     private String accountType;
     @Column(name = "email")
     private String email;
+    @Column(name = "password")
+    private String password;
+    @Column(name = "phone_number")
+    private String PhoneNumber;
 
     public int getId() {
         return id;
@@ -54,9 +58,5 @@ public class User {
         PhoneNumber = phoneNumber;
     }
 
-    @Column(name = "password")
-    private String password;
-    @Column(name = "phone_number")
-    private String PhoneNumber;
 
 }
