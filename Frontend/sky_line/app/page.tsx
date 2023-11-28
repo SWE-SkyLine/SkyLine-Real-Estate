@@ -8,7 +8,13 @@ import Head from 'next/head';
  
 export default function Home() {
   return (
-    <h1></h1>
-  )
+    <>
+    <Link href="/login">go to Login</Link>
+    <br />
+    <Link href="/page_verify">go to verify</Link>
+    <br />
+
+</>
+    )
 }
 
