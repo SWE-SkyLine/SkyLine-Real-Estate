@@ -25,7 +25,7 @@
   
   .header_text{
     font-weight: 600;
-    font-size: 3rem;
+    font-size: 2rem;
     font-family: "Montserrat", sans-serif;
     margin-left: 1rem;
     color: rgba(0, 0, 0, 0.688);
@@ -38,10 +38,10 @@
     margin-left: 1rem;
     margin-top: 2rem;
     margin-bottom: 1rem;
-    width:44vw;
-    height:6vh;
+    width:40vw;
+    height:5vh;
     border-radius: .5rem;
-    font-size: 26px;
+    font-size: 25px;
     font-weight: 700;
     color: white;
     background-color: rgb(40, 167, 222);
@@ -51,7 +51,7 @@
   }
   
   .logo{
-    background-image:url("../assets/logo.jpg");
+    background-image:url("../../assets/logo.jpg");
     background-repeat: no-repeat;
     background-size: contain;
     width:44vw;
@@ -67,11 +67,10 @@
   }
   
   .left_img {
-    margin-top: 4rem;
-    background-image:url("../assets/verify.svg");
+    background-image:url("../../assets/signup.jpg");
     background-repeat: no-repeat;
-    background-size: contain;
-    flex: 3; /* Takes up 3 parts out of 10 (30%) */
+    background-size: cover;
+    flex: 2; /* Takes up 3 parts out of 10 (30%) */
     padding: 20px; /* Optional padding */
   }
   .right{
