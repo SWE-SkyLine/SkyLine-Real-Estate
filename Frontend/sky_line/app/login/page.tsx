@@ -1,27 +1,60 @@
 'use client'
-import { useState } from "react";
+import React, { useState } from 'react';
 import myStyle from "./page.module.css"
-import style from "../page.module.css"
-import { loginRequest } from "../Services/LoginService"
+import style from "../page_verify/page.module.css"
+import { sendEmail,loginRequest} from "../Services/LoginService"
 
 const LoginForm = () => {
   // popup window functions
   const [showPopup, setShowPopup] = useState(false);
+  const [popupEmail, setPopupEmail] = useState('');
+  const [emailSentSuccessfully, setEmailSentSuccessfully] = useState<boolean | null>(null);
+
   const openPopup = () => {
     setShowPopup(true);
   };
 
   const closePopup = () => {
     setShowPopup(false);
+    setPopupEmail(''); // Reset the email state when closing the popup
   };
 
-  const submitEmail = () => {
-    // Add logic to handle the submitted email, e.g., send a reset email.
-    // For now, let's just close the popup
-    closePopup();
+  const generateRandomNumber = () => {
+    return Math.floor(100000 + Math.random() * 900000);
   };
 
-  // login form varaiables
+  const submitEmail = async () => {
+    const randomCode = generateRandomNumber();
+
+    try {
+      await sendEmail(popupEmail);
+      setEmailSentSuccessfully(true);
+
+      const enteredCode = window.prompt('Enter the verification code sent to your email:');
+
+      if (enteredCode !== null) {
+        if (enteredCode === '12345') {
+          // Open another window prompt for a new password
+          const newPassword = window.prompt('Enter your new password:');
+          if (newPassword !== null) {
+            // Handle setting the new password
+          } else {
+            // Handle the case where the user canceled entering the new password
+          }
+        } else {
+          console.log('Incorrect verification code. Closing prompt.');
+          // Handle the case where the verification code is incorrect
+        }
+      } else {
+        console.log('Verification code input canceled.');
+      }
+    } catch (error) {
+      console.error('Error sending email:', (error as Error).message);
+      setEmailSentSuccessfully(false);
+    }
+  };
+
+  // login form variables
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -31,14 +64,13 @@ const LoginForm = () => {
   // on submit handler
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("login buton")
-    console.log(email)
-    console.log(password)
-    console.log(selectedOption)
+    console.log("login button");
+    console.log(email);
+    console.log(password);
+    console.log(selectedOption);
     const res = await loginRequest(email, password, selectedOption);
     setLoginResult(res);
-    console.log(loginResult)
-
+    console.log(loginResult);
   };
 
   return (
@@ -50,20 +82,21 @@ const LoginForm = () => {
       <div className={style.right}>
         <div className={style.logo}></div>
         <h2 className={style.header_text}>Login</h2>
-        {/* login form  */}
+        {/* login form */}
         <form className={myStyle.loginForm} onSubmit={handleLogin}>
-          {/* add gmail button */}
+          {/* add email input */}
           <label className={myStyle.lable}>Email</label>
           <div>
             <input className={myStyle.textBox} type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           </div>
 
+          {/* add password input */}
           <label className={myStyle.lable}>Password</label>
           <div>
-            <input className={myStyle.textBox} type="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
+            <input className={myStyle.textBox} type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           </div>
 
-          {/* user type */}
+          {/* user type radio buttons */}
           <div>
             <label className={myStyle.lable}>
               <input
@@ -88,15 +121,16 @@ const LoginForm = () => {
                 name="userType"
                 onChange={(e) => setSelectedOption(e.target.value)}
               />
-              company
+              Company
             </label>
           </div>
 
+          {/* login button */}
           <button className={myStyle.loginBtn} type="submit">
             Login
           </button>
 
-          {/* forget password link and popup window  */}
+          {/* forget password link and popup window */}
           <a className={myStyle.link} href="#" onClick={openPopup}>
             Forgot Password
           </a>
@@ -106,13 +140,13 @@ const LoginForm = () => {
                 <span className={myStyle.close} onClick={closePopup}>
                   &times;
                 </span>
-                <label htmlFor="email">Enter your Gmail:</label>
+                <label htmlFor="popup-email">Enter your Gmail:</label>
                 <input
                   type="email"
-                  id="email"
-                  name="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  id="popup-email"
+                  name="popup-email"
+                  value={popupEmail}
+                  onChange={(e) => setPopupEmail(e.target.value)}
                   required
                 />
                 <button onClick={submitEmail}>Submit</button>

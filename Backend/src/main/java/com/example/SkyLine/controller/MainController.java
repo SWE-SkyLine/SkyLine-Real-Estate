@@ -17,7 +17,7 @@ public class MainController {
     @GetMapping("/add")
     public String addUser(){
         User user = new User();
-        user.setId(1);
+        user.setId(2);
         user.setEmail("amin@hasdp.com");
         user.setAccountType("yohohoh");
         user.setPassword("hahahah");
