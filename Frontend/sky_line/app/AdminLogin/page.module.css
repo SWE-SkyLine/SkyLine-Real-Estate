@@ -1,0 +1,73 @@
+.popup {
+    position: fixed;
+    top: 0; /* Position at the top of the screen */
+    left: 50%;
+    transform: translateX(-50%);
+    border: 1px solid #ccc;
+    padding: 20px;
+    background-color: #fff;
+    z-index: 1;
+  }
+  
+  .popup-content {
+    text-align: center;
+  }
+  
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+  }
+  
+  .loginForm{
+    background-color: rgb(40, 167, 222);
+    border-radius: .5rem;
+    font-family: "Montserrat", sans-serif;
+    width:40vw;
+    margin-top: 50px;
+    padding: 20px;
+  }
+  
+  .lable{
+    margin: 1rem;
+    font-weight: 500;
+    font-size: 25px;
+  }
+  
+  .textBox{
+    background-color: white;
+    color: black;
+    font-size: 25px;
+    margin: 1rem;
+    border-radius: .5rem;
+    width: 30vw;
+  }
+  
+  .loginBtn{
+    margin: 1rem;
+    width:20vw;
+    height:6vh;
+    border-radius: .5rem;
+    font-size: 26px;
+    font-weight: 700;
+    color: white;
+    background-color: darkslategray;
+    cursor: pointer;
+    display: block;
+  }
+  
+  .link{
+    position: relative;
+    text-decoration: underline;
+    margin: 20px;
+    font-size: 18px;
+  }
+  
+  .radio{
+    width: 20px;
+    height: 20px;
+    margin: 3px;
+  }
+  
+  
