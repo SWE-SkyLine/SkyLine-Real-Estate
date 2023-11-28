@@ -1,23 +1,80 @@
+
 .box{
-    width: 8vw;
-    height: 15vh;
-    border: 2px solid gray;
-    margin-left: 1rem;
-    border-radius: 25px;
-    box-shadow: 1ch;
-    font-weight: 550;
-    font-size: 5vw;
-    text-align: center;
-    color: darkslategray;
-    
-  }
-  .boxs{
-    width: 100vw;
-    height: 20vh;
+  width: 8vw;
+  height: 15vh;
+  border: 2px solid gray;
+  margin-left: 1rem;
+  border-radius: 25px;
+  box-shadow: 1ch;
+  font-weight: 550;
+  font-size: 5vw;
+  text-align: center;
+  color: darkslategray;
+  margin-top: 2rem;
+
   
-  }
-  .main{
-    height: 100vh;
-    background-color:white;   
+}
+.lable{
+  margin-left: 1rem;
+  font-weight: 500;
+  font-size: 18px;
+  color: rgb(62, 144, 225);
+}
+
+
+
+.header_text{
+  font-weight: 600;
+  font-size: 3rem;
+  font-family: "Montserrat", sans-serif;
+  margin-left: 1rem;
+  color: rgba(0, 0, 0, 0.688);
+}
+.verify_form{
+  margin-top: 2rem;
+}
+
+.btn_verify{
+  margin-left: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  width:44vw;
+  height:6vh;
+  border-radius: .5rem;
+  font-size: 26px;
+  font-weight: 700;
+  color: white;
+  background-color: rgb(40, 167, 222);
+  cursor: pointer;
+  display: block;
+
+}
+
+.logo{
+  background-image:url("../../assets/logo.jpg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  width:44vw;
+  height:20vh;
+  margin-left: 16rem;
   
-  }
+ }
+
+.container {
+  display: flex;
+  height: 100vh;
+  background-color:white;   
+}
+
+.left_img {
+  background-image:url("../../assets/login.jpg");
+  background-repeat: no-repeat;
+  background-size:cover;
+  flex: 5; /* Takes up 3 parts out of 10 (30%) */
+  padding: 20px; /* Optional padding */
+}
+.right{
+  flex: 4; /* Takes up 7 parts out of 10 (70%) */
+  padding: 20px; /* Optional padding */
+  
+}
