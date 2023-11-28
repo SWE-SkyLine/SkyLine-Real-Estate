@@ -1,6 +1,6 @@
 // api.ts
 
-const apiUrl = 'http://localhost:8082';
+const apiUrl = 'http://localhost:8080';
 
 interface LoginResponse {
   success: boolean;
@@ -40,4 +40,64 @@ const loginRequest = async (email: string, password: string, type: string): Prom
   }
 };
 
-export { loginRequest };
+const checkEmail = async (email: string): Promise<boolean> => {
+  const checkEmailUrl = `${apiUrl}/api/users/check-email`;
+  console.log(email);
+  await new Promise((resolve) => setTimeout(resolve, 0));
+
+  try {
+    const response = await fetch(checkEmailUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Error checking email: ${response.status} - ${errorText}`);
+    } else {
+      console.log('Email is valid');
+      return true;
+    }
+  } catch (error: any) {
+    console.error('Error checking email:', error);
+    return false;
+  }
+};
+
+const sendEmail = async (email: string): Promise<void> => {
+  try {
+    const isEmailValid = await checkEmail(email);
+
+    if (isEmailValid) {
+      const sendEmailUrl = `${apiUrl}/api/users/send-email`;
+      console.log(email);
+      await new Promise((resolve) => setTimeout(resolve, 0));
+
+      const response = await fetch(sendEmailUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Error sending email: ${response.status} - ${errorText}`);
+      } else {
+        console.log('Email sent successfully');
+      }
+    } else {
+      console.log('Email is not valid, so not sending.');
+    }
+  } catch (error: any) {
+    console.error('Error sending email:', error);
+    throw new Error(`Error sending email: ${error.message}`);
+  }
+};
+
+
+export {sendEmail, loginRequest };
