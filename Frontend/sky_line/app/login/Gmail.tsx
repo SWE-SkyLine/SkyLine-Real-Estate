@@ -1,14 +1,19 @@
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
-import jwt, { jwtDecode } from 'jwt-decode';
+import jwt, {JwtPayload, jwtDecode } from 'jwt-decode';
 import { useState } from 'react';
 import { gmailLogin } from '../Services/GmailLoginService';
+
+interface CustomJwtPayload extends JwtPayload {
+  userInfo: string;
+  email: string;
+}
 
 function Gmail() {
 
   const [email, setEmail] = useState('');
   const [loginResult, setLoginResult] = useState(false);
   const handleSuccess = async (credentialResponse: any) => {
-    const obj = jwtDecode(credentialResponse.credential);
+    const obj = jwtDecode<CustomJwtPayload>(credentialResponse.credential);
     const email = obj.email
     console.log(obj)
     console.log(email);
@@ -29,4 +34,3 @@ function Gmail() {
   );
 }
 export default Gmail;
-

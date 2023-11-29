@@ -70,7 +70,7 @@ const LoginForm = () => {
     const res = await loginRequest(email, password, selectedOption);
     // setLoginResult(res);
     //console.log(res)
-    if(res.status ==200){
+    if((res as Response).status ==200){
       window.location.assign('/')
     }
     else{

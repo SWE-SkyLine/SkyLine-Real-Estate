@@ -48,13 +48,14 @@ const makeRequest = async (url: string, user: any) => {
     return response;
   } catch (error) {
     console.error(error);
-    throw error;
+    alert("user already exists")
+    return "Error";
   }
 };
 
 const sendPostRequest = async () => {
   const response = await makeRequest(url, user);
-  console.log(response.status);
+  //console.log(response.status);
   return response; // Handle the response data here
 };
 

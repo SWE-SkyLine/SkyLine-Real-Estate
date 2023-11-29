@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { User } from "../objects/User";
 import {SignupRequest} from "../Services/UserSignupService"
 import { useNavigate } from 'react-router-dom';
+import { AxiosResponse } from "axios";
 
 export default  function Signup(){
 
@@ -94,17 +95,12 @@ function From_signup() {
           user.lastName = "";
          }
 
-         console.log(user);
-        const res = await SignupRequest(user);
-          if(res.status==226){
-
-            alert("Signup failed,try again")
-
-          }
-          else{
-            // alert("Signup Success")
-            window.location.assign('/page_verify')
-
+          console.log(user);
+          const res = await SignupRequest(user);
+          if ((res as AxiosResponse).status === 409) {
+            alert("Signup failed, try again");
+          } else {
+            window.location.assign('/page_verify');
           }
 
         //requet to back sign in
