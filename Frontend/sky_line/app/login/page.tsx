@@ -7,12 +7,10 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import Gmail from "./Gmail";
 import Link from "next/link";
 
+import { sendEmail,verifyCode, updatePassword } from "../Services/LoginService";
+
 const LoginForm = () => {
-  // popup window functions
-  const [showPopup, setShowPopup] = useState(false);
-  const openPopup = () => {
-    setShowPopup(true);
-  };
+
 
  // Functions for popup window
  const submitEmail = async () => {
@@ -143,7 +141,9 @@ const LoginForm = () => {
           <a className={myStyle.link} href="#" onClick={submitEmail}>
             Forgot Password
           </a>
+
           
+
           <div className={myStyle.gmaildiv}>
           <GoogleOAuthProvider clientId="286653287539-cfsq1r439hetsrluac5hdorpjoajbd3h.apps.googleusercontent.com">
             <Gmail/>

@@ -1,4 +1,4 @@
-package com.example.skyline.service;
+package com.example.SkyLine.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;

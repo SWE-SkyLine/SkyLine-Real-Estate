@@ -1,8 +1,8 @@
-package com.example.skyline.service;
+package com.example.SkyLine.service;
 
 import com.example.SkyLine.entity.User;
 import com.example.SkyLine.enums.UserRoleEnum;
-import com.example.skyline.repo.UserRepository;
+import com.example.SkyLine.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -4,10 +4,10 @@ import com.example.SkyLine.enums.UserRoleEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Entity
+@Entity(name = "Users")
 @Setter
 @Getter
-@Table(name = "users")
+@Table(name = "Users")
 public class User {
     @Id
     @Column(name = "user_id")
@@ -28,6 +28,10 @@ public class User {
 
    @Column(name ="first_name")
    private String firstName;
+
+    @Column(name ="last_name")
+    private String lastName;
+
 
 
 
@@ -95,8 +99,6 @@ public class User {
         return ver_code;
     }
 
-    @Column(name ="last_name")
-    private String lastName;
 
 
 
