@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 import java.util.Date;
 
 @Entity(name = "Notifications")
@@ -12,6 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="Notifications")
+
 public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
