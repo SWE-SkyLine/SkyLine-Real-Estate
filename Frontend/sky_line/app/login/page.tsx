@@ -127,6 +127,9 @@ const LoginForm = () => {
           </GoogleOAuthProvider>
           </div>
         </form>
+        <div>
+            <a href="/Signup" className={myStyle.signupLink}>Sign Up</a>
+        </div>
       </div>
     </div>
   );
