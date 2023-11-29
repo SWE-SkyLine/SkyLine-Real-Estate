@@ -17,7 +17,7 @@ public class User {
     private UserRoleEnum userRole;
     @Column(name = "email")
     private String email;
-
+    private byte[] profile_photo;
     @Column(name = "password")
     private String password;
     @Column(name = "phone_number")
@@ -85,6 +85,14 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public void setVer_code(Integer ver_code) {
+        this.ver_code = ver_code;
+    }
+
+    public Integer getVer_code() {
+        return ver_code;
     }
 
     @Column(name ="last_name")
