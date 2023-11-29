@@ -132,6 +132,19 @@ function From_signup() {
 
           <tr>
             <td>
+              <label>Phone Number</label>
+              <input
+                type="Phone"
+                placeholder="Enter Phone"
+                className={style_signup.table_input}
+                {...register("Phone",{required:"this is required"})}
+              />
+              <span>{errors.Phone?.message && String(errors.Phone.message)}</span>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
               <label>Address</label>
               <input
                 type="text"
@@ -168,7 +181,7 @@ function From_signup() {
                 {...register("password",{required:"this is required",minLength:{value:8,message:"Min length required is 8"}})}
               />
                 <span>{errors.password?.message && String(errors.password.message)}</span>
-                {watch().password&& <p className={style_signup.pass}>{checkPasswordStrength(watch().password)}</p>}
+                {watch().password&& <span className={style_signup.pass}>{checkPasswordStrength(watch().password)}</span>}
 
             </td>
           </tr>
