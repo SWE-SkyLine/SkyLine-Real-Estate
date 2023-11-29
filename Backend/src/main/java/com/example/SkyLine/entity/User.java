@@ -20,8 +20,12 @@ public class User {
     @Column(name = "phone_number")
     private String PhoneNumber;
 
-   @Column(name ="first_name")
-   private String firstName;
+    @Column(name = "first_name")
+    private String firstName;
+    @Column(name = "last_name")
+    private String lastName;
+    @Column(name = "verification_code")
+    private String verificationCode;
 
     public int getId() {
         return id;
@@ -79,9 +83,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    @Column(name ="last_name")
-    private String lastName;
+    public String getVerificationCode() {
+        return verificationCode;
+    }
 
-
-
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+    }
 }
