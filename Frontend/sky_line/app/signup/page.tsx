@@ -1,7 +1,6 @@
 'use client'
 import { useState } from "react";
 import { useRef } from "react";
-import style from "../page.module.css"
 import style_signup from "./page.module.css"
 import Link from "next/link";
 import { useForm } from "react-hook-form";
@@ -16,14 +15,14 @@ export default  function Signup(){
 
 return(
     
-  <div className={style.container}>
+  <div className={style_signup.container}>
 
-    <div className={style.left_img}></div>
+    <div className={style_signup.left_img}></div>
 
-    <div className={style.right}>
-        <div className={style.logo}></div>
+    <div className={style_signup.right}>
+        <div className={style_signup.logo}></div>
         <div className={style_signup.verify_form}> 
-            <span className={style.header_text}>Sign up Page</span>
+            <span className={style_signup.header_text}>Sign up Page</span>
             <From_signup></From_signup>
             <label className={style_signup.lable} >Already a member?<Link href="/login" className={style_signup.link}> Sign in now</Link></label>
         </div>
@@ -232,7 +231,7 @@ function From_signup() {
           </tr>
         </tbody>
       </table>
-      <button className={style.btn_verify}>Sign up</button>
+      <button className={style_signup.btn_verify}>Sign up</button>
       
       </form>
     </div>

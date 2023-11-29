@@ -13,6 +13,8 @@ export default function Home() {
     <br />
     <Link href="/page_verify">go to verify</Link>
     <br />
+    <Link href="/signup">go to signup</Link>
+    <br />
 
 </>
     )
