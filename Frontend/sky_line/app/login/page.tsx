@@ -5,6 +5,7 @@ import style from "../page_verify/page.module.css"
 import { loginRequest } from "../Services/LoginService"
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import Gmail from "./Gmail";
+import Link from "next/link";
 
 const LoginForm = () => {
   // popup window functions
@@ -94,11 +95,12 @@ const LoginForm = () => {
             </label>
           </div> */}
 
-          <button className={myStyle.loginBtn} type="submit">
+          <button className={style.btn_verify} type="submit">
             Login
           </button>
 
           {/* forget password link and popup window  */}
+          <span className={myStyle.lable1}>Not a member? <Link className={myStyle.link1} href="/Signup">Sign up now</Link></span>
           <a className={myStyle.link} href="#" onClick={openPopup}>
             Forgot Password
           </a>
@@ -121,15 +123,16 @@ const LoginForm = () => {
               </div>
             </div>
           )}
+
           <div className={myStyle.gmaildiv}>
           <GoogleOAuthProvider clientId="286653287539-cfsq1r439hetsrluac5hdorpjoajbd3h.apps.googleusercontent.com">
             <Gmail/>
           </GoogleOAuthProvider>
           </div>
         </form>
-        <div>
-            <a href="/Signup" className={myStyle.signupLink}>Sign Up</a>
-        </div>
+        
+            
+        
       </div>
     </div>
   );
