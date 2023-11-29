@@ -10,9 +10,10 @@ function Gmail() {
   const handleSuccess = async (credentialResponse: any) => {
     const obj = jwtDecode(credentialResponse.credential);
     const email = obj.email
+    console.log(obj)
     console.log(email);
-    const res = await gmailLogin(email);
-    setLoginResult(res);
+    // const res = await gmailLogin(email);
+    // setLoginResult(res);
     console.log(loginResult)
   };
 
