@@ -71,9 +71,15 @@ const LoginForm = () => {
     console.log(password)
     console.log(selectedOption)
     const res = await loginRequest(email, password, selectedOption);
-    setLoginResult(res);
-    console.log(loginResult)
-    
+    // setLoginResult(res);
+    console.log(res)
+    if(res.status ==200){
+      window.location.assign('/')
+    }
+    else{
+      alert("Error occurred try again")
+    }
+ 
 
   };
 
