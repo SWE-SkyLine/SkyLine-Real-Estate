@@ -6,6 +6,8 @@ import style_signup from "./page.module.css"
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { User } from "../objects/User";
+import {SignupRequest} from "../Services/UserSignupService"
 
 export default  function Signup(){
 
@@ -31,11 +33,17 @@ return(
 );
 };
 
+
 function From_signup() {
   const [kind, setKind] = useState("User");
-
   const {register,handleSubmit,formState:{ errors },watch} =useForm()
-
+  enum UserTypeEnum {
+    SUPERADMIN = 'SUPERADMIN',
+    ADMIN = 'ADMIN',
+    CLIENT = 'CLIENT',
+    COMPANY = 'COMPANY',
+    AGENT = 'AGENT',
+}
   const checkPasswordStrength=(password: string)=>{
     // Check if password has at least one uppercase letter
     const hasUppercase = /[A-Z]/.test(password);
@@ -64,11 +72,34 @@ function From_signup() {
   const handleKindChange = (event:any) => {
     setKind(event.target.value);
   };
-  const Submit = (data:any) => {
-     console.log(data)
-    if(data.passwords!=data.confirmPassword){
-      return
+  const Submit = async (data:any) => {
+    //  console.log(data)
+
+    if(data.password==data.confirmPassword){
+    let user = new User();
+        user.email = data.email;
+        user.password = data.password;
+        user.phone_number = data.Phone;
+         if(kind =="User"){
+         user.userType= UserTypeEnum.CLIENT; 
+         user.firstName = data.firstName;
+         user.lastName = data.lastName;
+         }
+         else{
+          user.userType= UserTypeEnum.COMPANY;
+          user.firstName = data.companyName;
+         user.lastName = "";
+
+         }
+        const res = await SignupRequest(user);
+        console.log(res);
+        
+
+        //requet to back sign in
     }
+    
+      
+    
     //send data then route
 
   };
@@ -108,7 +139,7 @@ function From_signup() {
                 <label>Last Name</label>
                 <input
                   placeholder="Enter Last Name"
-                  {...register("lastname",{required:"this is required"})}
+                  {...register("lastName",{required:"this is required"})}
                   className={style_signup.table_input}
                 />
                 <span>{errors.lastname?.message && String(errors.lastname.message)}</span>
