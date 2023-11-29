@@ -32,11 +32,11 @@ const loginRequest = async (email: string, password: string, type: string) => {
       throw new Error('Network response was not ok');
     }
 
-    var data: any;
-    return data;
+    return response;
   } catch (error) {
+
     console.error('Error during login:', error);
-    throw error;
+    return 403;   
   }
 };
 

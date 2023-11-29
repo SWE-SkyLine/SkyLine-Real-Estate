@@ -1,12 +1,12 @@
 'use client'
 import { useState } from "react";
-import { useRef } from "react";
 import style_signup from "./page.module.css"
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { User } from "../objects/User";
 import {SignupRequest} from "../Services/UserSignupService"
+import { useNavigate } from 'react-router-dom';
 
 export default  function Signup(){
 
@@ -34,7 +34,8 @@ return(
 
 
 function From_signup() {
-  const [kind, setKind] = useState("User");
+  const [kind, setKind] = useState("Company");
+
   const {register,handleSubmit,formState:{ errors },watch} =useForm()
   enum UserTypeEnum {
     SUPERADMIN = 'SUPERADMIN',
@@ -43,6 +44,7 @@ function From_signup() {
     COMPANY = 'COMPANY',
     AGENT = 'AGENT',
 }
+
   const checkPasswordStrength=(password: string)=>{
     // Check if password has at least one uppercase letter
     const hasUppercase = /[A-Z]/.test(password);
@@ -74,6 +76,8 @@ function From_signup() {
   const Submit = async (data:any) => {
     //  console.log(data)
 
+
+
     if(data.password==data.confirmPassword){
     let user = new User();
         user.email = data.email;
@@ -87,12 +91,21 @@ function From_signup() {
          else{
           user.userType= UserTypeEnum.COMPANY;
           user.firstName = data.companyName;
-         user.lastName = "";
-
+          user.lastName = "";
          }
+
+         console.log(user);
         const res = await SignupRequest(user);
-        console.log(res);
-        
+          if(res.status==226){
+
+            alert("Signup failed,try again")
+
+          }
+          else{
+            // alert("Signup Success")
+            window.location.assign('/page_verify')
+
+          }
 
         //requet to back sign in
     }
