@@ -27,27 +27,22 @@ public class RegisterationController {
     private AuthenticationManager authenticationManager;
 
 
+    @PostMapping("/user/signup")
     public ResponseEntity<?> signUp(@RequestBody UserRequestDTO user){
         if(regesterationService.userExists(user.getEmail()))
-            return new ResponseEntity<String>("user already exists", HttpStatus.IM_USED);
-
+            return new ResponseEntity<String>("user already exists", HttpStatus.CONFLICT);
         return new ResponseEntity<User>(regesterationService.register(user), HttpStatus.OK);
     }
-
     @PostMapping("/user/login")
-    public ResponseEntity<?> signIn(@RequestBody LogInRequestDTO login) {
-        System.out.println("logged in " + login.getEmail() + " " + login.getPassword());
-        Authentication authenticationRequest =
-                UsernamePasswordAuthenticationToken.unauthenticated(login.getEmail(), login.getPassword());
+    public ResponseEntity<?> signIn(@RequestBody LogInRequestDTO login){
+        System.out.println("logged in " + login.getEmail()+ " "+ login.getPassword());
+        Authentication authenticationRequest = UsernamePasswordAuthenticationToken.unauthenticated(login.getEmail(), login.getPassword());
         Authentication authenticationResponse = this.authenticationManager.authenticate(authenticationRequest);
         SecurityContextHolder.getContext().setAuthentication(authenticationResponse);
-
-//        return ResponseEntity.ok()
-//                .header("Location", "/logged in")
-//                .build();
-        return new ResponseEntity<String>("logged in", HttpStatus.OK);
+        return ResponseEntity.ok()
+                .header("Location", "/logged in")
+                .build();
     }
-
     @PostMapping("/user/OauthLogin")
     public ResponseEntity<?> signInOauth(@RequestBody String emailOauth){
         return new ResponseEntity<Boolean>(this.regesterationService.signInOauth(emailOauth), HttpStatus.OK);

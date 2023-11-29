@@ -55,8 +55,10 @@
             <artifactId>lombok</artifactId>
         </dependency>
 		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>3.12.4</version> <!-- Use the latest version available -->
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 

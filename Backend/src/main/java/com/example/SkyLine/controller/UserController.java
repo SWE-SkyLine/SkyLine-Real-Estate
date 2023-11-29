@@ -22,15 +22,14 @@ import java.util.Random;
 public class UserController {
 
     private final UserService userService;
+    private final UserRepository userRepository;
+    private final EmailService emailService;
 
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private EmailService emailService;
-
-    @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserRepository userRepository, EmailService emailService) {
         this.userService = userService;
+        this.userRepository = userRepository;
+        this.emailService = emailService;
     }
 
     @GetMapping
@@ -59,7 +58,7 @@ public class UserController {
                 int code = random.nextInt(999999 - 100000 + 1) + 100000;
 
                 // Set the verification code in the user entity
-                user.setVer_code(code);
+                user.setVerificationCodeForgetPassword(code);
 
                 // Save the user entity to update the verification code
                 userRepository.save(user);
@@ -86,7 +85,7 @@ public class UserController {
         try {
             if (user != null) {
                 // Get the stored verification code
-                int storedCode = user.getVer_code();
+                int storedCode = user.getVerificationCodeForgetPassword();
 
                 if (storedCode == code) {
                     // Verification code matches
