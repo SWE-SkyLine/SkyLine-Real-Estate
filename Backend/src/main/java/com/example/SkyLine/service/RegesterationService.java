@@ -2,6 +2,7 @@ package com.example.SkyLine.service;
 
 import com.example.SkyLine.DTO.UserRequestDTO;
 import com.example.SkyLine.entity.User;
+import com.example.SkyLine.repository.UserOauthRepository;
 import com.example.SkyLine.repository.UserRepository;
 import com.example.SkyLine.utility.UserTypeToUserRoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 public class RegesterationService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserOauthRepository userOauthRepository;
     @Autowired
     UserTypeToUserRoleMapper mapper;
     @Autowired
@@ -32,4 +35,8 @@ public class RegesterationService {
 
         return userRepository.save(userToBeSaved);
     }
+    public boolean signInOauth(String emailOauth){
+        return userOauthRepository.existsById(emailOauth);
+    }
+
 }
