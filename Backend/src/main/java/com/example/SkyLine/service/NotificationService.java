@@ -1,8 +1,8 @@
 package com.example.SkyLine.service;
 
-import com.example.skyline.model.Notification;
-import com.example.skyline.repo.NotificationRepository;
-import com.example.skyline.repo.UserRepository;
+import com.example.SkyLine.model.Notification;
+import com.example.SkyLine.repository.NotificationRepository;
+import com.example.SkyLine.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.example.skyline.model;
+package com.example.SkyLine.model;
 
 public class EmailRequest {
     private String email;

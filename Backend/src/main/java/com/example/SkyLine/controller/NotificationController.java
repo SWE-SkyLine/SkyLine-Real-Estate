@@ -1,7 +1,7 @@
 package com.example.SkyLine.controller;
 import com.example.SkyLine.model.Notification;
 import com.example.SkyLine.service.NotificationService;
-import com.example.skyline.service.UserService;
+import com.example.SkyLine.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

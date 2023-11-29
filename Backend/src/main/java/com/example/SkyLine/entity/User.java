@@ -4,10 +4,10 @@ import com.example.SkyLine.enums.UserRoleEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Entity
+@Entity(name = "Users")
 @Setter
 @Getter
-@Table(name = "users")
+@Table(name = "Users")
 public class User {
     @Id
     @Column(name = "user_id")

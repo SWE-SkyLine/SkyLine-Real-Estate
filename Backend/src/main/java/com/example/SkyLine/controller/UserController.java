@@ -3,11 +3,11 @@ package com.example.SkyLine.controller;
 import com.example.SkyLine.entity.User;
 import com.example.SkyLine.enums.UserRoleEnum;
 import com.example.SkyLine.repository.UserRepository;
-import com.example.skyline.model.EmailRequest;
-import com.example.skyline.model.UpdatePasswordRequest;
+import com.example.SkyLine.model.EmailRequest;
+import com.example.SkyLine.model.UpdatePasswordRequest;
 
-import com.example.skyline.service.EmailService;
-import com.example.skyline.service.UserService;
+import com.example.SkyLine.service.EmailService;
+import com.example.SkyLine.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

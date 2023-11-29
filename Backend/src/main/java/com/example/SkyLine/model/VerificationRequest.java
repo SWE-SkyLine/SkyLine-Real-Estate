@@ -1,4 +1,4 @@
-package com.example.skyline.model;
+package com.example.SkyLine.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
