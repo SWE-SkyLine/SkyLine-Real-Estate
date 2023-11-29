@@ -1,6 +1,5 @@
 'use client'
 import { useState } from "react";
-import { useRef } from "react";
 import style_signup from "./page.module.css"
 import Link from "next/link";
 import { useForm } from "react-hook-form";
@@ -43,6 +42,7 @@ function From_signup() {
     COMPANY = 'COMPANY',
     AGENT = 'AGENT',
 }
+
   const checkPasswordStrength=(password: string)=>{
     // Check if password has at least one uppercase letter
     const hasUppercase = /[A-Z]/.test(password);
@@ -87,12 +87,17 @@ function From_signup() {
          else{
           user.userType= UserTypeEnum.COMPANY;
           user.firstName = data.companyName;
-         user.lastName = "";
-
+          user.lastName = "";
          }
+
+         console.log(user);
         const res = await SignupRequest(user);
-        console.log(res);
-        
+          if(res.status==226){
+            
+          }
+          else{
+
+          }
 
         //requet to back sign in
     }
