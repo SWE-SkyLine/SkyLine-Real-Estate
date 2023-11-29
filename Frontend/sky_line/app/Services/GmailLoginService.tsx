@@ -2,12 +2,12 @@
 
 const apiUrl = 'http://localhost:8082';
 
-interface LoginResponse {
-  success: boolean;
-  // Add other fields based on your backend response
-}
+// interface LoginResponse {
+//   success: boolean;
+//   // Add other fields based on your backend response
+// }
 
-const gmailLogin = async (email: string): Promise<boolean> => {
+const gmailLogin = async (email: string) => {
   const loginUrl = `${apiUrl}/register/user/login`
 
   const requestBody = {
@@ -27,8 +27,8 @@ const gmailLogin = async (email: string): Promise<boolean> => {
       throw new Error('Network response was not ok');
     }
 
-    const data: LoginResponse = await response.json();
-    return data.success;
+    var data: any;
+    return data;
   } catch (error) {
     console.error('Error during login:', error);
     throw error;
