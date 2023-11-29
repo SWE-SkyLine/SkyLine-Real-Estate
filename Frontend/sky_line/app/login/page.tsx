@@ -7,7 +7,6 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import Gmail from "./Gmail";
 import Link from "next/link";
 
-import { sendEmail,verifyCode, updatePassword } from "../Services/LoginService";
 
 const LoginForm = () => {
 
