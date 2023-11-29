@@ -1,6 +1,6 @@
 // api.ts
 
-const apiUrl = 'http://localhost:8084';
+const apiUrl = 'http://localhost:8080';
 
 // interface LoginResponse {
 //   success: boolean;
@@ -28,9 +28,9 @@ const loginRequest = async (email: string, password: string, type: string) => {
       body: JSON.stringify(requestBody),
     });
 
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
+    // if (!response.ok) {
+    //   throw new Error('Network response was not ok');
+    // }
 
     return response;
   } catch (error) {
