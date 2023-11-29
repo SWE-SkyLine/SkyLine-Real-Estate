@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { User } from "../objects/User";
 import {SignupRequest} from "../Services/UserSignupService"
+import { useNavigate } from 'react-router-dom';
 
 export default  function Signup(){
 
@@ -33,7 +34,8 @@ return(
 
 
 function From_signup() {
-  const [kind, setKind] = useState("User");
+  const [kind, setKind] = useState("Company");
+
   const {register,handleSubmit,formState:{ errors },watch} =useForm()
   enum UserTypeEnum {
     SUPERADMIN = 'SUPERADMIN',
@@ -74,6 +76,8 @@ function From_signup() {
   const Submit = async (data:any) => {
     //  console.log(data)
 
+
+
     if(data.password==data.confirmPassword){
     let user = new User();
         user.email = data.email;
@@ -93,9 +97,13 @@ function From_signup() {
          console.log(user);
         const res = await SignupRequest(user);
           if(res.status==226){
-            
+
+            alert("Signup failed,try again")
+
           }
           else{
+            // alert("Signup Success")
+            window.location.assign('/page_verify')
 
           }
 
