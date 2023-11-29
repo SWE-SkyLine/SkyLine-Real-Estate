@@ -36,11 +36,11 @@ public class RegisterationController {
         Authentication authenticationRequest = UsernamePasswordAuthenticationToken.unauthenticated(login.getEmail(), login.getPassword());
         Authentication authenticationResponse = this.authenticationManager.authenticate(authenticationRequest);
         SecurityContextHolder.getContext().setAuthentication(authenticationResponse);
+
 //        return ResponseEntity.ok()
 //                .header("Location", "/logged in")
 //                .build();
         return new ResponseEntity<String>("logged in", HttpStatus.OK);
-
     }
     @PostMapping("/test")
     public UserRequestDTO test(){
