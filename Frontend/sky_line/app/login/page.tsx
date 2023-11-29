@@ -1,8 +1,12 @@
 'use client'
-import React, { useState } from 'react';
-import myStyle from "./page.module.css";
-import style from "../page_verify/page.module.css";
-import { sendEmail, loginRequest, verifyCode, updatePassword } from "../Services/LoginService";
+import { useState } from "react";
+import myStyle from "./page.module.css"
+import style from "../page_verify/page.module.css"
+import { loginRequest } from "../Services/LoginService"
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import Gmail from "./Gmail";
+import Link from "next/link";
+
 
 const LoginForm = () => {
   // State variables
@@ -90,6 +94,7 @@ const LoginForm = () => {
             <input className={myStyle.textBox} type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           </div>
 
+          {/* user type
           <div>
             <label className={myStyle.lable}>
               <input
@@ -116,17 +121,46 @@ const LoginForm = () => {
               />
               Company
             </label>
-          </div>
+          </div> */}
 
-          <button className={myStyle.loginBtn} type="submit">
+          <button className={style.btn_verify} type="submit">
             Login
           </button>
 
-          {/* Forget password link */}
-          <a className={myStyle.link} href="#" onClick={submitEmail}>
+          {/* forget password link and popup window  */}
+          <span className={myStyle.lable1}>Not a member? <Link className={myStyle.link1} href="/Signup">Sign up now</Link></span>
+          <a className={myStyle.link} href="#" onClick={openPopup}>
             Forgot Password
           </a>
+          {showPopup && (
+            <div className={myStyle.popup}>
+              <div className={myStyle.popupContent}>
+                <span className={myStyle.close} onClick={closePopup}>
+                  &times;
+                </span>
+                <label htmlFor="email">Enter your Gmail:</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+                <button onClick={submitEmail}>Submit</button>
+              </div>
+            </div>
+          )}
+
+          <div className={myStyle.gmaildiv}>
+          <GoogleOAuthProvider clientId="286653287539-cfsq1r439hetsrluac5hdorpjoajbd3h.apps.googleusercontent.com">
+            <Gmail/>
+          </GoogleOAuthProvider>
+
         </form>
+        
+            
+        
       </div>
     </div>
   );

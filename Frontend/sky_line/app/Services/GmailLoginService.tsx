@@ -7,12 +7,11 @@ const apiUrl = 'http://localhost:8082';
 //   // Add other fields based on your backend response
 // }
 
-const adminLoginRequest = async (email: string, password: string) => {
+const gmailLogin = async (email: string) => {
   const loginUrl = `${apiUrl}/register/user/login`
 
   const requestBody = {
     email: email,
-    password: password,
   };
 
   try {
@@ -36,4 +35,4 @@ const adminLoginRequest = async (email: string, password: string) => {
   }
 };
 
-export { adminLoginRequest };
+export { gmailLogin };
