@@ -1,9 +1,13 @@
 'use client'
 import { useState } from "react";
 import { useRef } from "react";
-import style from "./page.module.css"
+import style from "../page.module.css"
+import style_signup from "./page.module.css"
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-export default  function Verification(){
+export default  function Signup(){
 
  
 
@@ -16,9 +20,10 @@ return(
 
     <div className={style.right}>
         <div className={style.logo}></div>
-        <div className={style.verify_form}> 
+        <div className={style_signup.verify_form}> 
             <span className={style.header_text}>Sign up Page</span>
-            <button className={style.btn_verify}>Sign up</button>
+            <From_signup></From_signup>
+            <label className={style_signup.lable} >Already a member?<Link href="/login" className={style_signup.link}> Sign in now</Link></label>
         </div>
          
   </div>
@@ -26,5 +31,167 @@ return(
 );
 };
 
+function From_signup() {
+  const [kind, setKind] = useState("User");
 
+  const {register,handleSubmit,formState:{ errors },watch} =useForm()
+
+  const checkPasswordStrength=(password: string)=>{
+    // Check if password has at least one uppercase letter
+    const hasUppercase = /[A-Z]/.test(password);
+    // Check if password has at least one lowercase letter
+    const hasLowercase = /[a-z]/.test(password);
+    // Check if password has at least one digit
+    const hasDigit = /\d/.test(password);
+    // Check if password has at least one special character
+    const hasSpecialCharacter = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+   
+
+    if(password.length >=8){
+    if (!hasUppercase && !hasLowercase && hasDigit && !hasSpecialCharacter) {
+      return "Weak Password"; // Password doesn't have uppercase letters, lowercase letters, digits, or special characters
+    } else if ((hasUppercase ||hasLowercase&& hasDigit )|| hasSpecialCharacter) {
+      return "Strong password"; // Password has uppercase letters, lowercase letters, digits, and special characters
+    } else if(hasUppercase && hasDigit && hasSpecialCharacter) {
+      return "Very Strong"; // Password is neither very weak, weak, nor strong, so it's considered good
+    }
+    else {
+      return "weak Password"; // Password
+    }
+   }
+   
+  }
+  const handleKindChange = (event:any) => {
+    setKind(event.target.value);
+  };
+  const Submit = (data:any) => {
+     console.log(data)
+    if(data.passwords!=data.confirmPassword){
+      return
+    }
+    //send data then route
+
+  };
+  return (
+    <div>
+      <form onSubmit={handleSubmit(Submit)}>
+      <table className={style_signup.table}>
+        <tbody>
+          <tr>
+            <td colSpan={2}>
+              <label>User Or Company</label>
+              <select
+                className={style_signup.table_input}
+                value={kind}
+                onChange={handleKindChange}
+              >
+                <option value="User">User</option>
+                <option value="Company">Company</option>
+              </select>
+            </td>
+          </tr>
+
+          {kind === "User" && (
+            <tr>
+              <td>
+                <label>First Name</label>
+                <input
+                   className={style_signup.table_input}
+                   placeholder="Enter First Name"
+                  // onChange={(e) => setFirstName(e.target.value)}
+                  {...register("firstName",{required:"this is required"})}
+                />
+                <span>{errors.firstName?.message && String(errors.firstName.message)}</span>
+
+              </td>
+              <td>
+                <label>Last Name</label>
+                <input
+                  placeholder="Enter Last Name"
+                  {...register("lastname",{required:"this is required"})}
+                  className={style_signup.table_input}
+                />
+                <span>{errors.lastname?.message && String(errors.lastname.message)}</span>
+              </td>
+            </tr>
+          )}
+          {kind === "Company" && (
+            <tr>
+              <td colSpan={2}>
+                <label>Company Name</label>
+                <input
+                  placeholder="Enter Company Name"
+                  className={style_signup.table_input}
+                  {...register("companyName",{required:"this is required"})}
+                />
+              <span>{errors.companyName?.message && String(errors.companyName.message)}</span>
+
+              </td>
+            </tr>
+          )}
+
+          <tr>
+            <td>
+              <label>Address</label>
+              <input
+                type="text"
+                placeholder="Enter Address"
+                className={style_signup.table_input}
+                {...register("address",{required:"this is required"})}
+              />
+              <span>{errors.address?.message && String(errors.address.message)}</span>
+
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <label>Email</label>
+              <input
+                type="text"
+                placeholder="Enter Email Address"
+                className={style_signup.table_input}
+                {...register("email",{required:"this is required"})}
+              />
+              <span>{errors.email?.message && String(errors.email.message)}</span>
+              {watch().email && !watch().email.includes("@") && <span>Enter a Valid Email</span>}
+
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Password</label>
+              <input
+                type="text"
+                placeholder="Enter Password"
+                className={style_signup.table_input}
+                {...register("password",{required:"this is required",minLength:{value:8,message:"Min length required is 8"}})}
+              />
+                <span>{errors.password?.message && String(errors.password.message)}</span>
+                {watch().password&& <p className={style_signup.pass}>{checkPasswordStrength(watch().password)}</p>}
+
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Confirm Password</label>
+              <input
+                type="text"
+                placeholder="Enter Confirm Your Password "
+                className={style_signup.table_input}
+                {...register("confirmPassword",{required:"this is required",minLength:{value:8,message:"Min length required is 8"}})}
+              />
+              <span>{errors.confirmPassword?.message && String(errors.confirmPassword.message)}</span>
+             {watch().password!=watch().confirmPassword&& <span>Password must be the same as Confirm Password.</span>}
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button className={style.btn_verify}>Sign up</button>
+      
+      </form>
+    </div>
+  );
+}
 

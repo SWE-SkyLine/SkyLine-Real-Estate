@@ -1,0 +1,84 @@
+
+.box{
+    width: 8vw;
+    height: 15vh;
+    border: 2px solid gray;
+    margin-left: 1rem;
+    border-radius: 25px;
+    box-shadow: 1ch;
+    font-weight: 550;
+    font-size: 5vw;
+    text-align: center;
+    color: darkslategray;
+    margin-top: 2rem;
+  
+    
+  }
+  .lable{
+    margin-left: 1rem;
+    font-weight: 500;
+    font-size: 18px;
+    color: rgb(62, 144, 225);
+  }
+  
+  
+  
+  .header_text{
+    font-weight: 600;
+    font-size: 2rem;
+    font-family: "Montserrat", sans-serif;
+    margin-left: 1rem;
+    color: rgba(0, 0, 0, 0.903);
+  }
+  .verify_form{
+    margin-top: 2rem;
+  }
+  
+  .btn_verify{
+    margin-left: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    width:40vw;
+    height:5.5vh;
+    border-radius: .5rem;
+    font-size: 25px;
+    font-weight: 700;
+    color: white;
+    background-color: rgb(40, 167, 222);
+    cursor: pointer;
+    display: block;
+  }
+  .btn_verify:hover{
+    color:rgb(40, 167, 222); ;
+    background-color: white;
+    transition: .4s;
+  }
+  
+  .logo{
+    background-image:url("../assets/logo.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    width:44vw;
+    height:16vh;
+    margin-left: 16rem;
+    
+   }
+  
+  .container {
+    display: flex;
+    height: 100vh;
+    background-color:white;   
+  }
+  
+  .left_img {
+    background-image:url("../assets/signup.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    flex: 3; /* Takes up 3 parts out of 10 (30%) */
+    padding: 20px; /* Optional padding */
+  }
+  .right{
+    flex: 5; /* Takes up 7 parts out of 10 (70%) */
+    padding: 20px; /* Optional padding */
+    
+  }
