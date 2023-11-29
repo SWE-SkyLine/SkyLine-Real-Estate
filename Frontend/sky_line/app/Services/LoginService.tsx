@@ -40,38 +40,8 @@ const loginRequest = async (email: string, password: string, type: string): Prom
   }
 };
 
-const checkEmail = async (email: string): Promise<boolean> => {
-  const checkEmailUrl = `${apiUrl}/api/users/check-email`;
-  console.log(email);
-  await new Promise((resolve) => setTimeout(resolve, 0));
-
-  try {
-    const response = await fetch(checkEmailUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email }),
-    });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`Error checking email: ${response.status} - ${errorText}`);
-    } else {
-      console.log('Email is valid');
-      return true;
-    }
-  } catch (error: any) {
-    console.error('Error checking email:', error);
-    return false;
-  }
-};
-
 const sendEmail = async (email: string): Promise<void> => {
-  try {
-    const isEmailValid = await checkEmail(email);
-
-    if (isEmailValid) {
+  try {  
       const sendEmailUrl = `${apiUrl}/api/users/send-email`;
       console.log(email);
       await new Promise((resolve) => setTimeout(resolve, 0));
@@ -90,9 +60,7 @@ const sendEmail = async (email: string): Promise<void> => {
       } else {
         console.log('Email sent successfully');
       }
-    } else {
-      console.log('Email is not valid, so not sending.');
-    }
+
   } catch (error: any) {
     console.error('Error sending email:', error);
     throw new Error(`Error sending email: ${error.message}`);
@@ -100,4 +68,53 @@ const sendEmail = async (email: string): Promise<void> => {
 };
 
 
-export {sendEmail, loginRequest };
+const verifyCode = async (email: string, code: number): Promise<boolean> => {
+  try {
+    const verifyURL = `${apiUrl}/api/users/verify-code?email=${email}&code=${code}`;
+    const response = await fetch(verifyURL, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log(response.ok)
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Error verifying code: ${response.status} - ${errorText}`);
+    }
+
+    return true; // Verification successful
+  } catch (error) {
+    console.error('Error verifying code:', error);
+    return false; // Verification failed
+  }
+};
+
+const updatePassword = async (email: string, newPassword: string): Promise<boolean> => {
+  try {
+    //const updatePasswordURL = `${apiUrl}/api/users/update-password`;
+    const response = await fetch("http://localhost:8080/api/users/update-password", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, newPassword }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Error updating password: ${response.status} - ${errorText}`);
+    }
+
+    return true; // Password update successful
+  } catch (error) {
+    console.error('Error updating password:', error);
+    return false; // Password update failed
+  }
+};
+
+
+
+
+
+export {sendEmail, loginRequest, verifyCode, updatePassword };
