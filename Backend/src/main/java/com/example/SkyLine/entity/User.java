@@ -1,18 +1,35 @@
 package com.example.SkyLine.entity;
 
+import com.example.SkyLine.enums.UserRoleEnum;
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
-@Table(name = "user")
+@Setter
+@Getter
+@Table(name = "users")
 public class User {
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "account_type")
-    private String accountType;
+    private UserRoleEnum userRole;
     @Column(name = "email")
     private String email;
+    private byte[] profile_photo;
+    @Column(name = "password")
+    private String password;
+    @Column(name = "phone_number")
+    private String PhoneNumber;
+
+    @Column(name = "ver_code")
+    private Integer ver_code;
+
+   @Column(name ="first_name")
+   private String firstName;
+
+
 
     public int getId() {
         return id;
@@ -22,12 +39,12 @@ public class User {
         this.id = id;
     }
 
-    public String getAccountType() {
-        return accountType;
+    public UserRoleEnum getUserRole() {
+        return userRole;
     }
 
-    public void setAccountType(String accountType) {
-        this.accountType = accountType;
+    public void setUserRole(UserRoleEnum userRole) {
+        this.userRole = userRole;
     }
 
     public String getEmail() {
@@ -54,9 +71,33 @@ public class User {
         PhoneNumber = phoneNumber;
     }
 
-    @Column(name = "password")
-    private String password;
-    @Column(name = "phone_number")
-    private String PhoneNumber;
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setVer_code(Integer ver_code) {
+        this.ver_code = ver_code;
+    }
+
+    public Integer getVer_code() {
+        return ver_code;
+    }
+
+    @Column(name ="last_name")
+    private String lastName;
+
+
 
 }

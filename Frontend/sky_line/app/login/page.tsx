@@ -7,24 +7,58 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import Gmail from "./Gmail";
 import Link from "next/link";
 
+
 const LoginForm = () => {
-  // popup window functions
-  const [showPopup, setShowPopup] = useState(false);
-  const openPopup = () => {
-    setShowPopup(true);
+  // State variables
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [selectedOption, setSelectedOption] = useState('');
+  const [loginResult, setLoginResult] = useState(false);
+
+  // Functions for popup window
+  const submitEmail = async () => {
+    try {
+      const enteredEmail = window.prompt('Enter your email:');
+
+      if (enteredEmail !== null) {
+        await sendEmail(enteredEmail);
+        const enteredCode = window.prompt('Enter the verification code sent to your email:');
+
+        if (enteredCode !== null) {
+          console.log(parseInt(enteredCode))
+          const verificationResult = await verifyCode(enteredEmail, parseInt(enteredCode));
+          console.log(verificationResult)
+          if (verificationResult) {
+            const newPassword = window.prompt('Enter your new password:');
+             
+            
+            if (newPassword !== null) {
+              const passwordChangeStatus = await updatePassword(enteredEmail, newPassword)
+              if(passwordChangeStatus){
+                alert('Password change success');
+              }
+              
+              // Handle setting the new password
+            } else {
+              alert('Password change cancelled')
+            }
+          } else {
+            console.log('Incorrect verification code.');
+            // Handle the case where the verification code is incorrect
+          }
+        } else {
+          console.log('Verification code input canceled.');
+        }
+      } else {
+        console.log('Email input canceled.');
+      }
+    } catch (error) {
+      console.error('Error sending email:');
+    }
   };
 
-  const closePopup = () => {
-    setShowPopup(false);
-  };
-
-  const submitEmail = () => {
-    // Add logic to handle the submitted email, e.g., send a reset email.
-    // For now, let's just close the popup
-    closePopup();
-  };
-
-  // login form varaiables
+  // login form variables
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -34,28 +68,22 @@ const LoginForm = () => {
   // on submit handler
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("login buton")
-    console.log(email)
-    console.log(password)
-    console.log(selectedOption)
+    console.log("login button");
+    console.log(email);
+    console.log(password);
+    console.log(selectedOption);
     const res = await loginRequest(email, password, selectedOption);
     setLoginResult(res);
-    console.log(loginResult)
-
+    console.log(loginResult);
   };
 
   return (
-    // all page
     <div className={style.container}>
-      {/* left and right parts */}
       <div className={style.left_img}></div>
-
       <div className={style.right}>
         <div className={style.logo}></div>
         <h2 className={style.header_text}>Login</h2>
-        {/* login form  */}
         <form className={myStyle.loginForm} onSubmit={handleLogin}>
-          {/* add gmail button */}
           <label className={myStyle.lable}>Email</label>
           <div>
             <input className={myStyle.textBox} type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
@@ -63,7 +91,7 @@ const LoginForm = () => {
 
           <label className={myStyle.lable}>Password</label>
           <div>
-            <input className={myStyle.textBox} type="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
+            <input className={myStyle.textBox} type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           </div>
 
           {/* user type
@@ -91,7 +119,7 @@ const LoginForm = () => {
                 name="userType"
                 onChange={(e) => setSelectedOption(e.target.value)}
               />
-              company
+              Company
             </label>
           </div> */}
 
@@ -128,7 +156,7 @@ const LoginForm = () => {
           <GoogleOAuthProvider clientId="286653287539-cfsq1r439hetsrluac5hdorpjoajbd3h.apps.googleusercontent.com">
             <Gmail/>
           </GoogleOAuthProvider>
-          </div>
+
         </form>
         
             

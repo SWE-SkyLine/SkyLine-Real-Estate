@@ -16,13 +16,6 @@ public class MainController {
 
     @GetMapping("/add")
     public String addUser(){
-        User user = new User();
-        user.setId(1);
-        user.setEmail("amin@hasdp.com");
-        user.setAccountType("yohohoh");
-        user.setPassword("hahahah");
-        user.setPhoneNumber("0123123");
-        userRepository.save(user);
         return "OK";
     }
 }
