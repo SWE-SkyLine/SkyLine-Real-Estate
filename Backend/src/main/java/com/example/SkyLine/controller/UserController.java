@@ -1,6 +1,7 @@
 package com.example.SkyLine.controller;
 
 import com.example.SkyLine.entity.User;
+import com.example.SkyLine.enums.UserRoleEnum;
 import com.example.SkyLine.repository.UserRepository;
 import com.example.skyline.model.EmailRequest;
 import com.example.skyline.model.UpdatePasswordRequest;
@@ -35,6 +36,10 @@ public class UserController {
     @GetMapping
     public List<User> getAllUsers() {
         return userService.getAllUsers();
+    }
+    @GetMapping("/allUsersToPromote")
+    public List<User> getAllUsersToPromote() {
+        return userService.getAllUsersByAccountType(UserRoleEnum.USER);
     }
 
     @PostMapping
