@@ -129,8 +129,14 @@ const LoginForm = () => {
             Login
           </button>
 
+<<<<<<< HEAD
           {/* Forget password link */}
           <a className={myStyle.link} href="#" onClick={submitEmail}>
+=======
+          {/* forget password link and popup window  */}
+          <span className={myStyle.lable1}>Not a member? <Link className={myStyle.link1} href="/signup">Sign up now</Link></span>
+          <a className={myStyle.link} href="#" onClick={openPopup}>
+>>>>>>> 0f17a228c1c13cf737cafa288894d66d8e00152e
             Forgot Password
           </a>
           
