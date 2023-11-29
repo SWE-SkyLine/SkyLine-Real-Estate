@@ -2,9 +2,12 @@ package com.example.SkyLine.entity;
 
 import com.example.SkyLine.enums.UserRoleEnum;
 import jakarta.persistence.*;
+import lombok.*;
 
-@Entity
-@Table(name = "users")
+@Entity(name = "Users")
+@Setter
+@Getter
+@Table(name = "Users")
 public class User {
     @Id
     @Column(name = "user_id")
@@ -14,11 +17,12 @@ public class User {
     private UserRoleEnum userRole;
     @Column(name = "email")
     private String email;
-
+    private byte[] profile_photo;
     @Column(name = "password")
     private String password;
     @Column(name = "phone_number")
     private String PhoneNumber;
+
 
     @Column(name = "first_name")
     private String firstName;
@@ -26,6 +30,11 @@ public class User {
     private String lastName;
     @Column(name = "verification_code")
     private String verificationCode;
+
+    @Column(name = "ver_code")
+    private Integer verificationCodeForgetPassword;
+
+
 
     public int getId() {
         return id;
@@ -83,9 +92,22 @@ public class User {
         this.lastName = lastName;
     }
 
+
     public String getVerificationCode() {
         return verificationCode;
     }
+
+    public void setVerificationCodeForgetPassword(Integer verificationCodeForgetPassword) {
+        this.verificationCodeForgetPassword = verificationCodeForgetPassword;
+    }
+
+  
+    public Integer getVerificationCodeForgetPassword() {
+        return verificationCodeForgetPassword;
+    }
+
+
+
 
     public void setVerificationCode(String verificationCode) {
         this.verificationCode = verificationCode;

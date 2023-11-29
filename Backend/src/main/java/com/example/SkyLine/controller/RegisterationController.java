@@ -26,10 +26,11 @@ public class RegisterationController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @PostMapping("/user/signup")
-    public ResponseEntity<?> signUp(@RequestBody UserRequestDTO user) {
-        if (regesterationService.userExists(user.getEmail()))
-            return new ResponseEntity<String>("user already exists", HttpStatus.CONFLICT);
+
+    public ResponseEntity<?> signUp(@RequestBody UserRequestDTO user){
+        if(regesterationService.userExists(user.getEmail()))
+            return new ResponseEntity<String>("user already exists", HttpStatus.IM_USED);
+
         return new ResponseEntity<User>(regesterationService.register(user), HttpStatus.OK);
     }
 
@@ -40,9 +41,11 @@ public class RegisterationController {
                 UsernamePasswordAuthenticationToken.unauthenticated(login.getEmail(), login.getPassword());
         Authentication authenticationResponse = this.authenticationManager.authenticate(authenticationRequest);
         SecurityContextHolder.getContext().setAuthentication(authenticationResponse);
-        return ResponseEntity.ok()
-                .header("Location", "/logged in")
-                .build();
+
+//        return ResponseEntity.ok()
+//                .header("Location", "/logged in")
+//                .build();
+        return new ResponseEntity<String>("logged in", HttpStatus.OK);
     }
 
     @PostMapping("/user/OauthLogin")

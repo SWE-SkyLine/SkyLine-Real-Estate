@@ -2,7 +2,7 @@
 import { useState } from "react";
 import myStyle from "./page.module.css"
 import style from "../page_verify/page.module.css"
-import { loginRequest } from "../Services/LoginService"
+import { adminLoginRequest } from "../Services/AdminLoginService";
 
 const LoginForm = () => {
   // popup window functions
@@ -25,6 +25,7 @@ const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [loginResult, setLoginResult] = useState(false);
 
   // on submit handler
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -32,6 +33,9 @@ const LoginForm = () => {
     console.log("login buton")
     console.log(email)
     console.log(password)
+    const res = await adminLoginRequest(email, password);
+    setLoginResult(res);
+    console.log(loginResult)
   };
 
   return (
@@ -83,7 +87,6 @@ const LoginForm = () => {
               </div>
             </div>
           )}
-
         </form>
       </div>
     </div>
