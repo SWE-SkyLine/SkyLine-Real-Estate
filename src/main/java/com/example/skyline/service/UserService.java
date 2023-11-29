@@ -21,6 +21,9 @@ public class UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+    public ArrayList<User> getAllUsersByAccountType(String account){
+        return userRepository.getAllUsersByAccountType(account);
+    }
 
     public User getUserById(int userId) {
         return userRepository.findById(userId).orElse(null);
@@ -37,6 +40,7 @@ public class UserService {
     }
 
     public void PromoteUser(int UserID){
+        userRepository.promoteToAdmin(UserID,"Admin");
         // update the account_type field of the candidate user in the user table in DB to Admin
     }
 

@@ -25,34 +25,6 @@ public class User {
 
 
 
-    public int getUser_id() {
-        return user_id;
-    }
-
-    public byte[] getProfile_photo() {
-        return profile_photo;
-    }
-
-    public String getFirstName() {
-        return first_name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getLastName() {
-        return last_name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getPhone_number() {
-        return phone_number;
-    }
-
 }
 
 

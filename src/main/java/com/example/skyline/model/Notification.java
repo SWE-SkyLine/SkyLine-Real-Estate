@@ -28,60 +28,27 @@ public class Notification {
     private Boolean approved;
 
     private Boolean seen;
+    private Boolean answered;
 
-    public Notification( int requesterID,int candidateID, int responderID){
-        this.responder_id = responderID;
-        this.candidate_id = candidateID;
-        this.requester_id = requesterID;
+    public Notification( int requester_id,int candidate_id, int responder_id){
+        this.responder_id = responder_id;
+        this.candidate_id = candidate_id;
+        this.requester_id = requester_id;
         this.date_requested = new java.sql.Date(System.currentTimeMillis());
         this.date_answered =null;
         this.approved =null;
         this.seen =false;
+        this.answered=false;
 
     }
 
 
-    public void setDateAnswered(Date dateAnswered) {
-        this.date_answered = dateAnswered;
-    }
-
-    public void setDateRequested(Date dateRequested) {
-        this.date_requested = dateRequested;
-    }
-
-    public Date getDateAnswered() {
-        return date_answered;
-    }
-
-    public Date getDateRequested() {
-        return date_requested;
-    }
-
-    public void setApproved(Boolean approved) {
-        this.approved = approved;
-    }
 
 
-
-    public int getNotification_id() {
-        return notification_id;
-    }
-
-    public Boolean getApproved() {
-        return approved;
-    }
-
-    public int getCandidateID() {
+    public int getCandidate_id() {
         return candidate_id;
     }
 
-    public Date getDate_answered() {
-        return date_answered;
-    }
-
-    public Date getDate_requested() {
-        return date_requested;
-    }
 
     public int getRequester_id() {
         return requester_id;
