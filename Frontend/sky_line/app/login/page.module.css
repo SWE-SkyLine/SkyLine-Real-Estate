@@ -61,12 +61,16 @@
   position: relative;
   text-decoration: underline;
   margin: 20px;
-  font-size: 18px;
+  font-size: 22px;
 }
 
 .radio{
   width: 20px;
   height: 20px;
   margin: 3px;
+}
+
+.gmaildiv{
+  margin: 1rem;
 }
 

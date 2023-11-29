@@ -3,6 +3,8 @@ import { useState } from "react";
 import myStyle from "./page.module.css"
 import style from "../page_verify/page.module.css"
 import { loginRequest } from "../Services/LoginService"
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import Gmail from "./Gmail";
 
 const LoginForm = () => {
   // popup window functions
@@ -119,7 +121,11 @@ const LoginForm = () => {
               </div>
             </div>
           )}
-
+          <div className={myStyle.gmaildiv}>
+          <GoogleOAuthProvider clientId="286653287539-cfsq1r439hetsrluac5hdorpjoajbd3h.apps.googleusercontent.com">
+            <Gmail/>
+          </GoogleOAuthProvider>
+          </div>
         </form>
       </div>
     </div>

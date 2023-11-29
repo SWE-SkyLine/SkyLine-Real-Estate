@@ -7,12 +7,11 @@ interface LoginResponse {
   // Add other fields based on your backend response
 }
 
-const adminLoginRequest = async (email: string, password: string): Promise<boolean> => {
-  const loginUrl = `${apiUrl}/login/admin`
+const gmailLogin = async (email: string): Promise<boolean> => {
+  const loginUrl = `${apiUrl}/login/gmail`
 
   const requestBody = {
     email: email,
-    password: password,
   };
 
   try {
@@ -36,4 +35,4 @@ const adminLoginRequest = async (email: string, password: string): Promise<boole
   }
 };
 
-export { adminLoginRequest };
+export { gmailLogin };
