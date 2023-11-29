@@ -49,6 +49,7 @@ public class UserController {
     @PostMapping("/send-email")
     public ResponseEntity<String> sendVerificationCode(@RequestBody EmailRequest emailRequest) {
         String recipientEmail = emailRequest.getEmail();
+
         User user = userRepository.findByEmail(recipientEmail);
 
         try {
