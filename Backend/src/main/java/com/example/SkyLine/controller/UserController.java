@@ -11,6 +11,7 @@ import com.example.SkyLine.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +25,10 @@ public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
     private final EmailService emailService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
     @Autowired
     public UserController(UserService userService, UserRepository userRepository, EmailService emailService) {
@@ -107,7 +112,7 @@ public class UserController {
     @PostMapping("/update-password")
     public ResponseEntity<String> updatePassword(@RequestBody UpdatePasswordRequest updatePasswordRequest) {
         String email = updatePasswordRequest.getEmail();
-        String newPassword = updatePasswordRequest.getNewPassword();
+        String newPassword = passwordEncoder.encode(updatePasswordRequest.getNewPassword());
 
 
         // Retrieve the user from the database
@@ -120,6 +125,7 @@ public class UserController {
 
                 // Save the updated user entity
                 userRepository.save(user);
+
 
                 return ResponseEntity.ok(newPassword);
             } else {

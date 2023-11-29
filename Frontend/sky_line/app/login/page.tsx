@@ -69,15 +69,13 @@ const LoginForm = () => {
     console.log(selectedOption)
     const res = await loginRequest(email, password, selectedOption);
     // setLoginResult(res);
-    console.log(res)
+    //console.log(res)
     if(res.status ==200){
       window.location.assign('/')
     }
     else{
-      alert("Error occurred try again")
+      alert("User is not registered")
     }
- 
-
   };
 
   return (
