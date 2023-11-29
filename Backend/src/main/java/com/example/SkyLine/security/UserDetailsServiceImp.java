@@ -25,6 +25,7 @@ public class UserDetailsServiceImp implements UserDetailsService {
                 .password(user.getPassword())
                 .roles(new UserRoleEnumAdapter().UserRoleEnumToString(user.getUserRole()))
                 .build();
-        return null;
+        return details;
     }
+    //.password(passwordEncoder.encode(user.getPassword()))
 }
