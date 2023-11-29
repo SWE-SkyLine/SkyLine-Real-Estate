@@ -37,7 +37,7 @@ public class RegisterationController {
         Authentication authenticationResponse = this.authenticationManager.authenticate(authenticationRequest);
         SecurityContextHolder.getContext().setAuthentication(authenticationResponse);
         return ResponseEntity.ok()
-                .header("Location", "/logged in")
+                .header("Location", "/logged_in")
                 .build();
     }
     @PostMapping("/test")
