@@ -8,11 +8,11 @@ interface LoginResponse {
 }
 
 const loginRequest = async (email: string, password: string, type: string): Promise<boolean> => {
-  var loginUrl = ''
-  if(type === "company")
-    loginUrl = `${apiUrl}/login/company`;
-  else
-    loginUrl = `${apiUrl}/login/user`;
+  const loginUrl = `${apiUrl}/register/user/login`
+  // if(type === "company")
+  //   loginUrl = `${apiUrl}/register/company`;
+  // else
+  //   loginUrl = `${apiUrl}/register/user/login`;
 
   const requestBody = {
     email: email,

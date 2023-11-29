@@ -8,7 +8,7 @@ interface LoginResponse {
 }
 
 const adminLoginRequest = async (email: string, password: string): Promise<boolean> => {
-  const loginUrl = `${apiUrl}/login/admin`
+  const loginUrl = `${apiUrl}/register/user/login`
 
   const requestBody = {
     email: email,

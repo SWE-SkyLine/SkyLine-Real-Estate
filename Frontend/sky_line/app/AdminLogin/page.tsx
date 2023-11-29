@@ -46,7 +46,7 @@ const LoginForm = () => {
 
       <div className={style.right}>
         <div className={style.logo}></div>
-        <h2 className={style.header_text}>Login</h2>
+        <h2 className={style.header_text}>Admin Login</h2>
         {/* login form  */}
         <form className={myStyle.loginForm} onSubmit={handleLogin}>
           {/* add gmail button */}

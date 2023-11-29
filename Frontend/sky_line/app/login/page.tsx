@@ -65,7 +65,7 @@ const LoginForm = () => {
             <input className={myStyle.textBox} type="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
           </div>
 
-          {/* user type */}
+          {/* user type
           <div>
             <label className={myStyle.lable}>
               <input
@@ -92,7 +92,7 @@ const LoginForm = () => {
               />
               company
             </label>
-          </div>
+          </div> */}
 
           <button className={myStyle.loginBtn} type="submit">
             Login

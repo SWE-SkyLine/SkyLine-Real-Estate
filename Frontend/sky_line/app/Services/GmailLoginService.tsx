@@ -8,7 +8,7 @@ interface LoginResponse {
 }
 
 const gmailLogin = async (email: string): Promise<boolean> => {
-  const loginUrl = `${apiUrl}/login/gmail`
+  const loginUrl = `${apiUrl}/register/user/login`
 
   const requestBody = {
     email: email,
