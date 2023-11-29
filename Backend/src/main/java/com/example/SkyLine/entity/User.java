@@ -2,8 +2,11 @@ package com.example.SkyLine.entity;
 
 import com.example.SkyLine.enums.UserRoleEnum;
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
+@Setter
+@Getter
 @Table(name = "users")
 public class User {
     @Id
@@ -20,8 +23,13 @@ public class User {
     @Column(name = "phone_number")
     private String PhoneNumber;
 
+    @Column(name = "ver_code")
+    private Integer ver_code;
+
    @Column(name ="first_name")
    private String firstName;
+
+
 
     public int getId() {
         return id;

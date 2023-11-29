@@ -1,7 +1,7 @@
 package com.example.skyline.service;
 
+import com.example.SkyLine.entity.User;
 import com.example.skyline.repo.UserRepository;
-import com.example.skyline.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
