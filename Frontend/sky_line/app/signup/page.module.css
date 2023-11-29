@@ -1,0 +1,52 @@
+.table{
+  margin-left: 1rem;
+}
+
+.table_input {
+  border: 2px solid rgb(52, 50, 50);
+  width: 40vw;
+  height: 4vh;
+  border-radius: 7px;
+  margin-bottom: 4px;
+  padding-left: 5px;
+  font-size: 17px;
+  font-weight: 530;
+  
+}
+
+.table span{
+  color: red;
+}
+
+
+.table td label {
+  display: block;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  font-weight: 600;
+  font-size: 17px;
+}
+.verify_form{
+  margin-top: 1px;
+}
+.table td {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+
+}
+.lable{
+  margin-top: 1px;
+  margin-bottom: 2px;
+  margin-left: 1rem;
+  font-weight: 600;
+  font-size: 17px;
+}
+.link{
+  color: rgb(33, 165, 222);
+}
+.pass{
+  color: green !important;
+}
+.spinner-border{
+  margin-left: 50px;}
