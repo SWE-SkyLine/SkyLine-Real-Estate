@@ -2,10 +2,12 @@ package com.example.SkyLine.controller;
 
 import com.example.SkyLine.DTO.LogInRequestDTO;
 import com.example.SkyLine.DTO.UserRequestDTO;
+import com.example.SkyLine.DTO.VerifyCodeRequestDTO;
 import com.example.SkyLine.entity.User;
 import com.example.SkyLine.service.EmailService;
 import com.example.SkyLine.service.RegesterationService;
 import com.example.SkyLine.utility.VerificationCodeGenerator;
+import com.google.common.base.Verify;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,11 +45,12 @@ public class RegisterationController {
     }
 
     @PostMapping("/user/verify")
-    public void verify(@RequestBody String Email){
+    public void verify(@RequestBody VerifyCodeRequestDTO Request){
         //continue ...
-        String VerificationCode= VerificationCodeGenerator.generateVerificationCode();
-        EmailService.SendCodeVerifySignup(Email,VerificationCode);
-
+        System.out.println(Request);
+        System.out.println(Request.getEmail());
+        System.out.println(Request.getCode());
+        System.out.println(regesterationService.UserVerify(Request.getEmail(),Request.getCode()));
 
     }
     @PostMapping("/user/login")

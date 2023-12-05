@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 public class RegesterationService {
     @Autowired
@@ -39,6 +41,16 @@ public class RegesterationService {
         userToBeSaved.setUserRole(mapper.map(user.getUserType()));
         userToBeSaved.setVerificationCode(VerificationCode);
         return userRepository.save(userToBeSaved);
+    }
+
+    public boolean UserVerify(String Email,String code) {
+            User user =userRepository.findByEmail(Email);
+                if(Objects.equals(user.getVerificationCode(), code)){
+                    user.setIs_enable(true);
+                    userRepository.save(user);
+                    return true;
+                }
+        return false;
     }
     public boolean signInOauth(String emailOauth){
         return userOauthRepository.existsById(emailOauth);
