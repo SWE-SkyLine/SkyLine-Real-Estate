@@ -30,6 +30,7 @@ public class RegesterationService {
     public User register(UserRequestDTO user) {
         User userToBeSaved = new User();
         String VerificationCode= VerificationCodeGenerator.generateVerificationCode();
+        EmailService.SendCodeVerifySignup(user.getEmail(),VerificationCode);
         userToBeSaved.setFirstName(user.getFirstName());
         userToBeSaved.setLastName(user.getLastName());
         userToBeSaved.setEmail(user.getEmail());
@@ -37,7 +38,6 @@ public class RegesterationService {
         userToBeSaved.setPhoneNumber(user.getPhone_number());
         userToBeSaved.setUserRole(mapper.map(user.getUserType()));
         userToBeSaved.setVerificationCode(VerificationCode);
-        EmailService.SendCodeVerifySignup(user.getEmail(),VerificationCode);
         return userRepository.save(userToBeSaved);
     }
     public boolean signInOauth(String emailOauth){

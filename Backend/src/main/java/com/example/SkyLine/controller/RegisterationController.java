@@ -45,6 +45,10 @@ public class RegisterationController {
     @PostMapping("/user/verify")
     public void verify(@RequestBody String Email){
         //continue ...
+        String VerificationCode= VerificationCodeGenerator.generateVerificationCode();
+        EmailService.SendCodeVerifySignup(Email,VerificationCode);
+
+
     }
     @PostMapping("/user/login")
     public ResponseEntity<?> signIn(@RequestBody LogInRequestDTO login){

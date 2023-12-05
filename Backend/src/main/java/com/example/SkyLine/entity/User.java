@@ -32,14 +32,14 @@ public class User {
     @Column(name = "ver_code")
     private Integer verificationCodeForgetPassword;
 
-    @Column(name = "is_enable")
-    private String is_enable;
+    @Column(name = "is_enable", columnDefinition = "boolean default false")
+    private boolean is_enable;
 
-    public void setIs_enable(String is_enable) {
+    public void setIs_enable(Boolean is_enable) {
         this.is_enable = is_enable;
     }
 
-    public String getIs_enable() {
+    public Boolean getIs_enable() {
         return is_enable;
     }
 
