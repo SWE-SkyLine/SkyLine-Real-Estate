@@ -23,18 +23,25 @@ public class User {
     @Column(name = "phone_number")
     private String PhoneNumber;
 
-
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
     @Column(name = "verification_code")
     private String verificationCode;
-
     @Column(name = "ver_code")
     private Integer verificationCodeForgetPassword;
 
+    @Column(name = "is_enable")
+    private String is_enable;
 
+    public void setIs_enable(String is_enable) {
+        this.is_enable = is_enable;
+    }
+
+    public String getIs_enable() {
+        return is_enable;
+    }
 
     public int getId() {
         return id;

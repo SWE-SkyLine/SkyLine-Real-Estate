@@ -19,4 +19,15 @@ public class EmailService {
 
         javaMailSender.send(message);
     }
+
+    public void  SendCodeVerifySignup(String Email, String VerificationCode){
+        sendEmail(Email, "VerificationCode", "Dear [" + Email + "],\n" +
+                "\n" +
+                "To complete your registration, please use the following verification code: "
+                + VerificationCode + "\n"
+                +"This code is valid for a limited time, so please enter it as soon as possible to activate your account.\n" +
+                "Thank you,\n" +
+                "[Skyline RealEstate]");
+    }
+
 }

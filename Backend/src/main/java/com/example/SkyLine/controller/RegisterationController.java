@@ -3,7 +3,9 @@ package com.example.SkyLine.controller;
 import com.example.SkyLine.DTO.LogInRequestDTO;
 import com.example.SkyLine.DTO.UserRequestDTO;
 import com.example.SkyLine.entity.User;
+import com.example.SkyLine.service.EmailService;
 import com.example.SkyLine.service.RegesterationService;
+import com.example.SkyLine.utility.VerificationCodeGenerator;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,12 +28,23 @@ public class RegisterationController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private  EmailService EmailService;
 
     @PostMapping("/user/signup")
     public ResponseEntity<?> signUp(@RequestBody UserRequestDTO user){
-        if(regesterationService.userExists(user.getEmail()))
+        if(regesterationService.userExists(user.getEmail())){
             return new ResponseEntity<String>("user already exists", HttpStatus.CONFLICT);
-        return new ResponseEntity<User>(regesterationService.register(user), HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<User>(regesterationService.register(user), HttpStatus.OK);
+        }
+
+    }
+
+    @PostMapping("/user/verify")
+    public void verify(@RequestBody String Email){
+        //continue ...
     }
     @PostMapping("/user/login")
     public ResponseEntity<?> signIn(@RequestBody LogInRequestDTO login){

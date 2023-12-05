@@ -7,7 +7,7 @@ public class VerificationCodeGenerator {
         int codeLength = 5;
         Random random = new Random();
         String verificationCode = "";
-        String allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        String allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         for (int i = 0; i < codeLength; i++) {
             int randomIndex = random.nextInt(allowedChars.length());
             char character = allowedChars.charAt(randomIndex);

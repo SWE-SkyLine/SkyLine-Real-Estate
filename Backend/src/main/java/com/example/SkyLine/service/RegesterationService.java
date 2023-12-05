@@ -20,6 +20,8 @@ public class RegesterationService {
     UserTypeToUserRoleMapper mapper;
     @Autowired
     PasswordEncoder passwordEncoder;
+    @Autowired
+    EmailService EmailService;
 
     public boolean userExists(String Email) {
         return (userRepository.existsUserByEmail(Email) || userOauthRepository.existsById(Email)); // check if the email exists in basic registered or oAuth
@@ -27,15 +29,15 @@ public class RegesterationService {
     // here we can direct the creation respect to the userType
     public User register(UserRequestDTO user) {
         User userToBeSaved = new User();
+        String VerificationCode= VerificationCodeGenerator.generateVerificationCode();
         userToBeSaved.setFirstName(user.getFirstName());
         userToBeSaved.setLastName(user.getLastName());
         userToBeSaved.setEmail(user.getEmail());
         userToBeSaved.setPassword(passwordEncoder.encode(user.getPassword()));
         userToBeSaved.setPhoneNumber(user.getPhone_number());
         userToBeSaved.setUserRole(mapper.map(user.getUserType()));
-        userToBeSaved.setVerificationCode(
-                VerificationCodeGenerator.generateVerificationCode()
-        );
+        userToBeSaved.setVerificationCode(VerificationCode);
+        EmailService.SendCodeVerifySignup(user.getEmail(),VerificationCode);
         return userRepository.save(userToBeSaved);
     }
     public boolean signInOauth(String emailOauth){
