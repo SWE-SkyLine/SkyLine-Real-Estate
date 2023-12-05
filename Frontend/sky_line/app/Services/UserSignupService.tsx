@@ -9,31 +9,6 @@ const apiUrl = 'http://localhost:8080';
 const SignupRequest = async (user:User) => {
   const url = `${apiUrl}/register/user/signup`;
 
-//   const requestBody = {
-//     user: user
-//   };
-
-//   try {
-//     const response = await fetch(SignupUrl, {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify(requestBody),
-//     });
-
-//     if (!response.ok) {
-//       throw new Error('Network response was not ok');
-//     }
-
-//     const data: any = await response.json();
-//     return data;
-//   } catch (error) {
-//     console.error('Error during login:', error);
-//     throw error;
-//   }
-// };
-
 const data = {
   // Data to send in the request body
   name: 'John Doe',
@@ -60,7 +35,37 @@ const sendPostRequest = async () => {
 };
 
 return sendPostRequest();
-
-
 }
-export { SignupRequest };
+
+const verify_code_request = async (Email:string,code:string) => {
+  const url = `${apiUrl}/register/user/verify`;
+
+const data = {
+  email:Email,
+  code:code,
+};
+
+
+const makeRequest = async (url: string) => {
+  try {
+    const response = await axios.post(url,data);
+    return response;
+  } catch (error) {
+    console.error(error);
+    alert("Error")
+    return "Error";
+  }
+};
+
+const sendPostRequest = async () => {
+  const response = await makeRequest(url);
+  //console.log(response.status);
+  return response; // Handle the response data here
+};
+
+return sendPostRequest();
+}
+
+
+
+export { SignupRequest ,verify_code_request };
