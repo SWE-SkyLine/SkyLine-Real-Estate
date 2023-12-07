@@ -1,0 +1,88 @@
+.ticketPage{
+    height: 100vh;
+    background-color:white;   
+    background-size: contain;
+    color: black;
+}
+
+.allItems{
+    position: absolute;
+    left: 20%;
+    right: 20%;
+    display: grid;
+    grid-template-rows: auto auto 2Fr;
+    row-gap: 10px;
+}
+
+.ticketForm{
+    padding: 5px 25px;
+    background-color: rgb(230, 229, 229);
+    border-radius: .5rem;
+    display: grid;
+    row-gap: 15px;
+    font-size: 25px;
+    font-weight: 530;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.emailTextBox{
+    background-color: white;
+    color: black;
+    border: 3px solid rgb(52, 50, 50);
+    width: 44vw;
+    height: 4vh;
+    border-radius: .5rem;
+    padding-left: 5px;
+    font-size: 25px;
+    font-weight: 530;
+    font-family: Arial, Helvetica, sans-serif;
+}
+    
+
+
+
+.list{
+    display: block;
+    background: white;
+    width: 44vw;
+    color: black;
+    margin-top: 10px;
+    border: 3px solid rgb(52, 50, 50);
+    padding: 15px 0;
+    border-radius: .5rem;
+    font-size: 20px;
+    font-weight: 530;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.list:focus{
+    margin-bottom: 65px;
+}
+
+.message{
+    background-color: white;
+    color: black;
+    border: 3px solid rgb(52, 50, 50);
+    width: 44vw;
+    height: 25vh;
+    border-radius: .5rem;
+    padding: 5px;
+    font-size: 25px;
+    font-weight: 530;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.sendBtn{
+    width:15vw;
+    height:6vh;
+    border-radius: .5rem;
+    color: white;
+    background-color: rgb(40, 167, 222);
+    cursor: pointer;
+    display: block;
+    font-size: 25px;
+    font-weight: 530;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
