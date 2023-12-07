@@ -77,9 +77,7 @@ function From_signup() {
     setKind(event.target.value);
   };
   const Submit = async (data:any) => {
-    //  console.log(data)
-
-
+    //  console.log(data
 
     if(data.password==data.confirmPassword){
     let user = new User();
@@ -99,10 +97,13 @@ function From_signup() {
 
           console.log(user);
           const res = await SignupRequest(user);
-          if ((res as AxiosResponse).status === 409) {
-            alert("Signup failed, try again");
-          } else {
-              router.push(`/page_verify?Email=${user.email}`);
+          if ((res as AxiosResponse).status === 200) {
+              
+            router.push(`/page_verify?Email=${user.email}`);
+
+          } else { 
+              // we will replace it b 
+             alert("Signup failed, try again");      
             }
 
         //requet to back sign in

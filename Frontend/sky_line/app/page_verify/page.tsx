@@ -2,10 +2,12 @@
 import { useEffect, useState } from "react";
 import { useRef } from "react";
 import style from "./page.module.css"
-import { verify } from "crypto";
-import { SignupRequest, verify_code_request } from "../Services/UserSignupService";
+ import {verify_code_request,send_code_again } from "../Services/UserSignupService";
 import { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
+import { SP } from "next/dist/shared/lib/utils";
+import { Span } from "next/dist/trace";
+import { set } from "react-hook-form";
 
 export default  function Verification(){
     let [user_Email,set_email] = useState("");
@@ -23,6 +25,8 @@ export default  function Verification(){
     }, []);
 
   const [inputValue] = useState(Array(5).fill(''));
+  const [flag_boxs,setflag_boxs] = useState(0);
+ 
   const select0 =useRef<HTMLInputElement>(null)
   const select1 =useRef<HTMLInputElement>(null)
   const select2 =useRef<HTMLInputElement>(null)
@@ -33,29 +37,49 @@ export default  function Verification(){
  const handleInputChange = (e:any) => {
      let id= parseInt(e.target.id)
      inputValue[id]=e.target.value
+     console.log(inputValue)
+     setflag_boxs(0);
       if(e.target.value ==""){
          return
      }
+     
      if(id<4){
       select_box[id+1].current?.focus();
      }
+     
     //  console.log(inputValue.join(''))
  };
 
  const verify=async ()=>{
   let code = inputValue[0]+""+inputValue[1]+""+inputValue[2]+""+inputValue[3]+""+inputValue[4];
-  console.log(user_Email);
-  console.log(code);
+  if(inputValue[0]==""||inputValue[1]==""||inputValue[2]==""||inputValue[3]==""||inputValue[4]==""){
+    setflag_boxs(1)
+    return
+  }
+  
 
   const res = await verify_code_request( user_Email, code);
-          if ((res as AxiosResponse).status === 409) {
-            alert("Signup failed, try again");
+          if ((res as AxiosResponse).status == 200) {
+          
+            router.push(`/login`);
           } else {
-              router.push(`/login`);
+            alert("this code Not correct, try again"); 
             }
-
-
  }
+
+ const send_code=async ()=>{
+  const res = await send_code_again( user_Email);
+          if ((res as AxiosResponse).status == 200) {
+
+            alert("code sent successfully")
+          }
+          else{
+            //popup
+            alert("send code failed, try again");
+
+          } 
+ }
+
 
     return(
     
@@ -74,8 +98,9 @@ export default  function Verification(){
               <Input_box  select_box={select_box} id={3} handleInputChange={handleInputChange}/>
               <Input_box  select_box={select_box} id={4} handleInputChange={handleInputChange}/>
             </div>
+            {flag_boxs==1&&<span className={style.error}>All Field are Required</span>}   
             <button className={style.btn_verify} onClick={verify}>Verify</button>
-            <label className={style.lable}>Send Again</label>
+            <label className={style.lable} onClick={send_code}>Send Again</label>
         </div>
          
   </div>
@@ -85,7 +110,7 @@ export default  function Verification(){
 
 function Input_box({select_box,id,handleInputChange}:any){
    
-    return(
+    return( 
     <input
       className={style.box}
       ref={select_box[id]}
