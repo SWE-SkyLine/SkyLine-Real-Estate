@@ -9,11 +9,10 @@ import {SignupRequest} from "../Services/UserSignupService"
 import { Router, useNavigate } from 'react-router-dom';
 import { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
+import { Popup_respone } from "../Utility/Popup/Popup";
+import { text } from "stream/consumers";
 
 export default  function Signup(){
-
- 
-
 
 return(
     
@@ -46,7 +45,17 @@ function From_signup() {
     CLIENT = 'CLIENT',
     COMPANY = 'COMPANY',
     AGENT = 'AGENT',
-}
+  }
+  const [showModal, setShowModal] = useState(false);
+  const handleShow = () => setShowModal(true);
+  
+  let title="Sign-up Failed"
+  let body="An error occurred while creating your account. Please try again."
+  let btn_text="Close"
+   function btn_action() {
+    setShowModal(false);
+  }
+  
 
   const checkPasswordStrength=(password: string)=>{
     // Check if password has at least one uppercase letter
@@ -102,8 +111,8 @@ function From_signup() {
             router.push(`/page_verify?Email=${user.email}`);
 
           } else { 
-              // we will replace it b 
-             alert("Signup failed, try again");      
+              // we popup with error message 
+              handleShow();
             }
 
         //requet to back sign in
@@ -246,6 +255,10 @@ function From_signup() {
       <button className={style_signup.btn_verify}>Sign up</button>
       
       </form>
+
+      <Popup_respone showModal={showModal} setShowModal={setShowModal}
+  title={title} body={body} btn_text={btn_text} btn_action={btn_action}
+ />
     </div>
   );
 }

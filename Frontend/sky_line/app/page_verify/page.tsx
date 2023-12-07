@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { SP } from "next/dist/shared/lib/utils";
 import { Span } from "next/dist/trace";
 import { set } from "react-hook-form";
+import { Popup_respone } from "../Utility/Popup/Popup";
 
 export default  function Verification(){
     let [user_Email,set_email] = useState("");
@@ -34,6 +35,15 @@ export default  function Verification(){
   const select4 =useRef<HTMLInputElement>(null)
   const select_box=[select0,select1,select2,select3,select4]
 
+  const [showModal, setShowModal] = useState(false);
+  const handleShow = () => setShowModal(true);
+
+  let [title,settitle]=useState("Verify Email Failed")
+  let [body,setbody]=useState("Please double-check the code in your email and try again.")
+  let btn_text="Close"
+   function btn_action() {
+    setShowModal(false);
+  }
  const handleInputChange = (e:any) => {
      let id= parseInt(e.target.id)
      inputValue[id]=e.target.value
@@ -63,20 +73,22 @@ export default  function Verification(){
           
             router.push(`/login`);
           } else {
-            alert("this code Not correct, try again"); 
+              handleShow();
             }
  }
 
  const send_code=async ()=>{
   const res = await send_code_again( user_Email);
           if ((res as AxiosResponse).status == 200) {
-
-            alert("code sent successfully")
+            settitle("Send Code Again")
+            setbody("code sent successfully")
+            handleShow();
           }
           else{
             //popup
-            alert("send code failed, try again");
-
+            settitle("Send Code Again")
+            setbody("Code delivery failed. Please check your connection and try again.");
+            handleShow();
           } 
  }
 
@@ -104,6 +116,9 @@ export default  function Verification(){
         </div>
          
   </div>
+  <Popup_respone showModal={showModal} setShowModal={setShowModal}
+  title={title} body={body} btn_text={btn_text} btn_action={btn_action}
+ />
 </div>
     );
 };
