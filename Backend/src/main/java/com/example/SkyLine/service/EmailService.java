@@ -20,7 +20,7 @@ public class EmailService {
         javaMailSender.send(message);
     }
 
-    public void  SendCodeVerifySignup(String Email, String VerificationCode){
+    public void  sendCodeVerifySignup(String Email, String VerificationCode){
         sendEmail(Email, "VerificationCode", "Dear [" + Email + "],\n" +
                 "\n" +
                 "To complete your registration, please use the following verification code: "
