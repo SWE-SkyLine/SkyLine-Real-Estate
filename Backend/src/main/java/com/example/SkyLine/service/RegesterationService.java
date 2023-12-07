@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.concurrent.TimeoutException;
 
 @Service
 public class RegesterationService {
@@ -32,7 +33,7 @@ public class RegesterationService {
     public User register(UserRequestDTO user) {
         User userToBeSaved = new User();
         String VerificationCode= VerificationCodeGenerator.generateVerificationCode();
-        EmailService.SendCodeVerifySignup(user.getEmail(),VerificationCode);
+        EmailService.sendCodeVerifySignup(user.getEmail(),VerificationCode);
         userToBeSaved.setFirstName(user.getFirstName());
         userToBeSaved.setLastName(user.getLastName());
         userToBeSaved.setEmail(user.getEmail());
@@ -42,15 +43,34 @@ public class RegesterationService {
         userToBeSaved.setVerificationCode(VerificationCode);
         return userRepository.save(userToBeSaved);
     }
+    public User sendVerifyCodeAgain(String email) throws TimeoutException {
+        try {
+            String verificationCode = VerificationCodeGenerator.generateVerificationCode();
+            EmailService.sendCodeVerifySignup(email, verificationCode);
+            User user = userRepository.findByEmail(email);
+            user.setVerificationCode(verificationCode);
+            return userRepository.save(user);
+        } catch (Exception e) {
+            // Optionally, you can throw a custom exception or return an error response
+            throw new TimeoutException("Error sending verification code: " + e.getMessage());
+        }
+    }
 
     public boolean UserVerify(String Email,String code) {
+        try {
             User user =userRepository.findByEmail(Email);
-                if(Objects.equals(user.getVerificationCode(), code)){
-                    user.setIs_enable(true);
-                    userRepository.save(user);
-                    return true;
-                }
-        return false;
+            if(userExists(Email)&&Objects.equals(user.getVerificationCode(), code)){
+                user.setIs_enable(true);
+                userRepository.save(user);
+                return true;
+            }
+            return false;
+
+        }catch (Exception e){
+            throw new RuntimeException();
+
+        }
+
     }
     public boolean signInOauth(String emailOauth){
         return userOauthRepository.existsById(emailOauth);
