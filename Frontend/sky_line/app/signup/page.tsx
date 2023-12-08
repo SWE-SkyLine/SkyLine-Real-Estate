@@ -9,11 +9,10 @@ import {SignupRequest} from "../Services/UserSignupService"
 import { Router, useNavigate } from 'react-router-dom';
 import { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
+import { Popup_respone } from "../Utility/Popup/Popup";
+import { text } from "stream/consumers";
 
 export default  function Signup(){
-
- 
-
 
 return(
     
@@ -46,7 +45,17 @@ function From_signup() {
     CLIENT = 'CLIENT',
     COMPANY = 'COMPANY',
     AGENT = 'AGENT',
-}
+  }
+  const [showModal, setShowModal] = useState(false);
+  const handleShow = () => setShowModal(true);
+  
+  let title="Sign-up Failed"
+  let body="An error occurred while creating your account. Please try again."
+  let btn_text="Close"
+   function btn_action() {
+    setShowModal(false);
+  }
+  
 
   const checkPasswordStrength=(password: string)=>{
     // Check if password has at least one uppercase letter
@@ -77,9 +86,7 @@ function From_signup() {
     setKind(event.target.value);
   };
   const Submit = async (data:any) => {
-    //  console.log(data)
-
-
+    //  console.log(data
 
     if(data.password==data.confirmPassword){
     let user = new User();
@@ -99,10 +106,13 @@ function From_signup() {
 
           console.log(user);
           const res = await SignupRequest(user);
-          if ((res as AxiosResponse).status === 409) {
-            alert("Signup failed, try again");
-          } else {
-              router.push(`/page_verify?Email=${user.email}`);
+          if ((res as AxiosResponse).status === 200) {
+              
+            router.push(`/page_verify?Email=${user.email}`);
+
+          } else { 
+              // we popup with error message 
+              handleShow();
             }
 
         //requet to back sign in
@@ -245,6 +255,10 @@ function From_signup() {
       <button className={style_signup.btn_verify}>Sign up</button>
       
       </form>
+
+      <Popup_respone showModal={showModal} setShowModal={setShowModal}
+  title={title} body={body} btn_text={btn_text} btn_action={btn_action}
+ />
     </div>
   );
 }
