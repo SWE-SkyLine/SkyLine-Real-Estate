@@ -9,8 +9,12 @@ public class UserRoleEnumAdapter {
             userRole = "SUPERADMIN";
         else if(userRoleEnum == UserRoleEnum.ADMIN)
             userRole = "ADMIN";
+        else if(userRoleEnum == UserRoleEnum.COMPANY)
+            userRole = "COMPANY";
+        else if(userRoleEnum == UserRoleEnum.CLIENT)
+            userRole = "CLIENT";
         else
-            userRole = "USER";
+            userRole = "AGENT";
         return userRole;
     }
 }

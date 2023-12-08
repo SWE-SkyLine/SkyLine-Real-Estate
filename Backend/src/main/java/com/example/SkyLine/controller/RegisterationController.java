@@ -38,22 +38,7 @@ public class RegisterationController {
         }
     }
 
-    @PostMapping("/user/verify")
-    public ResponseEntity<String> verify(@RequestBody VerifyCodeRequestDTO Request){
-        //continue ...
-        try {
-            if(regesterationService.UserVerify(Request.getEmail(),Request.getCode())){
-                return new ResponseEntity<String>("Success", HttpStatus.OK);
-            }
-            else{
-                return new ResponseEntity<String>("Error", HttpStatus.NOT_ACCEPTABLE);
-            }
-        }
-        catch (Exception e){
-            return new ResponseEntity<String>("Error", HttpStatus.NOT_ACCEPTABLE);
-        }
 
-    }
 
     @PostMapping("/user/sendVerifyCodeAgain")
     public ResponseEntity<?> sendCodeAgain(@RequestBody VerifyCodeRequestDTO Request){
@@ -67,7 +52,11 @@ public class RegisterationController {
             return new ResponseEntity<String>("Time Out", HttpStatus.REQUEST_TIMEOUT);
 
         }
-
+    @PostMapping("/user/verify")
+    public ResponseEntity<?>  verify(@RequestBody VerifyCodeRequestDTO Request){
+       boolean status = regesterationService.UserVerify(Request.getEmail(),Request.getCode());
+       if(status) return new ResponseEntity<String>("User is verifired", HttpStatus.OK);
+       else return new ResponseEntity<String>("Verification code doesn't match", HttpStatus.NOT_ACCEPTABLE);
 
     }
     @PostMapping("/user/login")

@@ -37,13 +37,18 @@ public class UserController {
         this.emailService = emailService;
     }
 
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
     @GetMapping
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
     @GetMapping("/allUsersToPromote")
     public List<User> getAllUsersToPromote() {
-        return userService.getAllUsersByAccountType(UserRoleEnum.USER);
+        return userService.getAllUsersByAccountType(UserRoleEnum.CLIENT);
     }
 
     @PostMapping
@@ -99,8 +104,7 @@ public class UserController {
                     // Verification code does not match
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Incorrect verification code");
                 }
-            } else {
-                // User not found
+            } else {// User not found
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
             }
         } catch (Exception e) {
@@ -112,24 +116,23 @@ public class UserController {
     @PostMapping("/update-password")
     public ResponseEntity<String> updatePassword(@RequestBody UpdatePasswordRequest updatePasswordRequest) {
         String email = updatePasswordRequest.getEmail();
-        String newPassword = passwordEncoder.encode(updatePasswordRequest.getNewPassword());
-
 
         // Retrieve the user from the database
         User user = userRepository.findByEmail(email);
 
-        try {
-            if (user != null) {
+        try {if (user != null) {
+
+                // Encode the new password only if the user is found
+                String newPassword = passwordEncoder.encode(updatePasswordRequest.getNewPassword());
+
                 // Update the user's password
                 user.setPassword(newPassword);
 
                 // Save the updated user entity
                 userRepository.save(user);
 
-
                 return ResponseEntity.ok(newPassword);
-            } else {
-                // User not found
+            } else { // User not found
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
             }
         } catch (Exception e) {
@@ -137,6 +140,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Password update failed");
         }
     }
+
 
 
 

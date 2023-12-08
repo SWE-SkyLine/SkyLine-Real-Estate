@@ -17,12 +17,12 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     public User findUserByEmail(String email);
     @Transactional
     @Modifying
-    @Query("UPDATE Users n SET n.userRole = :newValue WHERE n.id = :UserId")
+    @Query("UPDATE User n SET n.userRole = :newValue WHERE n.id = :UserId")
     void promoteToAdmin(@Param("UserId") int UserId, @Param("newValue") UserRoleEnum userRoleEnum);
 
 
-    @Query(value = "SELECT * FROM Users WHERE account_type=:Account_Type ", nativeQuery = true)
+    @Query(value = "SELECT * FROM User WHERE account_type=:Account_Type ", nativeQuery = true)
     ArrayList<User> getAllUsersByAccountType(@Param("Account_Type") UserRoleEnum userRoleEnum);
-    @Query(value = "SELECT user_id FROM Users WHERE account_type=:Account_Type ", nativeQuery = true)
+    @Query(value = "SELECT user_id FROM User WHERE account_type=:Account_Type ", nativeQuery = true)
     ArrayList<Integer> getSuperAdminsID(@Param("Account_Type") String Account_Type);
 }

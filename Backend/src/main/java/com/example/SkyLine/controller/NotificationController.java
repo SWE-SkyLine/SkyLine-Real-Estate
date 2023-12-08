@@ -1,5 +1,5 @@
 package com.example.SkyLine.controller;
-import com.example.SkyLine.model.Notification;
+import com.example.SkyLine.entity.Notification;
 import com.example.SkyLine.service.NotificationService;
 import com.example.SkyLine.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
