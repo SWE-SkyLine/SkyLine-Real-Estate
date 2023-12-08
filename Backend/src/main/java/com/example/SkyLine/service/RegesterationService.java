@@ -34,19 +34,6 @@ public class RegesterationService {
     }
 
     // here we can direct the creation respect to the userType
-//    public User register(UserRequestDTO user) {
-//        User userToBeSaved = new User();
-//        String VerificationCode= VerificationCodeGenerator.generateVerificationCode();
-////        EmailService.SendCodeVerifySignup(user.getEmail(),VerificationCode);
-//        userToBeSaved.setFirstName(user.getFirstName());
-//        userToBeSaved.setLastName(user.getLastName());
-//        userToBeSaved.setEmail(user.getEmail());
-//        userToBeSaved.setPassword(passwordEncoder.encode(user.getPassword()));
-//        userToBeSaved.setPhoneNumber(user.getPhone_number());
-//        userToBeSaved.setUserRole(user.getUserRole());
-//        userToBeSaved.setVerificationCode(VerificationCode);
-//        return userRepository.save(userToBeSaved);
-//    }
     public User register(UserRequestDTO user) {
 
         User userToBeSaved = userFactory.userFactory(user.getUserRole().toString());
@@ -70,7 +57,7 @@ public class RegesterationService {
     public boolean UserVerify(String Email, String code) {
         User user = userRepository.findByEmail(Email);
         if (Objects.equals(user.getVerificationCode(), code)) {
-            user.setIs_enable(true);
+            user.setIsEnable(true);
             userRepository.save(user);
             return true;
         }

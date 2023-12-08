@@ -45,12 +45,10 @@ public class RegisterationController {
     }
 
     @PostMapping("/user/verify")
-    public void verify(@RequestBody VerifyCodeRequestDTO Request){
-        //continue ...
-        System.out.println(Request);
-        System.out.println(Request.getEmail());
-        System.out.println(Request.getCode());
-        System.out.println(regesterationService.UserVerify(Request.getEmail(),Request.getCode()));
+    public ResponseEntity<?>  verify(@RequestBody VerifyCodeRequestDTO Request){
+       boolean status = regesterationService.UserVerify(Request.getEmail(),Request.getCode());
+       if(status) return new ResponseEntity<String>("User is verifired", HttpStatus.OK);
+       else return new ResponseEntity<String>("Verification code doesn't match", HttpStatus.NOT_ACCEPTABLE);
 
     }
     @PostMapping("/user/login")
