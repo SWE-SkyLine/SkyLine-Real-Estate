@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client'
 import {useState } from "react";
 import style  from "../support/page.module.css";
@@ -6,7 +7,7 @@ import sendTicketRequest from "../Services/TicketService";
 import { Ticket, TicketCategoryEnum } from "../objects/Ticket";
 
 
-const ticket = () =>{
+const Tickets = () =>{
 
     const [email, setEmail] = useState("");
     const [selectedOption, setSelectedOption] = useState("PUBLISH");
@@ -74,4 +75,4 @@ const ticket = () =>{
         </div>     
     )
 };
-export default ticket;
+export default Tickets;
