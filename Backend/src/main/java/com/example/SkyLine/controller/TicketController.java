@@ -20,8 +20,12 @@ public class TicketController {
     
     @PostMapping("/ticket")
     public String getTicket(@RequestBody TicketRequestDTO ticket){
-        ticketService.sendTicket(ticket);
-        System.out.println("ticket sent");
-        return "Ticket is sent";
+        try{
+            ticketService.sendTicket(ticket);
+            System.out.println("ticket sent");
+            return "Ticket is sent";
+        }catch(Exception e){
+            return "Fail to send ticket";
+        } 
     }
 }

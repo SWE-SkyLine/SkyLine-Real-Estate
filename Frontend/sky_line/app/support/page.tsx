@@ -14,7 +14,7 @@ const ticket = () =>{
     const [message, setMessage] = useState("");
 
     const sendTicket = async (event: React.FormEvent<HTMLFormElement>) => {
-        // event.preventDefault();
+        event.preventDefault();
         let ticket = new Ticket();
         ticket.email = email;
         if(selectedOption === "PUBLISH")
