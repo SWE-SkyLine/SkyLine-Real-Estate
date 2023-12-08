@@ -95,6 +95,16 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+body.modal-open {
+  padding-right: 0 !important;
+}
+
+body.modal-close {
+  padding-right: 0 !important;
+}
+
+
+
 a {
   color: inherit;
   text-decoration: none;
@@ -105,3 +115,9 @@ a {
     color-scheme: dark;
   }
 }
+
+.container mt-4{
+  margin-top : 5rem;
+}
+
+
