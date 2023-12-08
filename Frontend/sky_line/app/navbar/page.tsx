@@ -1,7 +1,10 @@
+"use client"
 import React, { useState } from 'react';
 import { InputGroup, Button, Container, Form, Navbar, Nav, NavDropdown, Modal, ListGroup } from 'react-bootstrap';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
-import '../navbar/navbar.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import  style from'../navbar/page.module.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import Link from 'next/link';
 
 const NavbarComponent: React.FC = () => {
   const [showNotification, setShowNotification] = useState(false);
@@ -12,16 +15,19 @@ const NavbarComponent: React.FC = () => {
 
   return (
     <>
-      <Navbar expand="lg" className="bg-body-tertiary">
+      <Navbar expand="lg" className={`${style.navbar} bg-body-tertiary fixed-top`}>
         <Container fluid>
-          <Navbar.Brand href="#">SKYLINE</Navbar.Brand>
+          <Navbar.Brand className={style.brand} >SKYLINE</Navbar.Brand>
+          
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll" className="justify-content-center">
             <Nav className="me-auto my-2 my-lg-0" navbarScroll>
-              <Nav.Link href="/login">Home</Nav.Link>
-              <Nav.Link href="/support">Support</Nav.Link>
-              <Nav.Link href="/AboutUs">About Us</Nav.Link>
-              <Form className="d-flex">
+            <Link href="/support" className={`nav-link ${style.navLink}`}>Home</Link>
+            <Link href="/login" className={`nav-link ${style.navLink}`}>Rent</Link>
+            <Link href="/login" className={`nav-link ${style.navLink}`}>Buy</Link>
+            <Link href="/login" className={`nav-link ${style.navLink}`}>Support</Link>
+            <Link href="/login" className={`nav-link ${style.navLink}`}>About Us</Link>
+              {/* <Form className="d-flex">
                 <InputGroup>
                   <Form.Control
                     type="search"
@@ -31,7 +37,7 @@ const NavbarComponent: React.FC = () => {
                   />
                   <Button variant="outline-success" className="bi bi-search bi-sm"></Button>
                 </InputGroup>
-              </Form>
+              </Form> */}
             </Nav>
             <Button
               variant="link"
@@ -41,11 +47,15 @@ const NavbarComponent: React.FC = () => {
               <i className={`bi bi-bell${showNotification ? '-fill' : ''} bell-icon`} />
             </Button>
              {/* Use Link component to navigate to '/login' */}
-              <Button href="/login"
-                variant="outline-dark"
-                className="bi bi-toggle2 position-relative"
+              <Button href="/login" 
+                className={`${style.btn} bi-toggle2 position-relative`}
               >
                 Login
+              </Button>
+              <Button href="/login" 
+                className={`${style.btn} bi-toggle2 position-relative`}
+              >
+                Signup
               </Button>
             
           </Navbar.Collapse>

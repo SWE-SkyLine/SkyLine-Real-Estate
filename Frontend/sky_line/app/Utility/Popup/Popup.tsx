@@ -1,7 +1,6 @@
 // components/ExampleModal.tsx
 'use client'
 import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from "./popup.module.css"
 
 
