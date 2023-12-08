@@ -20,7 +20,7 @@ const NavbarComponent: React.FC = () => {
             <Nav className="me-auto my-2 my-lg-0" navbarScroll>
               <Nav.Link href="/login">Home</Nav.Link>
               <Nav.Link href="/support">Support</Nav.Link>
-              <Nav.Link href="/About us">About Us</Nav.Link>
+              <Nav.Link href="/AboutUs">About Us</Nav.Link>
               <Form className="d-flex">
                 <InputGroup>
                   <Form.Control
