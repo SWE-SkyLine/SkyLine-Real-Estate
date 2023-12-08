@@ -7,15 +7,23 @@ import lombok.*;
 @Entity(name = "Users")
 @Setter
 @Getter
-@Table(name = "Users")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="UserType"
+, discriminatorType = DiscriminatorType.STRING)
+@Table(name = "User")
 public class User {
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "first_name")
+    private String firstName;
+    @Column(name = "last_name")
+    private String lastName;
+    @Enumerated(value=EnumType.STRING)
     @Column(name = "account_type")
     private UserRoleEnum userRole;
-    @Column(name = "email")
+    @Column(name = "email", unique=true)
     private String email;
     private byte[] profile_photo;
     @Column(name = "password")
@@ -23,10 +31,6 @@ public class User {
     @Column(name = "phone_number")
     private String PhoneNumber;
 
-    @Column(name = "first_name")
-    private String firstName;
-    @Column(name = "last_name")
-    private String lastName;
     @Column(name = "verification_code")
     private String verificationCode;
     @Column(name = "ver_code")
@@ -81,22 +85,6 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         PhoneNumber = phoneNumber;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
 

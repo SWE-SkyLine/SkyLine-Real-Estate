@@ -1,6 +1,6 @@
 package com.example.SkyLine.DTO;
 
-import com.example.SkyLine.enums.UserTypeEnum;
+import com.example.SkyLine.enums.UserRoleEnum;
 
 public class UserRequestDTO {
     private String firstName;
@@ -9,7 +9,7 @@ public class UserRequestDTO {
     private String password;
     private String phone_number;
 
-    private UserTypeEnum userType;
+    private UserRoleEnum userRole;
 
     public String getFirstName() {
         return firstName;
@@ -51,11 +51,11 @@ public class UserRequestDTO {
         this.phone_number = phone_number;
     }
 
-    public UserTypeEnum getUserType() {
-        return userType;
+    public UserRoleEnum getUserRole() {
+        return userRole;
     }
 
-    public void setUserType(UserTypeEnum userType) {
-        this.userType = userType;
+    public void setUserRole(UserRoleEnum userRole) {
+        this.userRole = userRole;
     }
 }
