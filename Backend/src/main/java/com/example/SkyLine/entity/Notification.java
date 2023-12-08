@@ -1,14 +1,14 @@
-package com.example.SkyLine.model;
+package com.example.SkyLine.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 
 import java.util.Date;
 
 @Entity(name = "Notifications")
+@Setter
+@Getter
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

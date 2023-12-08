@@ -6,8 +6,9 @@ import { useForm } from "react-hook-form";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { User } from "../objects/User";
 import {SignupRequest} from "../Services/UserSignupService"
-import { useNavigate } from 'react-router-dom';
+import { Router, useNavigate } from 'react-router-dom';
 import { AxiosResponse } from "axios";
+import { useRouter } from "next/navigation";
 
 export default  function Signup(){
 
@@ -35,6 +36,7 @@ return(
 
 
 function From_signup() {
+  let router=useRouter();
   const [kind, setKind] = useState("Company");
 
   const {register,handleSubmit,formState:{ errors },watch} =useForm()
@@ -100,8 +102,8 @@ function From_signup() {
           if ((res as AxiosResponse).status === 409) {
             alert("Signup failed, try again");
           } else {
-            window.location.assign('/page_verify');
-          }
+              router.push(`/page_verify?Email=${user.email}`);
+            }
 
         //requet to back sign in
     }

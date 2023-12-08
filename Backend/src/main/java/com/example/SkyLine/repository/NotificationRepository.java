@@ -1,5 +1,5 @@
 package com.example.SkyLine.repository;
-import com.example.SkyLine.model.Notification;
+import com.example.SkyLine.entity.Notification;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -11,17 +11,17 @@ import java.util.Date;
 
 public interface NotificationRepository extends JpaRepository<Notification, Integer> {
 
-    @Query(value = "SELECT * FROM Notifications WHERE requester_id = ?1 AND answered=false AND responder_id=1 ", nativeQuery = true)
+    @Query(value = "SELECT * FROM notifications WHERE requester_id = ?1 AND answered=false AND responder_id=1 ", nativeQuery = true)
     ArrayList<Notification> getAdminPendingRequests(int AdminID);
 
 
 
-    @Query(value = "SELECT * FROM Notifications WHERE requester_id = ?1 AND (approved=true OR approved=false)AND answered=true ", nativeQuery = true)
+    @Query(value = "SELECT * FROM notifications WHERE requester_id = ?1 AND (approved=true OR approved=false)AND answered=true ", nativeQuery = true)
     ArrayList<Notification> getAdminAnsweredRequests(int AdminID);
 
 
 
-    @Query(value = "SELECT * FROM Notifications WHERE responder_id = ?1 AND answered=false", nativeQuery = true)
+    @Query(value = "SELECT * FROM notifications WHERE responder_id = ?1 AND answered=false", nativeQuery = true)
     ArrayList<Notification> getSuperAdminRequests(int SuperAdminID);
 
 
