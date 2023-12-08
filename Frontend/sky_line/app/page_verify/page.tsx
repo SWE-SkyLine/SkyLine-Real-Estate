@@ -1,9 +1,26 @@
 'use client'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRef } from "react";
 import style from "./page.module.css"
+import { verify } from "crypto";
+import { SignupRequest, verify_code_request } from "../Services/UserSignupService";
+import { AxiosResponse } from "axios";
+import { useRouter } from "next/navigation";
 
 export default  function Verification(){
+    let [user_Email,set_email] = useState("");
+    let router =useRouter();
+    useEffect(() => {
+      // Access the query parameter from the URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const email = urlParams.get('Email');
+  
+      if (email == null || !email.includes('@')) {
+        alert('Invalid email format');
+      } else {
+        set_email(email);
+      }
+    }, []);
 
   const [inputValue] = useState(Array(5).fill(''));
   const select0 =useRef<HTMLInputElement>(null)
@@ -16,8 +33,7 @@ export default  function Verification(){
  const handleInputChange = (e:any) => {
      let id= parseInt(e.target.id)
      inputValue[id]=e.target.value
-     console.log(select_box);
-     if(e.target.value ==""){
+      if(e.target.value ==""){
          return
      }
      if(id<4){
@@ -25,6 +41,21 @@ export default  function Verification(){
      }
     //  console.log(inputValue.join(''))
  };
+
+ const verify=async ()=>{
+  let code = inputValue[0]+""+inputValue[1]+""+inputValue[2]+""+inputValue[3]+""+inputValue[4];
+  console.log(user_Email);
+  console.log(code);
+
+  const res = await verify_code_request( user_Email, code);
+          if ((res as AxiosResponse).status === 409) {
+            alert("Signup failed, try again");
+          } else {
+              router.push(`/login`);
+            }
+
+
+ }
 
     return(
     
@@ -43,7 +74,7 @@ export default  function Verification(){
               <Input_box  select_box={select_box} id={3} handleInputChange={handleInputChange}/>
               <Input_box  select_box={select_box} id={4} handleInputChange={handleInputChange}/>
             </div>
-            <button className={style.btn_verify}>Verify</button>
+            <button className={style.btn_verify} onClick={verify}>Verify</button>
             <label className={style.lable}>Send Again</label>
         </div>
          
