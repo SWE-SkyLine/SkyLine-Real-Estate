@@ -1,12 +1,14 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client'
 import {useState } from "react";
 import style  from "../support/page.module.css";
-import generalStyle from "../page_verify/page.module.css"
+import generalStyle from "../page_verify/page.module.css";
 import sendTicketRequest from "../Services/TicketService";
+import Navbar from "../navbar/page";
 import { Ticket, TicketCategoryEnum } from "../objects/Ticket";
 
 
-const ticket = () =>{
+const Tickets = () =>{
 
     const [email, setEmail] = useState("");
     const [selectedOption, setSelectedOption] = useState("PUBLISH");
@@ -37,35 +39,38 @@ const ticket = () =>{
     }
 
     return(
-        <div className={style.ticketPage}>
+
+        <>
+          <Navbar/>        
+          <div className={style.ticketPage}>
             {/* 3 main items: logo, heading and form */}
             <div className={style.allItems}>
                 <div className={generalStyle.logo}></div>
 
-                <div>
+                {/* <div>
                     <h1>Do you have a problem?</h1>
                     <h2>Don't worry our support team members will do their best to help you</h2>
-                </div>
+                </div> */}
 
                 {/* 4 blocks and an additional one depending on category*/}
                 <form className={style.ticketForm} onSubmit={sendTicket}>
                     <div>
-                        <h4>Your e-mail</h4>
-                        <input className={style.emailTextBox} type="email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
+                        <h4  className={style.heads} >E-mail</h4>
+                        <input className={style.emailTextBox} placeholder="Enter Your Email ... example@gmail.com" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
                     </div>
 
                     <div>
-                        <h4>problem type</h4>
+                        <h4 className={style.heads}>Problem Type</h4>
                         <select className={style.list} value={selectedOption}  onChange={(e) => setSelectedOption(e.target.value)}>
                             <option className={style.list} value="PUBLISH">problem with publishing posts</option>
                             <option className={style.list} value="REPORT">Report a user</option>
                             <option className={style.list} value="OTHER">Other</option>
                         </select>
-                    </div>
+                    </div> 
                     {/* only shown with report user option */ }
                     {selectedOption === "REPORT" &&(
                         <div>
-                            <h4>Reported e-mail</h4>
+                            <h4 className={style.heads} >Reported e-mail</h4>
                             <input className={style.emailTextBox} type="email" value={reportEmail} onChange={(e) => setReportEmail(e.target.value)} required/>
                         </div> )
                     }
@@ -82,7 +87,9 @@ const ticket = () =>{
                     <button className={style.sendBtn} type="submit">Send</button>
                 </form>
             </div>
-        </div>     
+        </div>    
+        </> 
     )
 };
-export default ticket;
+export default Tickets;
+
