@@ -1,6 +1,8 @@
 package com.example.SkyLine.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,13 +21,13 @@ public class TicketController {
     private TicketService ticketService;
     
     @PostMapping("/ticket")
-    public String getTicket(@RequestBody TicketRequestDTO ticket){
+    public ResponseEntity<String> getTicket(@RequestBody TicketRequestDTO ticket){
         try{
             ticketService.sendTicket(ticket);
             System.out.println("ticket sent");
-            return "Ticket is sent";
+            return ResponseEntity.ok("Ticket sent successfully");
         }catch(Exception e){
-            return "Fail to send ticket";
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to send Ticket");
         } 
     }
 }

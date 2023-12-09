@@ -1,5 +1,5 @@
 .ticketPage{
-    height: 100vh;
+    height: 105vh;
     background-color:white;   
     background-size: contain;
     color: black;
@@ -72,6 +72,11 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.errorMessage{
+    font-size: 16px;
+    color: red;
+}
+
 .sendBtn{
     width:15vw;
     height:6vh;
@@ -84,5 +89,3 @@
     font-weight: 530;
     font-family: Arial, Helvetica, sans-serif;
 }
-
-

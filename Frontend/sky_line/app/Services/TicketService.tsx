@@ -10,10 +10,12 @@ const sendTicketRequest = async (ticket : Ticket) => {
     const makeRequest = async(url: string, ticket : Ticket) =>{
         try {
             const response = await axios.post(url, ticket);
+            console.log("respose is");
+            console.log(response);
             return response.data;
         } catch (error) {
+            console.log("error is");
             console.error(error);
-            alert("Ticket not sent")
             return "Ticket not sent";
         }
     }
