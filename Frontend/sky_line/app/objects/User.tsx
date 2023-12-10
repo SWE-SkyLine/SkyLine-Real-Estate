@@ -8,7 +8,7 @@ export class User{
 }
 
 
-enum UserTypeEnum {
+export enum UserTypeEnum {
     SUPERADMIN = 'SUPERADMIN',
     ADMIN = 'ADMIN',
     CLIENT = 'CLIENT',
