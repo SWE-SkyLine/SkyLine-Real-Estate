@@ -14,22 +14,28 @@ const Tickets = () =>{
     const [selectedOption, setSelectedOption] = useState("PUBLISH");
     const [reportEmail, setReportEmail] = useState("");
     const [message, setMessage] = useState("");
+    const [validLength, setValidLength] = useState(false)
+    
+    const handleLength = (mes: string)=>{
+        setValidLength(mes.length > 10 && mes.length < 10000)
+    }
 
     const sendTicket = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        let ticket = new Ticket();
-        ticket.email = email;
-        if(selectedOption === "PUBLISH")
-            ticket.category = TicketCategoryEnum.PUBLISH;
-        else if(selectedOption === "REPORT")
-            ticket.category = TicketCategoryEnum.REPORT;
-        else
-            ticket.category = TicketCategoryEnum.OTHER;
-        ticket.reported = reportEmail;
-        ticket.message = message
-
-        const res = await sendTicketRequest(ticket);
-        alert(res)
+        if(validLength){
+            let ticket = new Ticket();
+            ticket.email = email;
+            if(selectedOption === "PUBLISH")
+                ticket.category = TicketCategoryEnum.PUBLISH;
+            else if(selectedOption === "REPORT")
+                ticket.category = TicketCategoryEnum.REPORT;
+            else
+                ticket.category = TicketCategoryEnum.OTHER;
+            ticket.reported = reportEmail;
+            ticket.message = message
+            const res = await sendTicketRequest(ticket);
+            alert(res)
+        }
     }
 
     return(
@@ -70,8 +76,13 @@ const Tickets = () =>{
                     }
 
                     <div>
-                        <h4  className={style.heads} >Message</h4>
-                        <textarea className={style.message} value={message} onChange={(e) => setMessage(e.target.value)} required minLength={10}/>
+                        <h4>Message</h4>
+                        <textarea className={style.message} value={message} onChange={(e) => {setMessage(e.target.value), handleLength(e.target.value)}} required/>
+                        {!validLength && message.length > 0 &&(
+                            <div className={style.errorMessage}>
+                            The message must have more than 10 charecters and less than 10000 you are using {message.length}
+                            </div>
+                        )}
                     </div>
                     <button className={style.sendBtn} type="submit">Send</button>
                 </form>
@@ -81,3 +92,4 @@ const Tickets = () =>{
     )
 };
 export default Tickets;
+
