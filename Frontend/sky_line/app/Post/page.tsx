@@ -48,17 +48,6 @@ const Post: React.FC = () => {
     const [isHovered, setIsHovered] = useState(false);
     const [isValid, setIsValid] = useState(true);
 
-    const [title, setTitle] = useState('');
-    const [price, setPrice] = useState('');
-    const [type, setType] = useState('');
-    const [area, setArea] = useState('')
-    const [locationLink, setLocationLink] = useState('')
-    const [bathroom, setBathroom] = useState('')
-    const [bedroom, setBedroom] = useState('')
-    const [level, setLevel] = useState('')
-    const [desc, setDesc] = useState('')
-    const [rent, setRent] = useState('')
-    const [photos, setPhotos] = useState<Array<any>>([]);
 
     const [formData, setFormData] = useState<FormData>({
         title: '',
@@ -290,10 +279,11 @@ const Post: React.FC = () => {
                                             label="Type *"
                                             onChange={(event: SelectChangeEvent<EstateType>) => handleChangeType(event)}
                                         >
-                                            <MenuItem >Apartment</MenuItem>
-                                            <MenuItem >House</MenuItem>
-                                            <MenuItem >Villa</MenuItem>
-                                            <MenuItem >Land</MenuItem>
+                                            <MenuItem value={EstateType.APARTMENT}>Apartment</MenuItem>
+                                            <MenuItem value={EstateType.HOUSE}>House</MenuItem>
+                                            <MenuItem value={EstateType.VILLA}>Villa</MenuItem>
+                                            <MenuItem value={EstateType.LAND}>Land</MenuItem>
+
                                         </Select>
                                         <FormHelperText>Required</FormHelperText>
                                     </FormControl>
