@@ -33,8 +33,14 @@ const Tickets = () =>{
                 ticket.category = TicketCategoryEnum.OTHER;
             ticket.reported = reportEmail;
             ticket.message = message
-            const res = await sendTicketRequest(ticket);
-            alert(res)
+            try {
+                const res = await sendTicketRequest(ticket);
+                alert(res)
+            } catch (error) {
+                alert("Network connection fail")
+            }
+            
+            
         }
     }
 
