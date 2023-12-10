@@ -10,8 +10,8 @@ import Navbar from './navbar/page'
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import router from "next/navigation";
 import { useRouter } from "next/navigation";  
-import Post from "./objects/Post";
- 
+import Post from "./Post/page"
+
 export default function Home() {
   let router =useRouter();
   const handleClick = (path: string) => {
