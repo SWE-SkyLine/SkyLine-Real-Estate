@@ -25,7 +25,7 @@ import publishPostRequest from '../Services/PublishPostService';
 interface FormData {
     title: string;
     price: string;
-    rent: boolean;
+    isRent: boolean;
     area: string;
     description: string;
     estateType: EstateType;
@@ -52,7 +52,7 @@ const Post: React.FC = () => {
     const [formData, setFormData] = useState<FormData>({
         title: '',
         price: '',
-        rent: false,
+        isRent: false,
         area: '',
         description: '',
         estateType: EstateType.APARTMENT,
@@ -200,7 +200,7 @@ const Post: React.FC = () => {
         console.log("changed")
         setFormData(prevState => ({
             ...prevState,
-            rent: event.target.value === 'rent'
+            isRent: event.target.value === 'rent'
         }));
         //setDesc(event.target.value);
     };
