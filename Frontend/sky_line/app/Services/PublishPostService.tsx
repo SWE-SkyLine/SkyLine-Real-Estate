@@ -3,14 +3,14 @@ import Post from "../Post/page";
 
 const apiUrl = 'http://localhost:8080';
 
-const publishPostRequest = async (post : FormData) => {
+const publishPostRequest = async (post : any) => {
 
     const url = `${apiUrl}/api/publish_post`
 
     const makeRequest = async(url: string, post : FormData) =>{
         try {
             const response = await axios.post(url, post);
-            return response.data;
+            return response;
         } catch (error) {
             console.error(error);
             alert("Post is not published")

@@ -83,24 +83,60 @@ const Post: React.FC = () => {
 
     const handlePost = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        let data = new FormData();
-        
-        const res = await publishPostRequest(data);
-        if((res as Response).status ==200){
-          window.location.assign('/')
-        }
-        else{
-          alert("User is not registered")
+        // let data = new FormData();
+        // Object.keys(formData).forEach(key => {
+        //     Object.entries(formData).forEach(([key, value]) => {
+        //         if (key === 'photos') {
+        //             (value as File[]).forEach((photo) => {
+        //                 data.append('photos', photo);
+        //             });
+        //         } else {
+        //             data.append(key, value);
+        //         }
+        //     });
+        // });
+        // const res = await publishPostRequest(formData);
+        // console.log(formData);
+        // console.log(res.status)
+        // if((res as Response).status ==200){
+        //   window.location.assign('/')
+        // }
+        // else{
+        //   alert("User is not registered")
+        // }
+
+        const res = await publishPostRequest(formData);
+        console.log(formData);
+
+        if (typeof res === 'object' && 'status' in res) {
+            console.log(res.status);
+            if (res.status === 200) {
+                //window.location.assign('/');
+                alert("success");
+            } else {
+                alert("User is not registered");
+            }
+        } else {
+            console.error(res); // Log the error message
         }
     };
+    //
 
     const handleChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setTitle(event.target.value);
+        setFormData(prevState => ({
+            ...prevState,
+            title: event.target.value
+        }));
+        // setTitle(event.target.value);
     };
 
     const handlePriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
-        setPrice(value);
+        setFormData(prevState => ({
+            ...prevState,
+            price: event.target.value
+        }));
+        //setPrice(value);
         setIsValid(value === '' || parseInt(value) > 10);
     };
 
@@ -116,30 +152,68 @@ const Post: React.FC = () => {
     };
 
     const handleChangeType = (event: SelectChangeEvent) => {
-        setType(event.target.value);
+        console.log("changed")
+        setFormData(prevState => ({
+            ...prevState,
+            estateType: event.target.value as EstateType
+        }));
+        //setType(event.target.value);
     };
     const handleAreaChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setArea(event.target.value);
+        setFormData(prevState => ({
+            ...prevState,
+            area: event.target.value
+        }));
+        //setArea(event.target.value);
     };
 
     const handleLocationLinkChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setLocationLink(event.target.value);
+        setFormData(prevState => ({
+            ...prevState,
+            mapLink: event.target.value
+        }));
+        //setLocationLink(event.target.value);
     };
 
     const handleBathroomChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setBathroom(event.target.value);
+        setFormData(prevState => ({
+            ...prevState,
+            bathroom: event.target.value
+        }));
+        //setBathroom(event.target.value);
     };
 
     const handleBedroomChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setBedroom(event.target.value);
+        setFormData(prevState => ({
+            ...prevState,
+            bedroom: event.target.value
+        }));
+        //setBedroom(event.target.value);
     };
 
     const handleLevelChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setLevel(event.target.value);
+        setFormData(prevState => ({
+            ...prevState,
+            level: event.target.value
+        }));
+        //setLevel(event.target.value);
     };
 
     const handleDescChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setDesc(event.target.value);
+        setFormData(prevState => ({
+            ...prevState,
+            description: event.target.value
+        }));
+        //setDesc(event.target.value);
+    };
+
+    const handleRentOrBuyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        console.log("changed")
+        setFormData(prevState => ({
+            ...prevState,
+            rent: event.target.value === 'rent'
+        }));
+        //setDesc(event.target.value);
     };
 
 
@@ -212,9 +286,9 @@ const Post: React.FC = () => {
                                     <FormControl required sx={{ minWidth: 120 }}>
                                         <InputLabel id="demo-simple-select-required-label">Type</InputLabel>
                                         <Select
-                                            value={type}
+                                            value={formData.estateType}
                                             label="Type *"
-                                            onChange={handleChangeType}
+                                            onChange={(event: SelectChangeEvent<EstateType>) => handleChangeType(event)}
                                         >
                                             <MenuItem >Apartment</MenuItem>
                                             <MenuItem >House</MenuItem>
@@ -229,6 +303,7 @@ const Post: React.FC = () => {
                                         <RadioGroup
                                             defaultValue="Sale"
                                             name="radio-buttons-group"
+                                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleRentOrBuyChange(event)}
                                         >
                                             <FormControlLabel value="sale" control={<Radio />} label="Sale" />
                                             <FormControlLabel value="rent" control={<Radio />} label="Rent" />
@@ -239,7 +314,6 @@ const Post: React.FC = () => {
                                     <InputLabel htmlFor="outlined-adornment-amount">Price</InputLabel>
                                     <OutlinedInput
                                         id="outlined-adornment-amount"
-                                        value={price}
                                         onChange={handlePriceChange}
                                         startAdornment={<InputAdornment position="start">$</InputAdornment>}
                                         label="Price"
