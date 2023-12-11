@@ -25,7 +25,7 @@
     background-color: white;
     color: black;
     border: 3px solid rgb(52, 50, 50);
-    /* width: 44vw; */
+    width: 44vw;
     height: 25vh;
     border-radius: .5rem;
     padding: 5px;
@@ -38,4 +38,28 @@
 .errorMessage{
     font-size: 16px;
     color: red;
+}
+
+@media (min-width: 320px) {
+    .message{
+        width: 80vw;
+    }
+}
+
+@media (min-width: 768px) {
+    .message{
+        width: 45vw;
+    }
+}
+/* medium */
+@media (min-width: 950px) {
+    .message{
+        width: 55vw;
+    }
+}
+/* larg */
+@media (min-width: 1200px) {
+    .message{
+        width: 45vw;
+    }
 }
