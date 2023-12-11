@@ -29,10 +29,13 @@ public class PostController {
             @RequestParam(required = false) String location,
             @RequestParam(required = false) Integer minPrice,
             @RequestParam(required = false) Integer maxPrice,
-            @RequestParam(required = false) EstateTypeEnum estateType
+            @RequestParam(required = false) Integer area,
+            @RequestParam(required = false) EstateTypeEnum estateType,
+            @RequestParam(required = false) String status
     ) {
-        return postService.getFilteredPosts(location, minPrice, maxPrice, estateType);
+        return postService.getFilteredPosts(location, minPrice, maxPrice, area, estateType, status);
     }
+
 
     @GetMapping("/sort")
     public List<Post> getSortedPosts(

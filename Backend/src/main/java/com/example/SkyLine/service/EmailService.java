@@ -52,7 +52,7 @@ public class EmailService implements Runnable {
     @Override
     public void run() {
         try {
-            this.SendCodeVerifySignup(this.email, this.VerificationCode);
+            this.sendCodeVerifySignup(this.email, this.VerificationCode);
         }
         catch (Exception e){
             System.out.println(e.getMessage()+" I am Runnable :(");
