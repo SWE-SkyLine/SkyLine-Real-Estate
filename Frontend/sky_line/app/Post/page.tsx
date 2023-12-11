@@ -19,7 +19,9 @@ import Stack from '@mui/material/Stack';
 import CreateIcon from '@mui/icons-material/Create';
 import style from '../Post/page.module.css'
 import { CSSTransition } from 'react-transition-group';
-import publishPostRequest from '../Services/PublishPostService';
+// import publishPostRequest from '../Services/PublishPostService';
+import { publishPostRequest, testPhotoApi } from '../Services/PublishPostService';
+import { Alert } from 'react-bootstrap';
 
 
 interface FormData {
@@ -47,7 +49,7 @@ const Post: React.FC = () => {
     const [showModal, setShowModal] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
     const [isValid, setIsValid] = useState(true);
-
+    const [isSend, setIsSend] = useState(0);
 
     const [formData, setFormData] = useState<FormData>({
         title: '',
@@ -71,28 +73,10 @@ const Post: React.FC = () => {
     };
 
     const handlePost = async (event: React.MouseEvent<HTMLButtonElement>) => {
+        //close the open modal 
+        setShowModal(false);
+        //post sending
         event.preventDefault();
-        // let data = new FormData();
-        // Object.keys(formData).forEach(key => {
-        //     Object.entries(formData).forEach(([key, value]) => {
-        //         if (key === 'photos') {
-        //             (value as File[]).forEach((photo) => {
-        //                 data.append('photos', photo);
-        //             });
-        //         } else {
-        //             data.append(key, value);
-        //         }
-        //     });
-        // });
-        // const res = await publishPostRequest(formData);
-        // console.log(formData);
-        // console.log(res.status)
-        // if((res as Response).status ==200){
-        //   window.location.assign('/')
-        // }
-        // else{
-        //   alert("User is not registered")
-        // }
 
         const res = await publishPostRequest(formData);
         console.log(formData);
@@ -100,12 +84,45 @@ const Post: React.FC = () => {
         if (typeof res === 'object' && 'status' in res) {
             console.log(res.status);
             if (res.status === 200) {
+                setIsSend(1); // display succesfull message
                 //window.location.assign('/');
-                alert("success");
+                //alert("success");
             } else {
-                alert("User is not registered");
+                setIsSend(2); // display wrong message
+                //alert("User is not registered");
             }
         } else {
+            setIsSend(2); // display wrong message
+            console.error(res); // Log the error message
+        }
+    };
+    /**test photo */
+    const handlePhotoTest = async (event: React.MouseEvent<HTMLButtonElement>) => {
+        // Close the open modal 
+        setShowModal(false);
+        // Prevent the default form submission
+        event.preventDefault();
+    
+        // Ensure there is at least one photo
+        if (formData.photos.length === 0) {
+            console.error("No photos to send");
+            setIsSend(2); // Display wrong message
+            return;
+        }
+    
+        // Send the first photo
+        const res = await testPhotoApi(formData.photos[0]);
+        console.log(formData.photos[0]);
+    
+        if (typeof res === 'object' && 'status' in res) {
+            console.log(res.status);
+            if (res.status === 200) {
+                setIsSend(1); // Display successful message
+            } else {
+                setIsSend(2); // Display wrong message
+            }
+        } else {
+            setIsSend(2); // Display wrong message
             console.error(res); // Log the error message
         }
     };
@@ -213,6 +230,37 @@ const Post: React.FC = () => {
                 <CreateIcon className={style['create-icon']} />
 
             </button>
+            {isSend === 1 ? (
+                <Alert
+                    variant={'success'}
+                    dismissible
+                    onClose={() => setIsSend(0)}
+                    style={{
+                        position: 'fixed',
+                        bottom: '0',
+                        right: '0',
+                        width: '30%',
+                        borderRadius: '10px',
+                    }}
+                >
+                    Your post is published successfully
+                </Alert>
+            ) : isSend === 2 ? (
+                <Alert
+                    variant={'danger'}
+                    dismissible
+                    onClose={() => setIsSend(0)}
+                    style={{
+                        position: 'fixed',
+                        bottom: '0',
+                        right: '0',
+                        width: '30%',
+                        borderRadius: '10px',
+                    }}
+                >
+                    Something wrong happened
+                </Alert>
+            ) : null}
 
             <CSSTransition
                 in={showModal}
@@ -384,20 +432,19 @@ const Post: React.FC = () => {
                                     </div>
                                 </Grid>
                             </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <Button variant="contained" fullWidth endIcon={<SendIcon />} onClick={handlePost} style={{ margin: '10px' }}>
-                                    Submit
-                                </Button>
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <Button variant="outlined" fullWidth onClick={handleCloseModal} style={{ margin: '10px' }}>
-                                    Cancel
-                                </Button>
-                            </Grid>
-
+                            <div style={{ display: 'flex' }}>
+                                <Grid item xs={12} sm={6} style={{ margin: '10px' }}>
+                                    <Button variant="outlined" fullWidth onClick={handleCloseModal} style={{ margin: '10px' }}>
+                                        Cancel
+                                    </Button>
+                                </Grid>
+                                <Grid item xs={12} sm={6} style={{ margin: '10px' }}>
+                                    <Button variant="contained" fullWidth endIcon={<SendIcon />} onClick={handlePhotoTest} style={{ margin: '10px' }}>
+                                        Publish
+                                    </Button>
+                                </Grid>
+                            </div>
                         </React.Fragment>
-
-
                     </div>
                 </Modal>
             </CSSTransition>
