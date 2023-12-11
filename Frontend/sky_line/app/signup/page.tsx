@@ -48,7 +48,6 @@ function From_signup() {
         setShowModal(false);
     }
 
-
     const checkPasswordStrength=(password: string)=>{
         // Check if password has at least one uppercase letter
         const hasUppercase = /[A-Z]/.test(password);
