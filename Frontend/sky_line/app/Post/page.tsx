@@ -53,10 +53,10 @@ interface FormDataState {
 
 
 enum EstateType {
-    APARTMENT = 'Apartment',
-    HOUSE = 'House',
-    VILLA = 'Villa',
-    LAND = 'Land',
+    APARTMENT = 'APARTMENT',
+    HOUSE = 'HOUSE',
+    VILLA = 'VILLA',
+    LAND = 'LAND',
 }
 
 const Post: React.FC = () => {
