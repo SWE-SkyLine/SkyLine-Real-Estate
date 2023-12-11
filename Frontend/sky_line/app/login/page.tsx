@@ -79,7 +79,7 @@ const LoginForm = () => {
   };
 
   return (
-    <>
+    <div className={commonStyle.allComponents}>
         <Navbar/>   
         {/*  all page */}
         <div className={commonStyle.container}>
@@ -121,7 +121,7 @@ const LoginForm = () => {
                 
             </div>
         </div>
-    </>
+    </div>
     
   );
 };

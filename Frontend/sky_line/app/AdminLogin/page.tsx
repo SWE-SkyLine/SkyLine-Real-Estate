@@ -2,6 +2,7 @@
 import { useState } from "react";
 import myStyle from "../login/page.module.css"
 import commonStyle from "../Utility/CommonCode/common.module.css"
+import Navbar from "../navbar/page";
 import { adminLoginRequest } from "../Services/AdminLoginService";
 
 const LoginForm = () => {
@@ -38,53 +39,57 @@ const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
 };
 
 return (
-    // all page
-    <div className={commonStyle.container}>
-        {/* left and right parts */}
-        <div className={myStyle.left_img}></div>
 
-        <div className={commonStyle.right}>
-            <div className={commonStyle.logo}></div>
-            <h2 className={commonStyle.header_text}>Admin Login</h2>
-            {/* login form  */}
-            <form className={commonStyle.Form} onSubmit={handleLogin}>
-                {/* add gmail button */}
-                <label className={commonStyle.lable}>Email</label>
-                <div>
-                    <input className={commonStyle.emailTextBox} type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-                </div>
+    <div className={commonStyle.allComponents}>
+        <Navbar/> 
+        {/* all page */}
+        <div className={commonStyle.container}>
+            {/* left and right parts */}
+            <div className={myStyle.left_img}></div>
 
-                <label className={commonStyle.lable}>Password</label>
-                <div>
-                    <input className={commonStyle.emailTextBox} type="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
-                </div>
-
-                <button className={commonStyle.sendBtn} type="submit">Login</button>
-
-                {/* forget password link and popup window  */}
-                <a className={commonStyle.link} href="#" onClick={openPopup}>
-                Forgot Password
-                </a>
-                {showPopup && (
-                <div className={myStyle.popup}>
-                    <div className={myStyle.popupContent}>
-                    <span className={myStyle.close} onClick={closePopup}>
-                        &times;
-                    </span>
-                    <label htmlFor="email">Enter your Gmail:</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                    <button onClick={submitEmail}>Submit</button>
+            <div className={commonStyle.right}>
+                <div className={commonStyle.logo}></div>
+                <h2 className={commonStyle.header_text}>Admin Login</h2>
+                {/* login form  */}
+                <form className={commonStyle.Form} onSubmit={handleLogin}>
+                    {/* add gmail button */}
+                    <label className={commonStyle.lable}>Email</label>
+                    <div>
+                        <input className={commonStyle.emailTextBox} type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                     </div>
-                </div>
-                )}
-            </form>
+
+                    <label className={commonStyle.lable}>Password</label>
+                    <div>
+                        <input className={commonStyle.emailTextBox} type="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
+                    </div>
+
+                    <button className={commonStyle.sendBtn} type="submit">Login</button>
+
+                    {/* forget password link and popup window  */}
+                    <a className={commonStyle.link} href="#" onClick={openPopup}>
+                    Forgot Password
+                    </a>
+                    {showPopup && (
+                    <div className={myStyle.popup}>
+                        <div className={myStyle.popupContent}>
+                        <span className={myStyle.close} onClick={closePopup}>
+                            &times;
+                        </span>
+                        <label htmlFor="email">Enter your Gmail:</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                        <button onClick={submitEmail}>Submit</button>
+                        </div>
+                    </div>
+                    )}
+                </form>
+            </div>
         </div>
     </div>
   );

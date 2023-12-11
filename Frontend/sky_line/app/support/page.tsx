@@ -40,7 +40,7 @@ const Tickets = () =>{
 
     return(
 
-        <>
+        <div className={commonStyle.allComponents}>
           <Navbar/>        
           <div className={style.ticketPage}>
             {/* 3 main items: logo, heading and form */}
@@ -61,7 +61,7 @@ const Tickets = () =>{
 
                     <div>
                         <label className={commonStyle.head}>Problem Type</label>
-                        <select className={style.list} value={selectedOption}  onChange={(e) => setSelectedOption(e.target.value)}>
+                        <select className={commonStyle.emailTextBox} value={selectedOption}  onChange={(e) => setSelectedOption(e.target.value)}>
                             <option className={style.list} value="PUBLISH">problem with publishing posts</option>
                             <option className={style.list} value="REPORT">Report a user</option>
                             <option className={style.list} value="OTHER">Other</option>
@@ -88,7 +88,7 @@ const Tickets = () =>{
                 </form>
             </div>
         </div>    
-        </> 
+        </div> 
     )
 };
 export default Tickets;

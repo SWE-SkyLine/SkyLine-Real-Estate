@@ -7,33 +7,25 @@
 }
 
 .allItems{
-    position: absolute;
-    left: 20%;
-    right: 20%;
+    margin: 20px;
     display: grid;
     grid-template-rows: auto auto 2Fr;
     row-gap: 10px;
 }
-    
-.list{
-    display: block;
-    background: white;
-    width: 44vw;
-    color: black;
-    margin-top: 10px;
-    border: 3px solid rgb(52, 50, 50);
-    border-radius: .5rem;
-    font-size: 18px;
-    font-weight: 530;
-    font-family: Arial, Helvetica, sans-serif;
-    height: 6vh;
+
+@media(min-width: 768px){
+    .allItems{
+        position: absolute;
+        left: 20%;
+        right: 20%;
+    }
 }
 
 .message{
     background-color: white;
     color: black;
     border: 3px solid rgb(52, 50, 50);
-    width: 44vw;
+    /* width: 44vw; */
     height: 25vh;
     border-radius: .5rem;
     padding: 5px;

@@ -1,9 +1,13 @@
-.left_img {
-  background-image:url("../../assets/login.jpg");
-  background-repeat: no-repeat;
-  background-size:cover;
-  flex: 5; /* Takes up 3 parts out of 10 (30%) */
-  padding: 20px; /* Optional padding */
+@media(min-width: 950px){
+  .left_img {
+    background-image:url("../../assets/login.jpg");
+    background-repeat: no-repeat;
+    background-size:cover;
+    flex: 5; /* Takes up 3 parts out of 10 (30%) */
+    padding: 20px; /* Optional padding */
+    width: 40vw;
+    height: 100vh;
+  }
 }
 
 .gmaildiv{
