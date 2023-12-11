@@ -16,23 +16,22 @@
   /* padding: 20px; Optional padding */
   margin-left: .5rem;
 }
-
 .upperSlice {
-  flex: 1; /* Takes up 1 part out of 1.5 (approximately 66.7%) */
+  flex: 0 0 auto; /* Do not grow or shrink, and use auto for the height */
+  height: 200px; /* Set your desired fixed height */
   background-color: rgba(0, 0, 0, 0.086);
   border-radius: 1rem;
-  border: 3px solid  rgb(40, 167, 222);
-
+  border: 3px solid rgb(40, 167, 222);
 }
 
 .lowerSlice {
   margin-top: 1rem;
-  flex: 2; /* Takes up 1 part out of 1.5 (approximately 66.7%) */
+  flex: 1; /* Takes up the remaining space */
   background-color: rgba(76, 76, 76, 0.086);
   border-radius: 1rem;
-  border: 3px solid  rgb(40, 167, 222);
-
+  border: 3px solid rgb(40, 167, 222);
 }
+
 
 .right{
   flex: 9; /* Takes up 7 parts out of 10 (70%) */
