@@ -1,0 +1,11 @@
+.imgs {
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 10vh;
+    width: 10vh; /* Set a square width and height */
+    margin-left: 1rem;
+    margin-top:  1rem;
+    border-radius: 50%; /* Make it a circle */
+    border: 1px solid rgba(109, 103, 103, 0.408);
+    padding: 20px;
+}

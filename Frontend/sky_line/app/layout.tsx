@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-sync-scripts */
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
@@ -16,7 +17,19 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
+    
     <html lang="en" >
+
+    <script
+      src="https://kit.fontawesome.com/6d56012fea.js"
+      crossOrigin="anonymous"
+    ></script>
+    
+    <script
+      src="https://kit.fontawesome.com/6d56012fea.js"
+      crossOrigin="anonymous"
+    ></script>
+     
       <body className={inter.className}>{children}</body>
     </html>
   )
