@@ -1,0 +1,138 @@
+.logo{
+    background-image:url("../../../assets/logo.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    width:44vw;
+    height:20vh;
+    /* margin-left: 16rem; */
+    
+   }
+
+.Form{
+    padding: 25px;
+    background-color: rgb(230, 229, 229);
+    border-radius: .5rem;
+    display: grid;
+    row-gap: 15px;
+    font-size: 2px;
+    font-weight: 530;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 20px;
+}
+
+.emailTextBox{
+    background-color: white;
+    color: black;
+    border: 3px solid rgb(52, 50, 50);
+    height: 5vh;
+    border-radius: .5rem;
+    padding-left: 5px;
+    font-size: 20px;
+    font-weight: 530;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.sendBtn{
+    
+    height:6vh;
+    border-radius: .5rem;
+    color: white;
+    background-color: rgb(40, 167, 222);
+    cursor: pointer;
+    display: block;
+    font-size: 25px;
+    font-weight: 530;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.head{
+    font-weight: 500;
+    font-size: 25px;
+    color: black;
+    display: block;
+}
+
+.container {
+    display: flex;
+    background-color:white;   
+}
+
+.right{
+    flex: 4;
+    padding: 20px; 
+}
+
+.header_text{
+    font-weight: 600;
+    font-size: 3rem;
+    font-family: "Montserrat", sans-serif;
+    margin-left: 1rem;
+    color: rgba(0, 0, 0, 0.688);
+}
+
+.link{
+    color: rgb(33, 165, 222)!important;
+    font-size: 20px;
+}
+
+.lable{
+    margin-top: 1px;
+    margin-bottom: 2px;
+    margin-left: 1rem;
+    font-weight: 600;
+    font-size: 17px;
+    color: black;
+    display: block;
+}
+
+@media (min-width: 320px) {
+    .allComponents {
+        width: 300px;
+    }
+    .Form{
+        width: 90vw;
+    }
+    .emailTextBox{
+        width: 80vw;
+    }
+}
+
+@media (min-width: 768px) {
+    .allComponents {
+        width: 750px;
+    }
+    .Form{
+        width: 50vw;
+    }
+    .emailTextBox{
+        width: 45vw;
+    }
+    .sendBtn{
+        width:15vw;
+    }
+    
+}
+/* medium */
+@media (min-width: 950px) {
+    .allComponents {
+        width: 900px;
+    }
+    .Form{
+        width: 60vw;
+    }
+    .emailTextBox{
+        width: 55vw;
+    }
+}
+/* larg */
+@media (min-width: 1200px) {
+    .allComponents {
+        width: 90vw;
+    }
+    .Form{
+        width: 50vw;
+    }
+    .emailTextBox{
+        width: 45vw;
+    }
+}
