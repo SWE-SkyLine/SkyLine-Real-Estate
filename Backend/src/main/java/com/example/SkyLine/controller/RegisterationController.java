@@ -52,6 +52,7 @@ public class RegisterationController {
             return new ResponseEntity<String>("Time Out", HttpStatus.REQUEST_TIMEOUT);
 
         }
+    }
     @PostMapping("/user/verify")
     public ResponseEntity<?>  verify(@RequestBody VerifyCodeRequestDTO Request){
        boolean status = regesterationService.UserVerify(Request.getEmail(),Request.getCode());
