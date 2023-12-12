@@ -1,6 +1,7 @@
 package com.example.SkyLine.controller;
 
 import com.example.SkyLine.entity.Post;
+
 import com.example.SkyLine.service.PostCreationService;
 import com.example.SkyLine.utility.ContollerDataToPostAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,5 +50,6 @@ public class PostController {
         int postId = postCreationService.createPost(post, photos);
 
         return new ResponseEntity<String>("Post Added with ID : " + postId, HttpStatus.OK);
+
     }
 }
