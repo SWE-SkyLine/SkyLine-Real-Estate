@@ -1,22 +1,15 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/no-unescaped-entities */
 'use client'
 import { useState } from "react";
 import { useRef } from "react";
 import style from "./page.module.css"
 import 'bootstrap/dist/css/bootstrap.css'
-import Link from "next/link";
-import styles from './page.module.css';
-import Head from 'next/head';
 import Navbar from './navbar/page'
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import router from "next/navigation";
-import { useRouter } from "next/navigation";
- 
-export default function Home() {
-  let router =useRouter();
-  const handleClick = (path: string) => {
-    router.push(`${path}`);
-  };
+ export default function Home() {
+
 
 
   let first_name="KARIM",last_name="TAREK";
@@ -26,7 +19,20 @@ export default function Home() {
   const inside1= '/assets/inside1.jpeg';
   const inside2= '/assets/inside2.jpeg';
   const inside3= '/assets/inside3.jpg';
+  const images=[inside2,inside1,inside3];
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
+  function handleNextImage() {
+    if (currentImageIndex < images.length - 1) {
+      setCurrentImageIndex(currentImageIndex + 1);
+    }
+  }
 
+  function handlePreviousImage() {
+    if (currentImageIndex > 0) {
+      setCurrentImageIndex(currentImageIndex - 1);
+    }
+  }
   return (
 
 
@@ -62,11 +68,40 @@ export default function Home() {
         <div className={style.post_head}> <label>Map Link:</label> <a href="https://www.google.com/maps" target="_blank">Https:Link</a> </div>
       </div>
       <div className={style.post_imgs}>
-        <div className={style.post_img} style={{ backgroundImage: `url(${home})` }}></div>
-        <div className={style.post_img} style={{ backgroundImage: `url(${inside1})` }}></div>
-        <div className={style.post_img} style={{ backgroundImage: `url(${inside2})` }}></div>
-        <div className={style.post_img} style={{ backgroundImage: `url(${inside3})` }}></div>
-      </div>
+
+<button 
+
+      className={style.btn}
+      style={{ borderRadius: "5px", padding: "5px 10px", cursor: "pointer",fontWeight:"500"}}
+      onClick={handlePreviousImage}
+      disabled={currentImageIndex === 0}
+  >
+    &#8678; Previous Photo
+  </button>
+
+  <img
+      src={images[currentImageIndex]}
+      style={{
+        maxWidth: "70%",
+        maxHeight: "50%",
+        margin: 0,
+        objectFit: "cover",
+        objectPosition: "center",
+        borderRadius: "5px",
+        border:"3px solid rgb(27, 31, 33)"
+        
+      }}
+  />
+
+   <button
+      className={style.btn}
+      style={{ borderRadius: "5px", padding: "5px 10px", cursor: "pointer",fontWeight:"500"}}
+      onClick={handleNextImage}
+      disabled={currentImageIndex === images.length - 1}
+  >
+    Next Photo &#8680;
+  </button>
+</div>
     </div>
 
 
@@ -88,10 +123,39 @@ export default function Home() {
         <div className={style.post_head}> <label>Map Link:</label> <a href="https://www.google.com/maps" target="_blank">Https:Link</a> </div>
       </div>
       <div className={style.post_imgs}>
-        <div className={style.post_img} style={{ backgroundImage: `url(${home})` }}></div>
-        <div className={style.post_img} style={{ backgroundImage: `url(${inside1})` }}></div>
-        <div className={style.post_img} style={{ backgroundImage: `url(${inside2})` }}></div>
-        <div className={style.post_img} style={{ backgroundImage: `url(${inside3})` }}></div>
+
+      <button 
+
+            className={style.btn}
+            style={{ borderRadius: "5px", padding: "5px 10px", cursor: "pointer",fontWeight:"500"}}
+            onClick={handlePreviousImage}
+            disabled={currentImageIndex === 0}
+        >
+          &#8678; Previous Photo
+        </button>
+
+        <img
+            src={images[currentImageIndex]}
+            style={{
+              maxWidth: "70%",
+              maxHeight: "50%",
+              margin: 0,
+              objectFit: "cover",
+              objectPosition: "center",
+              borderRadius: "5px",
+              border:"3px solid rgb(27, 31, 33)"
+              
+            }}
+        />
+
+         <button
+            className={style.btn}
+            style={{ borderRadius: "5px", padding: "5px 10px", cursor: "pointer",fontWeight:"500"}}
+            onClick={handleNextImage}
+            disabled={currentImageIndex === images.length - 1}
+        >
+          Next Photo &#8680;
+        </button>
       </div>
     </div>
   </div>     
