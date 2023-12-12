@@ -107,7 +107,6 @@ function From_signup() {
           console.log(user);
           const res = await SignupRequest(user);
           if ((res as AxiosResponse).status === 200) {
-              
             router.push(`/page_verify?Email=${user.email}`);
 
           } else { 
