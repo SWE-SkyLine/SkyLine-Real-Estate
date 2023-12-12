@@ -52,7 +52,7 @@ const NavbarComponent: React.FC = () => {
               >
                 Login
               </Button>
-              <Button href="/login" 
+              <Button href="/signup" 
                 className={`${style.btn} bi-toggle2 position-relative`}
               >
                 Signup

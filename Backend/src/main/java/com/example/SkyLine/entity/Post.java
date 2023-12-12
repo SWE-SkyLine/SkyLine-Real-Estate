@@ -8,7 +8,6 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Entity
 @Setter
 @Getter
@@ -27,13 +26,15 @@ public class Post {
 
     private String description;
 
-    @Enumerated(value=EnumType.STRING)
+    private String status;
+
+    @Enumerated(value = EnumType.STRING)
     private EstateTypeEnum estateTypeEnum;
 
-    @Column(name="map_link")
+    @Column(name = "map_link")
     private String mapLink;
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="post_id")
-private List<Photo> photos = new ArrayList<Photo>();
+    @JoinColumn(name = "post_id")
+    private List<Photo> photos = new ArrayList<Photo>();
 
 }

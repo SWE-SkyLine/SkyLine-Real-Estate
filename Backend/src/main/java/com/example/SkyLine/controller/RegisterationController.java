@@ -41,17 +41,17 @@ public class RegisterationController {
 
 
     @PostMapping("/user/sendVerifyCodeAgain")
-    public ResponseEntity<?> sendCodeAgain(@RequestBody VerifyCodeRequestDTO Request){
+    public ResponseEntity<?> sendCodeAgain(@RequestBody VerifyCodeRequestDTO Request) {
         //continue ...
         System.out.println(Request.getEmail());
         try {
             regesterationService.sendVerifyCodeAgain(Request.getEmail());
             return new ResponseEntity<String>("Success", HttpStatus.OK);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<String>("Time Out", HttpStatus.REQUEST_TIMEOUT);
 
         }
+    }
     @PostMapping("/user/verify")
     public ResponseEntity<?>  verify(@RequestBody VerifyCodeRequestDTO Request){
        boolean status = regesterationService.UserVerify(Request.getEmail(),Request.getCode());
