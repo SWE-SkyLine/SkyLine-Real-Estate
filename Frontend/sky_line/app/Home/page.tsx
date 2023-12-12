@@ -8,6 +8,7 @@ import style from "./page.module.css"
 import 'bootstrap/dist/css/bootstrap.css'
 import Navbar from '../navbar/page'
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import SortFilter from "../sortFilter/page";
  export default function Home_page() {
 
   let first_name="KARIM",last_name="TAREK";
@@ -50,6 +51,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
       <div className={style.lowerSlice}></div>
     </div>
     <div className={style.right}>
+      
       <div className={style.contain_post}>
         <div>
           <div className={`${style.photo}`} style={{ backgroundImage: `url(${x})` }}></div>
@@ -67,19 +69,19 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
       </div>
       <div className={style.post_imgs}>
 
-<button 
+      <button 
 
       className={style.btn}
       style={{ borderRadius: "5px", padding: "5px 10px", cursor: "pointer",fontWeight:"500"}}
       onClick={handlePreviousImage}
       disabled={currentImageIndex === 0}
-  >
-    &#8678; Previous Photo
-  </button>
+      >
+          &#8678; Previous Photo
+      </button>
 
-  <img
-      src={images[currentImageIndex]}
-      style={{
+      <img
+        src={images[currentImageIndex]}
+        style={{
         maxWidth: "70%",
         maxHeight: "50%",
         margin: 0,
@@ -88,18 +90,18 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
         borderRadius: "5px",
         border:"3px solid rgb(27, 31, 33)"
         
-      }}
-  />
+        }}
+      />
 
-   <button
+      <button
       className={style.btn}
       style={{ borderRadius: "5px", padding: "5px 10px", cursor: "pointer",fontWeight:"500"}}
       onClick={handleNextImage}
       disabled={currentImageIndex === images.length - 1}
-  >
-    Next Photo &#8680;
-  </button>
-</div>
+      >
+          Next Photo &#8680;
+      </button>
+    </div>
     </div>
 
 
