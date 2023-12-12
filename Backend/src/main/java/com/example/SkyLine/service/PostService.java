@@ -23,31 +23,4 @@ public class PostService {
         return postRepository.findAll();
     }
 
-    public List<Post> getFilteredPosts(
-            String location,
-            Integer minPrice,
-            Integer maxPrice,
-            Integer area,
-            EstateTypeEnum estateType,
-            String status
-    ) {
-        System.out.println("Location: " + location);
-        System.out.println("Min Price: " + minPrice);
-        System.out.println("Max Price: " + maxPrice);
-        System.out.println("Area: " + area);
-        System.out.println("Estate Type: " + estateType);
-        System.out.println("Status: " + status);
-
-        List<Post> result = postRepository.findFilteredPosts(area, estateType, status);
-
-
-        System.out.println("Result: " + result);
-        return result;
-    }
-
-
-    public List<Post> getSortedPosts(String sortBy, String sortOrder) {
-        Sort sort = Sort.by(Sort.Direction.fromString(sortOrder), sortBy);
-        return postRepository.findAll(sort);
-    }
 }

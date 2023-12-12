@@ -14,19 +14,5 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Integer> {
     List<Post> findAll();
 
-    List<Post> findByAreaAndEstateTypeEnumAndStatus(
-            Integer area,
-            EstateTypeEnum estateType,
-            String status
-    );
-
-    @Query("SELECT p FROM Post p WHERE (:area IS NULL OR p.area = :area) " +
-            "AND (:estateType IS NULL OR p.estateTypeEnum = :estateType) " +
-            "AND (:status IS NULL OR p.status = :status)")
-    List<Post> findFilteredPosts(
-            @Param("area") Integer area,
-            @Param("estateType") EstateTypeEnum estateType,
-            @Param("status") String status
-    );
 
 }
