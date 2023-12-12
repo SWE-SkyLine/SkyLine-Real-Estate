@@ -80,7 +80,6 @@ const LoginForm = () => {
 
   return (
     <div className={commonStyle.allComponents}>
-        <Navbar/>   
         {/*  all page */}
         <div className={commonStyle.container}>
             {/* left and right parts */}

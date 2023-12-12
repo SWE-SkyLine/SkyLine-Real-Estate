@@ -16,7 +16,6 @@ export default  function Signup(){
 
     return(
         <div className={commonStyle.allComponents}>  
-            <Navbar/>
             <div className={commonStyle.container}>
                 <div className={style_signup.left_img}></div>
                 <div className={commonStyle.right}>
