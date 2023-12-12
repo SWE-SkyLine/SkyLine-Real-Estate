@@ -11,6 +11,8 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import router from "next/navigation";
 import { useRouter } from "next/navigation";  
 import Post from "./Post/page"
+import PostRetrievalTest from "./PostRetrieveTest/page"
+
 
 export default function Home() {
   let router =useRouter();
@@ -23,6 +25,7 @@ export default function Home() {
 
     <>
     {/* <Navbar/> */}
+    <PostRetrievalTest/>
     <Post/>
     <div>
         <h1>Welcome to Next.js</h1>
