@@ -39,6 +39,8 @@ public class Post {
     private byte level;
     @Column(name = "map_link")
     private String mapLink;
+    private String address;
+    private String city;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
