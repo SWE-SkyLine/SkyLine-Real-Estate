@@ -9,6 +9,8 @@ import 'bootstrap/dist/css/bootstrap.css'
 import Navbar from '../navbar/page'
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import SortFilter from "../sortFilter/page";
+import { Post_object } from "../objects/Post_object";
+
  export default function Home_page() {
 
   let first_name="KARIM",last_name="TAREK";
@@ -20,7 +22,23 @@ import SortFilter from "../sortFilter/page";
   const inside3= '/assets/inside3.jpg';
   const images=[inside2,inside1,inside3];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  
+
+  var post :Post_object=new Post_object();
+  post.area=10;
+  post.title="Charming Family Home with Modern Elegance and Picturesque Views"
+  post.description="Welcome to this beautifully designed family home that seamlessly combines modern elegance with the warmth of a welcoming retreat. Nestled in a serene neighborhood, this residence offers a perfect blend of comfort and style. The thoughtful layout ensures ample space for family gatherings, entertaining guests, and creating lasting memories."
+  post.bathroom=4
+  post.level=1;
+  post.map_link="https://www.bing.com/ck/a?!&&p=23e5b8e8a975aad9JmltdHM9MTcwMjMzOTIwMCZpZ3VpZD0zOTM4ZWFmOS1jYWI4LTY1YTMtMTcxNS1mOTQwY2JjZjY0ZGQmaW5zaWQ9NTc2Mg&ptn=3&ver=2&hsh=3&fclid=3938eaf9-cab8-65a3-1715-f940cbcf64dd&u=a1L21hcHM_Jm1lcGk9MTA3fkxvY2FsflVua25vd25-RW50aXR5X1ZlcnRpY2FsX0xpc3RfQ2FyZCZ0eT0xNyZxPXNlZGliZXNociUyMGxvY2F0aW9uJnNlZ21lbnQ9TG9jYWwmcHBvaXM9MzEuMjU1MjEwODc2NDY0ODQ0XzI5Ljk3NzYyMTA3ODQ5MTIxX0FwYXJ0bWVudCUyMFNlZGklMjBCZXNocl9ZTjgwNTR4MTQ0MjE4NjQ3NDUyODQyMTAxMTF-MzEuMjYzMjgwODY4NTMwMjczXzI5Ljk4NTg0OTM4MDQ5MzE2NF9TZWElMjB2aWV3JTIwYXBhcnRtZW50JTIwU2lkaSUyMGJlc2hyX1lOODA1NHgxMDU1NDEwODcyOTI2NDA2Mjk5fiZzZWk9MCZjcD0zMS4yNTUyMTF-MjkuOTc3NjIxJmNoaWxkPSUyNnR5JTNEMTglMjZxJTNEQXBhcnRtZW50JTI1MjBTZWRpJTI1MjBCZXNociUyNnNzJTNEeXBpZC5ZTjgwNTR4MTQ0MjE4NjQ3NDUyODQyMTAxMTElMjZzZWdtZW50JTNETG9jYWwlMjZwcG9pcyUzRDMxLjI1NTIxMDg3NjQ2NDg0NF8yOS45Nzc2MjEwNzg0OTEyMV9BcGFydG1lbnQlMjUyMFNlZGklMjUyMEJlc2hyX1lOODA1NHgxNDQyMTg2NDc0NTI4NDIxMDExMX4lMjZjcCUzRDMxLjI1NTIxMX4yOS45Nzc2MjElMjZFbmFibGVNYXBWaWV3Q2hhbmdlJTNEdHJ1ZSZGT1JNPU1QU1JQTA&ntb=1"
+  post.bedroom="4"
+  post.price=400.000
+  post.rent=true
+
+  let all_posts:Post_object[]=[]
+
+  all_posts.push(post);  
+  all_posts.push(post);  
+
   function handleNextImage() {
     if (currentImageIndex < images.length - 1) {
       setCurrentImageIndex(currentImageIndex + 1);
@@ -32,9 +50,10 @@ import SortFilter from "../sortFilter/page";
       setCurrentImageIndex(currentImageIndex - 1);
     }
   }
+
+
+
   return (
-
-
     <>
     <Navbar/>
   <div className={style.container}>
@@ -51,113 +70,58 @@ import SortFilter from "../sortFilter/page";
       <div className={style.lowerSlice}></div>
     </div>
     <div className={style.right}>
-      
-      <div className={style.contain_post}>
-        <div>
-          <div className={`${style.photo}`} style={{ backgroundImage: `url(${x})` }}></div>
-          <label className={style.post_owner}>{first_name} {last_name}</label>
-        </div>
-      <div className={style.post_body}>
-        <div className={style.post_head}> <label>Title:</label> </div>
-        <label className={style.under_head}>Charming Family Home with Modern Elegance and Picturesque Views (<span className={style.post_type}>Rent</span>)</label>
-        <div className={style.post_head}> <label>Description:</label> </div>
-        <label className={style.under_head}>Welcome to this beautifully designed family home that seamlessly combines modern elegance with the warmth of a welcoming retreat. Nestled in a serene neighborhood, this residence offers a perfect blend of comfort and style. The thoughtful layout ensures ample space for family gatherings, entertaining guests, and creating lasting memories.
-        </label>   
-        <div className={style.post_head}> <label>Price</label> : <span className={style.under_head}>400.000 <i className="fa-solid fa-dollar-sign"> </i></span> </div>
-        <div className={style.post_head}> <label>Area</label>: <span className={style.under_head}>150 m<sup>2</sup></span> </div>
-        <div className={style.post_head}> <label>Map Link:</label> <a href="https://www.google.com/maps" target="_blank">Https:Link</a> </div>
-      </div>
-      <div className={style.post_imgs}>
 
-      <button 
+      {all_posts.map((p, index) => (
+            <div key={index} className={style.contain_post}>
+              <div>
+                <div className={`${style.photo}`} style={{ backgroundImage: `url(${x})` }}></div>
+                <label className={style.post_owner}>{first_name} {last_name}</label>
+              </div>
+               <div className={style.post_body}>
+             <div className={style.post_head}> <label>Title:</label> </div>
+             <label className={style.under_head}>{p.title} (<span className={style.post_type}>{p.rent && "rent"}{!p.rent && "Buy"}</span>)</label>
+             <div className={style.post_head}> <label>Description:</label> </div>
+             <label className={style.under_head}>{p.description}</label>   
+             <div className={style.post_head}> <label>Price</label> : <span className={style.under_head}>{p.price} <i className="fa-solid fa-dollar-sign"> </i></span> </div>
+             <div className={style.post_head}> <label>Number OF Bathroom</label> : <span className={style.under_head}>{p.bathroom} </span> </div>
+             <div className={style.post_head}> <label>Number OF Bedroom</label> : <span className={style.under_head}>{p.bedroom}</span> </div>
+             <div className={style.post_head}> <label>Number OF Level</label> : <span className={style.under_head}>{p.level} </span> </div>
+             <div className={style.post_head}> <label>Area</label>: <span className={style.under_head}>{p.area}m<sup>2</sup></span> </div>
+             <div className={style.post_head}> <label>Map Link:</label> <a href={p.map_link} target="_blank">Location</a> </div>
+             </div>
+               <div className={style.post_imgs}>
+                <button
+                  className={style.btn}
+                  style={{ borderRadius: "5px", padding: "5px 10px", cursor: "pointer", fontWeight: "500" }}
+                  onClick={handlePreviousImage}
+                  disabled={currentImageIndex === 0}
+                >
+                  &#8678; Previous Photo
+                </button>
+                <img
+                  src={images[currentImageIndex]}
+                  style={{
+                    maxWidth: "70%",
+                    maxHeight: "50%",
+                    margin: 0,
+                    objectFit: "cover",
+                    objectPosition: "center",
+                    borderRadius: "5px",
+                    border: "3px solid rgb(27, 31, 33)"
+                  }}
+                />
+                <button
+                  className={style.btn}
+                  style={{ borderRadius: "5px", padding: "5px 10px", cursor: "pointer", fontWeight: "500" }}
+                  onClick={handleNextImage}
+                  disabled={currentImageIndex === images.length - 1}
+                >
+                  Next Photo &#8680;
+                </button>
+              </div>
+            </div>
+          ))}
 
-      className={style.btn}
-      style={{ borderRadius: "5px", padding: "5px 10px", cursor: "pointer",fontWeight:"500"}}
-      onClick={handlePreviousImage}
-      disabled={currentImageIndex === 0}
-      >
-          &#8678; Previous Photo
-      </button>
-
-      <img
-        src={images[currentImageIndex]}
-        style={{
-        maxWidth: "70%",
-        maxHeight: "50%",
-        margin: 0,
-        objectFit: "cover",
-        objectPosition: "center",
-        borderRadius: "5px",
-        border:"3px solid rgb(27, 31, 33)"
-        
-        }}
-      />
-
-      <button
-      className={style.btn}
-      style={{ borderRadius: "5px", padding: "5px 10px", cursor: "pointer",fontWeight:"500"}}
-      onClick={handleNextImage}
-      disabled={currentImageIndex === images.length - 1}
-      >
-          Next Photo &#8680;
-      </button>
-    </div>
-    </div>
-
-
-    {/* will remove it */}
-
-    <div className={style.contain_post}>
-        <div>
-          <div className={`${style.photo}`} style={{ backgroundImage: `url(${x})` }}></div>
-          <label className={style.post_owner}>Ahmed Hesham</label>
-        </div>
-      <div className={style.post_body}>
-        <div className={style.post_head}> <label>Title:</label> </div>
-        <label className={style.under_head}>Charming Family Home with Modern Elegance and Picturesque Views (<span className={style.post_type}>Buy</span>)</label>
-        <div className={style.post_head}> <label>Description:</label> </div>
-        <label className={style.under_head}>Welcome to this beautifully designed family home that seamlessly combines modern elegance with the warmth of a welcoming retreat. Nestled in a serene neighborhood, this residence offers a perfect blend of comfort and style. The thoughtful layout ensures ample space for family gatherings, entertaining guests, and creating lasting memories.
-        </label>   
-        <div className={style.post_head}> <label>Price</label> : <span className={style.under_head}>400.000 <i className="fa-solid fa-dollar-sign"> </i></span> </div>
-        <div className={style.post_head}> <label>Area</label>: <span className={style.under_head}>150 m<sup>2</sup></span> </div>
-        <div className={style.post_head}> <label>Map Link:</label> <a href="https://www.google.com/maps" target="_blank">Https:Link</a> </div>
-      </div>
-      <div className={style.post_imgs}>
-
-      <button 
-
-            className={style.btn}
-            style={{ borderRadius: "5px", padding: "5px 10px", cursor: "pointer",fontWeight:"500"}}
-            onClick={handlePreviousImage}
-            disabled={currentImageIndex === 0}
-        >
-          &#8678; Previous Photo
-        </button>
-
-        <img
-            src={images[currentImageIndex]}
-            style={{
-              maxWidth: "70%",
-              maxHeight: "50%",
-              margin: 0,
-              objectFit: "cover",
-              objectPosition: "center",
-              borderRadius: "5px",
-              border:"3px solid rgb(27, 31, 33)"
-              
-            }}
-        />
-
-         <button
-            className={style.btn}
-            style={{ borderRadius: "5px", padding: "5px 10px", cursor: "pointer",fontWeight:"500"}}
-            onClick={handleNextImage}
-            disabled={currentImageIndex === images.length - 1}
-        >
-          Next Photo &#8680;
-        </button>
-      </div>
-    </div>
   </div>     
 </div>
     </>
