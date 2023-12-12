@@ -40,8 +40,7 @@ const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
 
 return (
 
-    <div className={commonStyle.allComponents}>
-        <Navbar/> 
+    <div className={commonStyle.allComponents}> 
         {/* all page */}
         <div className={commonStyle.container}>
             {/* left and right parts */}
