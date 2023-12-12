@@ -45,6 +45,8 @@ interface FormDataState {
     description: string;
     estateType: EstateType;
     mapLink: string;
+    address: string,
+    city: string,
     bedroom: string;
     bathroom: string;
     level: string;
@@ -86,6 +88,8 @@ const Post: React.FC = () => {
         description: '',
         estateType: EstateType.APARTMENT,
         mapLink: '',
+        address:'',
+        city:'',
         bedroom: '',
         bathroom: '',
         level: '',
@@ -99,39 +103,12 @@ const Post: React.FC = () => {
         setShowModal(false);
     };
 
-    // const handlePost = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    //     //close the open modal 
-    //     setShowModal(false);
-    //     //post sending
-    //     event.preventDefault();
-
-    //     const res = await publishPostRequest(formData);
-    //     console.log(formData);
-
-    //     if (typeof res === 'object' && 'status' in res) {
-    //         console.log(res.status);
-    //         if (res.status === 200) {
-    //             setIsSend(1); // display succesfull message
-    //             //window.location.assign('/');
-    //             //alert("success");
-    //         } else {
-    //             setIsSend(2); // display wrong message
-    //             //alert("User is not registered");
-    //         }
-    //     } else {
-    //         setIsSend(2); // display wrong message
-    //         console.error(res); // Log the error message
-    //     }
-    // };
-
-
 
     const handlePost = async (event: React.MouseEvent<HTMLButtonElement>) => {
         // Close the open modal 
         setShowModal(false);
         // Post sending
         event.preventDefault();
-    
         let data = new FormData();
         for (const key in formData) {
             console.log(key + " : values :");
@@ -294,6 +271,21 @@ const Post: React.FC = () => {
         //setDesc(event.target.value);
     };
 
+    const handleAdressChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData(prevState => ({
+            ...prevState,
+            address: event.target.value
+        }));
+        //setLevel(event.target.value);
+    };
+    const handleCityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData(prevState => ({
+            ...prevState,
+            city: event.target.value
+        }));
+        //setLevel(event.target.value);
+    };
+
 
     return (
         <div>
@@ -440,7 +432,7 @@ const Post: React.FC = () => {
                                         onChange={handleAreaChange}
                                     />
                                 </Grid>
-                                <Grid item xs={12} sm={6}>
+                                <Grid item xs={12} sm={3}>
                                     <TextField
                                         required
                                         label="Location Link"
@@ -449,6 +441,26 @@ const Post: React.FC = () => {
                                         onChange={handleLocationLinkChange}
                                     />
                                 </Grid>
+                                
+                                <Grid item xs={12} sm={6}>
+                                    <TextField
+                                        required
+                                        label="Adress"
+                                        fullWidth
+                                        variant="outlined"
+                                        onChange={handleAdressChange}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={3}>
+                                    <TextField
+                                        required
+                                        label="City"
+                                        fullWidth       
+                                        variant="outlined"
+                                        onChange={handleCityChange}
+                                    />
+                                </Grid>
+                                
                                 <Grid item xs={6} sm={4}>
                                     <TextField
                                         required
@@ -488,7 +500,6 @@ const Post: React.FC = () => {
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
-                                    {/* Photo Upload (Multiple) */}
                                     <div className="mb-3">
                                         <label htmlFor="photos" className="form-label">
                                             Photos

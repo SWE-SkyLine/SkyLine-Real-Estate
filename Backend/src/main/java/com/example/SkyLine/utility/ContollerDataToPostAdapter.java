@@ -18,6 +18,8 @@ public class ContollerDataToPostAdapter {
                                            String description,
                                            String estateType,
                                            String mapLink,
+                                           String address,
+                                           String city,
                                            String bedroom,
                                            String bathroom,
                                            String level) {
@@ -32,6 +34,8 @@ public class ContollerDataToPostAdapter {
                 .setDescription(description)
                 .setEstateType(EstateTypeEnum.valueOf(estateType))
                 .setMapLink(mapLink)
+                .setAddress(address)
+                .setCity(city)
                 .setBedroom((byte) Integer.parseInt(bedroom))
                 .setBathroom((byte) Integer.parseInt(bathroom))
                 .setLevel((byte) Integer.parseInt(level));
