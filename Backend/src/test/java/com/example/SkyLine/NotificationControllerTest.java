@@ -1,7 +1,7 @@
 package com.example.SkyLine;
 
 import com.example.SkyLine.controller.NotificationController;
-import com.example.SkyLine.model.Notification;
+import com.example.SkyLine.entity.Notification;
 import com.example.SkyLine.service.NotificationService;
 import com.example.SkyLine.service.UserService;
 import org.junit.jupiter.api.BeforeEach;

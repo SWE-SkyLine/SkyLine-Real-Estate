@@ -13,9 +13,12 @@ import Navbar from './navbar/page'
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import router from "next/navigation";
 import { useRouter } from "next/navigation";  
+
 import PostCreate from './PostCreate/page'
 import SortFilter from './sortFilter/page'
  
+
+
 export default function Home() {
   let router =useRouter();
   const handleClick = (path: string) => {
@@ -24,9 +27,11 @@ export default function Home() {
   
   return (
 
+
      <>
     <Navbar/>
     <SortFilter/>
+
     <div>
         <h1>Welcome to Next.js</h1>
     </div>

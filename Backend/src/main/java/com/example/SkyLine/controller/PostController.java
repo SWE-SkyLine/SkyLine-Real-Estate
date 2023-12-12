@@ -1,47 +1,55 @@
 package com.example.SkyLine.controller;
 
 import com.example.SkyLine.entity.Post;
-import com.example.SkyLine.enums.EstateTypeEnum;
-import com.example.SkyLine.service.PostService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import com.example.SkyLine.service.PostCreationService;
+import com.example.SkyLine.utility.ContollerDataToPostAdapter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @RestController
-@RequestMapping("/api/posts")
+@CrossOrigin
+@RequestMapping("/api")
 public class PostController {
-
-    private final PostService postService;
-
     @Autowired
-    public PostController(PostService postService) {
-        this.postService = postService;
-    }
+    private PostCreationService postCreationService;
 
-    @GetMapping
-    public List<Post> getAllPosts() {
-        return postService.getAllPosts();
-    }
-
-    @GetMapping("/filter")
-    public List<Post> getFilteredPosts(
-            @RequestParam(required = false) String location,
-            @RequestParam(required = false) Integer minPrice,
-            @RequestParam(required = false) Integer maxPrice,
-            @RequestParam(required = false) Integer area,
-            @RequestParam(required = false) EstateTypeEnum estateType,
-            @RequestParam(required = false) String status
+    @PostMapping("/publish_post")
+    public ResponseEntity<?> publishPost(
+            @RequestParam("title") String title,
+            @RequestParam("price") String price,
+            @RequestParam("isRent") String isRent,
+            @RequestParam("area") String area,
+            @RequestParam("description") String description,
+            @RequestParam("estateType") String estateType,
+            @RequestParam("mapLink") String mapLink,
+            @RequestParam("address") String address,
+            @RequestParam("city") String city,
+            @RequestParam("bedroom") String bedroom,
+            @RequestParam("bathroom") String bathroom,
+            @RequestParam("level") String level,
+            @RequestPart("photos") MultipartFile[] photos
     ) {
-        return postService.getFilteredPosts(location, minPrice, maxPrice, area, estateType, status);
-    }
+        System.out.println("there is a request to publish a post");
+        System.out.println(title + " " + price + " " + isRent + " " + area + " "
+                + description + " " + estateType + " " + mapLink
+                + " " + address + " " + city + " "
+                + bedroom + " " + bathroom + " " + level + " " + photos.length);
+        Post post = ContollerDataToPostAdapter.contollerDataToPost(
+                title, price, isRent, area, description, estateType, 
+                mapLink, address, city, bedroom, bathroom, level
+        );
+        int postId = postCreationService.createPost(post, photos);
 
+        return new ResponseEntity<String>("Post Added with ID : " + postId, HttpStatus.OK);
 
-    @GetMapping("/sort")
-    public List<Post> getSortedPosts(
-            @RequestParam String sortBy,
-            @RequestParam String sortOrder
-    ) {
-        return postService.getSortedPosts(sortBy, sortOrder);
     }
 }

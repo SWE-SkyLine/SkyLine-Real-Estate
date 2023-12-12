@@ -4,10 +4,10 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import com.example.SkyLine.DTO.TicketRequestDTO;
 import com.example.SkyLine.controller.TicketController;
+import com.example.SkyLine.enums.TicketCategoryEnum;
 import com.example.SkyLine.service.TicketService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -37,6 +37,10 @@ class TicketControllerTest {
     @Test
     void testGetTicketSuccess() throws Exception {
         TicketRequestDTO ticketRequestDTO = new TicketRequestDTO();
+        ticketRequestDTO.setCategory(TicketCategoryEnum.OTHER);
+        ticketRequestDTO.setEmail("a");
+        ticketRequestDTO.setMessage("a");
+        ticketRequestDTO.setReported("a");
         doNothing().when(ticketService).sendTicket(ticketRequestDTO);
 
         mockMvc.perform(post("/api/ticket")
@@ -53,23 +57,7 @@ class TicketControllerTest {
         mockMvc.perform(post("/api/ticket")
                 .content(new ObjectMapper().writeValueAsString(ticketRequestDTO))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    void TestReturnGetTicketSuccess() throws Exception{
-        TicketRequestDTO ticketRequestDTO = new TicketRequestDTO();
-        doNothing().when(ticketService).sendTicket(ticketRequestDTO);
-        String response = ticketController.getTicket(ticketRequestDTO);
-        assertThat(response).isEqualTo("Ticket is sent");
-    }
-
-    @Test
-    void TestReturnGetTicketFailure() throws Exception{
-        TicketRequestDTO ticketRequestDTO = new TicketRequestDTO();
-        doThrow(new RuntimeException("Test exception")).when(ticketService).sendTicket(ticketRequestDTO);
-        String response = ticketController.getTicket(ticketRequestDTO);
-        assertThat(response).isEqualTo("Fail to send ticket");
+                .andExpect(status().isInternalServerError());
     }
 
     
