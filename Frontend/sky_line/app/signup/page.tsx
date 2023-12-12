@@ -14,22 +14,22 @@ import Navbar from "../navbar/page";
 
 export default  function Signup(){
 
-return(
-    <div className={commonStyle.allComponents}>  
-        <Navbar/>
-        <div className={commonStyle.container}>
-            <div className={style_signup.left_img}></div>
-            <div className={commonStyle.right}>
-                <div className={commonStyle.logo}></div>
-                <div> 
-                    <span className={commonStyle.header_text}>Sign up</span>
-                    <From_signup></From_signup>
+    return(
+        <div className={commonStyle.allComponents}>  
+            <Navbar/>
+            <div className={commonStyle.container}>
+                <div className={style_signup.left_img}></div>
+                <div className={commonStyle.right}>
+                    <div className={commonStyle.logo}></div>
+                    <div> 
+                        <span className={commonStyle.header_text}>Sign up</span>
+                        <From_signup></From_signup>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-  
-);
+    
+    );
 };
 
 
