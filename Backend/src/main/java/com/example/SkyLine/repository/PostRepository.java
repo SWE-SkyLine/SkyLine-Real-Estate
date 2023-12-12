@@ -13,6 +13,18 @@ import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Integer> {
     List<Post> findAll();
+    List<Post> findByTitleContainingIgnoreCase(String query);
 
+    // PostRepository.java
+    List<Post> findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String title, String description);
+
+    @Query("SELECT p FROM Post p WHERE (:area IS NULL OR p.area = :area) " +
+                    "AND (:estateType IS NULL OR p.estateType = :estateType) " +
+                    "AND (:rent IS NULL OR p.rent = :rent)")
+
+    List<Post> findFilteredPosts(
+                    @Param("area") Integer area,
+                    @Param("estateType") EstateTypeEnum estateType,
+                    @Param("rent") boolean rent);
 
 }

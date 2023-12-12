@@ -13,6 +13,7 @@ import org.springframework.util.StreamUtils;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -56,13 +57,26 @@ public class PostRetrievalDTO {
         this.address = post.getAddress();
         this.city = post.getCity();
 
-        try{
+        try {
             for (Photo photo : post.getPhotos()) {
-                Resource resource = new UrlResource(Paths.get(photo.getPostPhotoURL()).toUri());
+                Path filePath = Paths.get(photo.getPostPhotoURL()).toAbsolutePath();
+
+                String os = System.getProperty("os.name").toLowerCase();
+                if (os.contains("win")) {
+
+                    Path modifiedParent = filePath.getParent().resolveSibling("Backend").resolve("uploads");
+                    filePath = modifiedParent.resolve(filePath.getFileName());
+                } else {
+
+                    filePath = filePath.resolveSibling("Backend").resolve("uploads").resolve(filePath.getFileName());
+                }
+
+                URL fileUrl = filePath.toUri().toURL();
+
+                Resource resource = new UrlResource(fileUrl);
                 photosByteArray.add(StreamUtils.copyToByteArray(resource.getInputStream()));
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage() + "I AM IN DTO");
         }
 
@@ -127,6 +141,5 @@ public class PostRetrievalDTO {
     public String getCity() {
         return city;
     }
-
 
 }
