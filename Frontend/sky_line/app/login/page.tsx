@@ -1,12 +1,12 @@
 'use client'
 import { useState } from "react";
 import myStyle from "./page.module.css"
-import style from "../page_verify/page.module.css"
+import commonStyle from "../Utility/CommonCode/common.module.css"
 import { loginRequest, sendEmail, updatePassword, verifyCode } from "../Services/LoginService"
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import Gmail from "./Gmail";
+import Navbar from "../navbar/page";
 import Link from "next/link";
-
 
 const LoginForm = () => {
 
@@ -79,79 +79,49 @@ const LoginForm = () => {
   };
 
   return (
-    // all page
-    <div className={style.container}>
-      {/* left and right parts */}
-      <div className={style.left_img}></div>
+    <div className={commonStyle.allComponents}>  
+        {/*  all page */}
+        <div className={commonStyle.container}>
+            {/* left and right parts */}
+            <div className={myStyle.left_img}></div>
 
-      <div className={style.right}>
-        <div className={style.logo}></div>
-        <h2 className={style.header_text}>Login</h2>
-        {/* login form  */}
-        <form className={myStyle.loginForm} onSubmit={handleLogin}>
-          {/* add gmail button */}
-          <label className={myStyle.lable}>Email</label>
-          <div>
-            <input className={myStyle.textBox} type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-          </div>
+            <div className={commonStyle.right}>
+                <div className={commonStyle.logo}></div>
+                <h2 className={commonStyle.header_text}>Login</h2>
+                {/* login form  */}
+                <form className={commonStyle.Form} onSubmit={handleLogin}>
+                    {/* add gmail button */}
+                    <label className={commonStyle.head}>Email</label>
+                    <div>
+                        <input className={commonStyle.emailTextBox} placeholder="E-mail" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                    </div>
 
-          <label className={myStyle.lable}>Password</label>
-          <div>
-            <input className={myStyle.textBox} type="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
-          </div>
+                    <label className={commonStyle.head}>Password</label>
+                    <div>
+                        <input className={commonStyle.emailTextBox} placeholder="Passeord" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
+                    </div>
 
-          {/* user type
-          <div>
-            <label className={myStyle.lable}>
-              <input
-                className={myStyle.radio}
-                type="radio"
-                value="Personal"
-                checked={selectedOption === 'Personal'}
-                required
-                name="userType"
-                onChange={(e) => setSelectedOption(e.target.value)}
-              />
-              Personal
-            </label>
+                    <button className={commonStyle.sendBtn} type="submit">
+                        Login
+                    </button>
 
-            <label className={myStyle.lable}>
-              <input
-                className={myStyle.radio}
-                type="radio"
-                value="company"
-                checked={selectedOption === 'company'}
-                required
-                name="userType"
-                onChange={(e) => setSelectedOption(e.target.value)}
-              />
-              company
-            </label>
-          </div> */}
+                    {/* forget password link and popup window  */}
+                    <span className={commonStyle.lable}>Not a member? <Link className={commonStyle.link} href="/signup">Sign up now</Link></span>
+                    <a className={commonStyle.link} href="#" onClick={submitEmail}>
+                        Forgot Password
+                    </a>
 
-          <button className={style.btn_verify} type="submit">
-            Login
-          </button>
-
-          {/* forget password link and popup window  */}
-          <span className={myStyle.lable1}>Not a member? <Link className={myStyle.link1} href="/signup">Sign up now</Link></span>
-          <a className={myStyle.link} href="#" onClick={submitEmail}>
-            Forgot Password
-          </a>
-
-          
-
-          <div className={myStyle.gmaildiv}>
-          <GoogleOAuthProvider clientId="286653287539-cfsq1r439hetsrluac5hdorpjoajbd3h.apps.googleusercontent.com">
-            <Gmail/>
-          </GoogleOAuthProvider>
-          </div>
-        </form>
-        
-            
-        
-      </div>
+                    <div className={myStyle.gmaildiv}>
+                    <GoogleOAuthProvider clientId="286653287539-cfsq1r439hetsrluac5hdorpjoajbd3h.apps.googleusercontent.com">
+                        <Gmail/>
+                    </GoogleOAuthProvider>
+                    </div>
+                </form>
+                
+            </div>
+        </div>
     </div>
+    
   );
 };
 

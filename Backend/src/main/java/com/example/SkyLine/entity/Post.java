@@ -12,7 +12,6 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Entity
 @Setter
 @Getter
@@ -32,11 +31,13 @@ public class Post {
     private boolean rent;
     private short area;
     private String description;
+
     @Enumerated(value = EnumType.STRING)
     private EstateTypeEnum estateType;
     private byte bedroom;
     private byte bathroom;
     private byte level;
+
     @Column(name = "map_link")
     private String mapLink;
     private String address;
