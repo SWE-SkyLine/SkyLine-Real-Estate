@@ -1,19 +1,29 @@
 package com.example.SkyLine.controller;
 
+import com.example.SkyLine.DTO.PostRetrievalDTO;
+import com.example.SkyLine.entity.Photo;
 import com.example.SkyLine.entity.Post;
+import com.example.SkyLine.repository.PhotoRepository;
+import com.example.SkyLine.repository.PostRepository;
 
 import com.example.SkyLine.service.PostCreationService;
 import com.example.SkyLine.utility.ContollerDataToPostAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -21,6 +31,12 @@ import java.nio.file.Paths;
 public class PostController {
     @Autowired
     private PostCreationService postCreationService;
+    //
+    @Autowired
+    private PhotoRepository photoRepository;
+    @Autowired
+    private PostRepository postRepository;
+    //
 
     @PostMapping("/publish_post")
     public ResponseEntity<?> publishPost(
@@ -44,7 +60,7 @@ public class PostController {
                 + " " + address + " " + city + " "
                 + bedroom + " " + bathroom + " " + level + " " + photos.length);
         Post post = ContollerDataToPostAdapter.contollerDataToPost(
-                title, price, isRent, area, description, estateType, 
+                title, price, isRent, area, description, estateType,
                 mapLink, address, city, bedroom, bathroom, level
         );
         int postId = postCreationService.createPost(post, photos);
@@ -52,4 +68,14 @@ public class PostController {
         return new ResponseEntity<String>("Post Added with ID : " + postId, HttpStatus.OK);
 
     }
+
+    
+
+    @GetMapping("/get_posts_with_photos")
+    public ResponseEntity<List<PostRetrievalDTO>> getFullPosts() throws MalformedURLException {
+        return new ResponseEntity<List<PostRetrievalDTO>>(postCreationService.PostToRetrievalEntity(postRepository.findAll()), HttpStatus.OK);
+    }
+
+
+  
 }

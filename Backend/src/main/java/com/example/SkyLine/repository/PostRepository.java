@@ -10,8 +10,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+
 public interface PostRepository extends JpaRepository<Post, Integer> {
+    List<Post> findAll();
 
     List<Post> findByAreaAndEstateTypeEnumAndStatus(
             Integer area,

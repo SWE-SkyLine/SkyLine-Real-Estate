@@ -1,21 +1,29 @@
 package com.example.SkyLine.service;
 
+import com.example.SkyLine.DTO.PostRetrievalDTO;
 import com.example.SkyLine.entity.Photo;
 import com.example.SkyLine.entity.Post;
+import com.example.SkyLine.repository.PhotoRepository;
 import com.example.SkyLine.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PostCreationService {
     @Autowired
     private PostRepository postRepository;
+
     public int createPost(Post post, MultipartFile[] photos) {
         Post newPost = postRepository.save(post);
         int postId = newPost.getId();
@@ -41,4 +49,16 @@ public class PostCreationService {
         return postId;
 
     }
+    public List<PostRetrievalDTO> PostToRetrievalEntity(List<Post> posts) throws MalformedURLException {
+        List<PostRetrievalDTO>  retrievalDTOS = new ArrayList<>();
+        for(Post p : posts){
+            try {
+                retrievalDTOS.add(new PostRetrievalDTO(p));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
+        return retrievalDTOS;
+    }
+
 }
