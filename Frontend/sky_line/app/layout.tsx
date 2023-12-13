@@ -20,7 +20,7 @@ export default function RootLayout({
     
     <html lang="en" >
 
-    <script
+    {/* <script
       src="https://kit.fontawesome.com/6d56012fea.js"
       crossOrigin="anonymous"
     ></script>
@@ -29,7 +29,7 @@ export default function RootLayout({
       src="https://kit.fontawesome.com/6d56012fea.js"
       crossOrigin="anonymous"
     ></script>
-     
+      */}
       <body className={inter.className}>{children}</body>
     </html>
   )

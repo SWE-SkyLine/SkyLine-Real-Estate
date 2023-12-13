@@ -1,23 +1,23 @@
-// // api.ts
-// import { Post_object } from "../objects/Post_object";
+// api.ts
+import { Post_object } from "../objects/Post_object";
 
-// import axios, { Axios, AxiosResponse, responseEncoding } from 'axios';
-// const apiUrl = 'http://localhost:8080';
-
-
-// const get_all_posts = async (user:User) => {
-//   const url = `${apiUrl}/register/user/signup`;
-
-//   try {
-//     const response = await axios.post(url, user);
-//     return response;
-//   }
-//   catch (error:any) {
-//     console.log(error.response);
-//     return error.response
-//   }
-// };
+import axios from 'axios';
+const apiUrl = 'http://localhost:8080';
 
 
+const get_all_posts = async () => {
+  const url = `${apiUrl}/api/get_posts_with_photos`;
 
-// export { SignupRequest };
+  try {
+    const response = await axios.get(url);
+     return response;
+  }
+  catch (error:any) {
+    console.log(error.response);
+    return error.response
+  }
+};
+
+
+
+export { get_all_posts };
