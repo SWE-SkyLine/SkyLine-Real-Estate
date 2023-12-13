@@ -18,6 +18,7 @@ import Home_page from './Home/page'
 
 import PostCreate from './PostCreate/page'
 import SortFilter from './sortFilter/page'
+import Post from "./Post/page";
  
 
 
@@ -34,6 +35,7 @@ export default function Home() {
      <>
     <Navbar/>
     {/* <SortFilter/> */}
+    <Post/>
     <Home_page/>
   
     </>
