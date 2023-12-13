@@ -23,6 +23,7 @@ import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Post from "../Post/page";
 
 export interface FilterData {
   priceFrom: string;
@@ -44,21 +45,23 @@ export interface FilterData {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   var post :Post_object=new Post_object();
-  post.area=10;
-  post.title="Charming Family Home with Modern Elegance and Picturesque Views"
-  post.description="Welcome to this beautifully designed family home that seamlessly combines modern elegance with the warmth of a welcoming retreat. Nestled in a serene neighborhood, this residence offers a perfect blend of comfort and style. The thoughtful layout ensures ample space for family gatherings, entertaining guests, and creating lasting memories."
-  post.bathroom=4
-  post.level=1;
-  post.map_link="https://www.bing.com/ck/a?!&&p=23e5b8e8a975aad9JmltdHM9MTcwMjMzOTIwMCZpZ3VpZD0zOTM4ZWFmOS1jYWI4LTY1YTMtMTcxNS1mOTQwY2JjZjY0ZGQmaW5zaWQ9NTc2Mg&ptn=3&ver=2&hsh=3&fclid=3938eaf9-cab8-65a3-1715-f940cbcf64dd&u=a1L21hcHM_Jm1lcGk9MTA3fkxvY2FsflVua25vd25-RW50aXR5X1ZlcnRpY2FsX0xpc3RfQ2FyZCZ0eT0xNyZxPXNlZGliZXNociUyMGxvY2F0aW9uJnNlZ21lbnQ9TG9jYWwmcHBvaXM9MzEuMjU1MjEwODc2NDY0ODQ0XzI5Ljk3NzYyMTA3ODQ5MTIxX0FwYXJ0bWVudCUyMFNlZGklMjBCZXNocl9ZTjgwNTR4MTQ0MjE4NjQ3NDUyODQyMTAxMTF-MzEuMjYzMjgwODY4NTMwMjczXzI5Ljk4NTg0OTM4MDQ5MzE2NF9TZWElMjB2aWV3JTIwYXBhcnRtZW50JTIwU2lkaSUyMGJlc2hyX1lOODA1NHgxMDU1NDEwODcyOTI2NDA2Mjk5fiZzZWk9MCZjcD0zMS4yNTUyMTF-MjkuOTc3NjIxJmNoaWxkPSUyNnR5JTNEMTglMjZxJTNEQXBhcnRtZW50JTI1MjBTZWRpJTI1MjBCZXNociUyNnNzJTNEeXBpZC5ZTjgwNTR4MTQ0MjE4NjQ3NDUyODQyMTAxMTElMjZzZWdtZW50JTNETG9jYWwlMjZwcG9pcyUzRDMxLjI1NTIxMDg3NjQ2NDg0NF8yOS45Nzc2MjEwNzg0OTEyMV9BcGFydG1lbnQlMjUyMFNlZGklMjUyMEJlc2hyX1lOODA1NHgxNDQyMTg2NDc0NTI4NDIxMDExMX4lMjZjcCUzRDMxLjI1NTIxMX4yOS45Nzc2MjElMjZFbmFibGVNYXBWaWV3Q2hhbmdlJTNEdHJ1ZSZGT1JNPU1QU1JQTA&ntb=1"
-  post.bedroom="4"
-  post.price=400.000
-  post.rent=true
-
+  // post.area=10;
+  // post.title="Charming Family Home with Modern Elegance and Picturesque Views"
+  // post.description="Welcome to this beautifully designed family home that seamlessly combines modern elegance with the warmth of a welcoming retreat. Nestled in a serene neighborhood, this residence offers a perfect blend of comfort and style. The thoughtful layout ensures ample space for family gatherings, entertaining guests, and creating lasting memories."
+  // post.bathroom=4
+  // post.level=1;
+  // post.map_link="https://www.bing.com/ck/a?!&&p=23e5b8e8a975aad9JmltdHM9MTcwMjMzOTIwMCZpZ3VpZD0zOTM4ZWFmOS1jYWI4LTY1YTMtMTcxNS1mOTQwY2JjZjY0ZGQmaW5zaWQ9NTc2Mg&ptn=3&ver=2&hsh=3&fclid=3938eaf9-cab8-65a3-1715-f940cbcf64dd&u=a1L21hcHM_Jm1lcGk9MTA3fkxvY2FsflVua25vd25-RW50aXR5X1ZlcnRpY2FsX0xpc3RfQ2FyZCZ0eT0xNyZxPXNlZGliZXNociUyMGxvY2F0aW9uJnNlZ21lbnQ9TG9jYWwmcHBvaXM9MzEuMjU1MjEwODc2NDY0ODQ0XzI5Ljk3NzYyMTA3ODQ5MTIxX0FwYXJ0bWVudCUyMFNlZGklMjBCZXNocl9ZTjgwNTR4MTQ0MjE4NjQ3NDUyODQyMTAxMTF-MzEuMjYzMjgwODY4NTMwMjczXzI5Ljk4NTg0OTM4MDQ5MzE2NF9TZWElMjB2aWV3JTIwYXBhcnRtZW50JTIwU2lkaSUyMGJlc2hyX1lOODA1NHgxMDU1NDEwODcyOTI2NDA2Mjk5fiZzZWk9MCZjcD0zMS4yNTUyMTF-MjkuOTc3NjIxJmNoaWxkPSUyNnR5JTNEMTglMjZxJTNEQXBhcnRtZW50JTI1MjBTZWRpJTI1MjBCZXNociUyNnNzJTNEeXBpZC5ZTjgwNTR4MTQ0MjE4NjQ3NDUyODQyMTAxMTElMjZzZWdtZW50JTNETG9jYWwlMjZwcG9pcyUzRDMxLjI1NTIxMDg3NjQ2NDg0NF8yOS45Nzc2MjEwNzg0OTEyMV9BcGFydG1lbnQlMjUyMFNlZGklMjUyMEJlc2hyX1lOODA1NHgxNDQyMTg2NDc0NTI4NDIxMDExMX4lMjZjcCUzRDMxLjI1NTIxMX4yOS45Nzc2MjElMjZFbmFibGVNYXBWaWV3Q2hhbmdlJTNEdHJ1ZSZGT1JNPU1QU1JQTA&ntb=1"
+  // post.bedroom="4"
+  // post.price=400.000
+  // post.rent=true
+  const initialIndexArray = Array.from({ length: 100 }, () => 0);
   const [all_posts, setAllPosts] = useState<Post_object[]>([]);
   const [all_posts1, setAllPosts1] = useState<Post_object[]>([]);
+  const [indexArray, setIndexArray] = useState<number[]>(initialIndexArray);
 
   // const [images, setImages] = useState<string[]>([]);
 
+ 
 
 
 
@@ -92,20 +95,29 @@ export interface FilterData {
       } 
     }  setAllPosts1(all_posts)
 
+    const initialIndexArray = Array.from({ length: 100 }, () => 0);
+    setIndexArray(initialIndexArray)
+
+
   }, [all_posts]);
 
 
 
-  function handleNextImage() {
-    // if (currentImageIndex < images.length - 1) {
-    //   setCurrentImageIndex(currentImageIndex + 1);
-    // }
+    function handleNextImage(index:any) {
+    if (indexArray[index] < all_posts1[index]?.photosByteArray.length - 1) {
+      const newArray = [...indexArray];
+      console.log(newArray);
+      newArray[index] ++;
+      setIndexArray(newArray);}
+
   }
 
-  function handlePreviousImage() {
-    if (currentImageIndex > 0) {
-      setCurrentImageIndex(currentImageIndex - 1);
-    }
+  function handlePreviousImage(index:any) {
+    if (indexArray[index] > 0) {
+      const newArray = [...indexArray];
+      console.log(newArray);
+      newArray[index]--; 
+      setIndexArray(newArray);    }
   }
 
 
@@ -224,6 +236,7 @@ export interface FilterData {
 
   return (
     <>
+    <Post/>
     <Navbar/>
     
   <div className={style.container}>
@@ -239,10 +252,9 @@ export interface FilterData {
         {/* <div className={style.phone}><i className="fa-solid fa-phone"></i> <span>01202743255</span></div> */}
        {/* <div className={style.follow}><i className="fa-solid fa-user-group"></i> <span> Followers: 50</span></div>
        <div className={style.follow}> <i className="fa-solid fa-user-check"></i> <span>Following: 100</span></div> */}
-       <div>
+       
         <button className={style.btn_edit}>Edit Profile</button>
-       </div>
-     </div>
+      </div>
       </div>
        
     
@@ -395,13 +407,13 @@ export interface FilterData {
                 <button
                   className={style.btn}
                   style={{ borderRadius: "5px", padding: "5px 10px", cursor: "pointer", fontWeight: "500" }}
-                  onClick={handlePreviousImage}
-                  disabled={currentImageIndex === 0}
+                  onClick={() => handlePreviousImage(index)}
+                  disabled={indexArray[index] === 0}
                 >
                   &#8678; Previous Photo
                 </button>
                 <img
-              src={all_posts1[index]?.photosByteArray[0]}
+              src={all_posts1[index]?.photosByteArray[indexArray[index]]}
               style={{
                     maxWidth: "70%",
                     maxHeight: "50%",
@@ -415,8 +427,8 @@ export interface FilterData {
                 <button
                   className={style.btn}
                   style={{ borderRadius: "5px", padding: "5px 10px", cursor: "pointer", fontWeight: "500" }}
-                  // onClick={handleNextImage(}
-                  // disabled={currentImageIndex === images.length - 1}
+                  onClick={() => handleNextImage(index)}
+                  disabled={indexArray[index] === all_posts1[index]?.photosByteArray.length- 1}
                 >
                   Next Photo &#8680;
                 </button>

@@ -18,7 +18,7 @@
   }
   .upperSlice {
     flex: 0 0 auto; /* Do not grow or shrink, and use auto for the height */
-    height: 250px; /* Set your desired fixed height */
+    height: 200px; /* Set your desired fixed height */
     background-color: rgba(0, 0, 0, 0.086);
     border-radius: 1rem;
     border: 3px solid rgb(40, 167, 222);
@@ -58,6 +58,7 @@
 
   .user_data{
     display: block;
+    margin-left: 18rem;
   }
 
   .photo {
@@ -113,7 +114,7 @@
   
   .btn_edit{
     margin-left:1rem;
-    margin-top: 1rem;
+    margin-top: 2rem;
     border-radius: .5rem;
     font-size: 22px;
     padding-left: 3rem;
@@ -122,6 +123,8 @@
     color: white;
     background-color: rgb(40, 167, 222);
     cursor: pointer;
+    width: 50vw;
+    height: 6vh;
   }
   .imgs {
     background-repeat: no-repeat;
