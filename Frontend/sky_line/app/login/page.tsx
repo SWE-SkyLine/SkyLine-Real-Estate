@@ -70,8 +70,10 @@ const LoginForm = () => {
     const res = await loginRequest(email, password, selectedOption);
     // setLoginResult(res);
     //console.log(res)
-    if((res as Response).status ==200){
-      window.location.assign('/')
+    if((res as Response).status === 200){
+      console.log("Log in  ID : ")
+      console.log(res)
+      //window.location.assign('/')
     }
     else{
       alert("User is not registered")
