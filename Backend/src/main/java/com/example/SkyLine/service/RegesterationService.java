@@ -1,5 +1,7 @@
 package com.example.SkyLine.service;
 
+import com.example.SkyLine.DTO.LogInRequestDTO;
+import com.example.SkyLine.DTO.LogInResponseDTO;
 import com.example.SkyLine.DTO.UserRequestDTO;
 import com.example.SkyLine.entity.User;
 import com.example.SkyLine.repository.UserOauthRepository;
@@ -8,9 +10,13 @@ import com.example.SkyLine.utility.RepositoryFactory;
 import com.example.SkyLine.utility.UserFactory;
 import com.example.SkyLine.utility.VerificationCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.security.authentication.AuthenticationManager;
 
 import java.util.Objects;
 import java.util.concurrent.TimeoutException;
@@ -29,6 +35,8 @@ public class RegesterationService {
     private UserFactory userFactory;
     @Autowired
     private RepositoryFactory repositoryFactory;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     public boolean userExists(String Email) {
         return (userRepository.existsUserByEmail(Email) || userOauthRepository.existsById(Email)); // check if the email exists in basic registered or oAuth
@@ -74,6 +82,16 @@ public class RegesterationService {
             return true;
         }
         return false;
+    }
+
+    public int signIn(LogInRequestDTO login){
+        System.out.println("logged in " + login.getEmail()+ " "+ login.getPassword());
+        Authentication authenticationRequest =
+                UsernamePasswordAuthenticationToken.unauthenticated(login.getEmail(), login.getPassword());
+        Authentication authenticationResponse = this.authenticationManager.authenticate(authenticationRequest);
+        SecurityContextHolder.getContext().setAuthentication(authenticationResponse);
+        //LogInResponseDTO logInResposne = new LogInResponseDTO();
+        return userRepository.findByEmail(login.getEmail()).getId();
     }
 
     public boolean signInOauth(String emailOauth) {
