@@ -11,7 +11,25 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import SortFilter from "../sortFilter/page";
 import { Post_object } from "../objects/Post_object";
 import {get_all_posts} from "../Services/PostService";
+import {filter_all_posts} from "../Services/PostService";
+import { sort_all_posts } from "../Services/PostService";
+import { search_all_posts } from "../Services/PostService";
 import { AxiosResponse } from "axios";
+
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import ToggleButton from "react-bootstrap/ToggleButton";
+import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+
+export interface FilterData {
+  priceFrom: string;
+  priceTo: string;
+  estateType: string;
+  rent: boolean;
+}
 
  export default function Home_page() {
 
@@ -91,10 +109,246 @@ import { AxiosResponse } from "axios";
   }
 
 
+  const [showFormModal, setShowFormModal] = useState(false);
+  const [validated, setValidated] = useState(false);
+  const [rentBuyValue, setRentBuyValue] = useState<string | null>(null);
+  const [area, setArea] = useState<string | null>(null);
+  const [estateType, setEstateType] = useState<string>("APARTMENT");
+  const [priceFrom, setPriceFrom] = useState<string>("");
+  const [priceTo, setPriceTo] = useState<string>("");
+  const [priceSortOrder, setPriceSortOrder] = useState<boolean>(false);
+  const [areaSortOrder, setAreaSortOrder] = useState<boolean>(false);
+
+  
+
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+
+    if (form.checkValidity() === false) {
+      event.stopPropagation();
+      setValidated(true);
+      return;
+    }
+
+    const filterQueryParams = new URLSearchParams();
+    filterQueryParams.append("priceFrom", priceFrom || "");
+    filterQueryParams.append("priceTo", priceTo || "");
+    filterQueryParams.append("estateType", estateType);
+    filterQueryParams.append("rent", rentBuyValue === "rent" ? "true" : "false");
+    
+    try {
+      const filterResponsePromise = filter_all_posts(filterQueryParams);
+      const filterResponse = await filterResponsePromise;
+      if (filterResponse.status === 200) {
+        console.log(filterResponse.data);
+        console.log("Filter request sent successfully");
+      } else {
+        if (filterResponse.status) {
+          console.error("Response status:", filterResponse.status);
+        }
+      }
+    } catch (error) {
+      console.error("Error sending filter request", error);
+    }
+  setValidated(false);
+};
+
+  // Open the form modal
+  const openFormModal = () => {
+    setShowFormModal(true);
+  };
+
+  // Close the form modal
+  const closeFormModal = () => {
+    setShowFormModal(false);
+    setValidated(false);
+  };
+
+  // Toggle the price sort order and send sort request to the backend
+  const togglePriceSortOrder = () => {
+    setPriceSortOrder(!priceSortOrder);
+    sendSortRequest("price", priceSortOrder);
+  };
+
+  // Toggle the area sort order and send sort request to the backend
+  const toggleAreaSortOrder = () => {
+    setAreaSortOrder(!areaSortOrder);
+    sendSortRequest("area", areaSortOrder);
+  };
+
+  // Send sort request to the backend
+  const sendSortRequest = async (sortType: string, sortOrder: boolean) => {
+    try {
+      const sortRequestPromise = sort_all_posts(sortType, sortOrder);
+      const sortResponse = await sortRequestPromise;
+      if (sortResponse.status === 200) {
+        console.log(`Sort request for ${sortType} sent successfully`);
+        console.log(sortResponse.data)
+      } else {
+        console.error(`Error sending sort request for ${sortType}`);
+      }
+    } catch (error) {
+      console.error(`Error sending sort request for ${sortType}`, error);
+    }
+  };
+  const handleSearchButtonClick = async () => {
+    const searchInput = document.getElementsByName(
+      "search"
+    )[0] as HTMLInputElement | null;
+
+    if (searchInput) {
+      const searchQuery = searchInput.value.trim();
+
+      if (searchQuery) {
+        try {
+          const searchRequestPromise = search_all_posts(searchQuery);
+          const searchResponse = await searchRequestPromise;
+          if (searchResponse.status === 200) {
+            console.log(`search request for ${searchQuery} sent successfully`);
+            console.log(searchResponse.data)
+          } else {
+            console.error(`Error sending sort request for ${searchQuery}`);
+          }
+        } catch (error) {
+          console.error("Error sending search request", error);
+        }
+      }
+    }
+  };
+
+
 
   return (
     <>
     <Navbar/>
+         {/*start of sort and filter */}
+    <>
+      <div className="container mt-3">
+        <div className="row" style={{ marginTop: "70px" }}>
+          {/* Search Bar */}
+          <div className="col-6">
+            <div className="input-group">
+              <span className="input-group-text">
+                <i className="bi bi-search"></i>
+              </span>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Search"
+                name="search" // Assign a name to the search input
+              />
+              {/* Correct usage of handleFormSubmit */}
+              <button
+                className="btn btn-primary"
+                type="button" // Change type to "button"
+                onClick={handleSearchButtonClick} // Attach click event
+              >
+                <i className="bi bi-search"></i> Search
+              </button>
+            </div>
+          </div>
+
+          {/* Sort Buttons */}
+          <div className="col">
+            <Button variant="outline-primary" onClick={togglePriceSortOrder}>
+              {priceSortOrder ? (
+                <i className="bi bi-arrow-down"></i>
+              ) : (
+                <i className="bi bi-arrow-up"></i>
+              )}{" "}
+              Price
+            </Button>
+            <span style={{ padding: "10px" }}></span>
+            <Button variant="outline-primary" onClick={toggleAreaSortOrder}>
+              {areaSortOrder ? (
+                <i className="bi bi-arrow-down"></i>
+              ) : (
+                <i className="bi bi-arrow-up"></i>
+              )}{" "}
+              Area
+            </Button>
+          </div>
+
+          {/* Open Form Button */}
+          <div className="col">
+            <Button variant="primary" onClick={openFormModal}>
+              Filter
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Form Modal */}
+      <Modal show={showFormModal} onHide={closeFormModal}>
+        <Modal.Body>
+          <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+            <Form.Group className="mb-3">
+              {/* <Form.Label>Rent/Buy</Form.Label> */}
+              <ToggleButtonGroup
+                type="radio"
+                name="rentBuyOptions"
+                value={rentBuyValue}
+                onChange={(val) => setRentBuyValue(val)}
+              >
+                <ToggleButton id="1" value="rent" className="custom-toggle">
+                  Rent
+                </ToggleButton>
+                <ToggleButton id="2" value="buy" className="custom-toggle">
+                  Buy
+                </ToggleButton>
+              </ToggleButtonGroup>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Estate Type</Form.Label>
+              <Form.Control
+                as="select"
+                value={estateType}
+                onChange={(e) => setEstateType(e.target.value)}
+              >
+                <option value="APARTMENT">Apartment</option>
+                <option value="HOUSE">House</option>
+                <option value="VILLA">Villa</option>
+                <option value="LAND">Land</option>
+              </Form.Control>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Price Range</Form.Label>
+              <Row>
+                <Col>
+                  <Form.Control
+                    type="number"
+                    placeholder="From"
+                    value={priceFrom}
+                    onChange={(e) => setPriceFrom(e.target.value)}
+                  />
+                </Col>
+                <Col>
+                  <Form.Control
+                    type="number"
+                    placeholder="To"
+                    value={priceTo}
+                    onChange={(e) => setPriceTo(e.target.value)}
+                  />
+                </Col>
+              </Row>
+            </Form.Group>
+            <div className="d-flex justify-content-end">
+              <Button
+                variant="secondary"
+                className="me-2"
+                onClick={closeFormModal}
+              >
+                Cancel
+              </Button>
+              <Button type="submit">Apply Filters</Button>
+            </div>
+          </Form>
+        </Modal.Body>
+      </Modal>
+    </>
+                {/*end of sort and filter */}
+
   <div className={style.container}>
 
     <div className={style.left}>
