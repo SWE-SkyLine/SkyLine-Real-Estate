@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react';
 import * as React from 'react';
-import Modal from 'react-modal';
+import Modal from ""
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';

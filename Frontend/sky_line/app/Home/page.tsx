@@ -229,21 +229,27 @@ export interface FilterData {
   <div className={style.container}>
 
     <div className={style.left}>
-      <div className={style.upperSlice}>
-        <div className={style.photo} style={{ backgroundImage: `url(${photo})` }}></div>
-        <label className={style.name}>{first_name} {last_name}</label>
-        <div className={style.phone}><i className="fa-solid fa-phone"></i> <span>01202743255</span></div>
+
+     <div className={style.upperSlice}>
+      <div className={style.contain_upper}> 
+        <div className={style.user_data}>
+         <div className={style.photo} style={{ backgroundImage: `url(${photo})` }}></div>
+        <label className={style.name} >{first_name} {last_name}</label>
+        </div>
+        {/* <div className={style.phone}><i className="fa-solid fa-phone"></i> <span>01202743255</span></div> */}
        {/* <div className={style.follow}><i className="fa-solid fa-user-group"></i> <span> Followers: 50</span></div>
        <div className={style.follow}> <i className="fa-solid fa-user-check"></i> <span>Following: 100</span></div> */}
+       <div>
         <button className={style.btn_edit}>Edit Profile</button>
+       </div>
+     </div>
       </div>
-      <div className={style.lowerSlice}></div>
-    </div>
-
-    <div className={style.right}>
+       
+    
+    <div className={style.lowerSlice}>
 
     <div className="container mt-3">
-        <div className="row" style={{ marginTop: "-10px",marginBottom:"2rem",marginLeft:"7rem" }}>
+        <div className="row" style={{ marginTop: "1rem",marginBottom:"2rem",marginLeft:"7rem" }}>
           {/* Search Bar */}
           <div className="col-6">
             <div className="input-group">
@@ -418,9 +424,10 @@ export interface FilterData {
             </div>
           ))}
 
-  </div>     
-</div>
-    </>
+      </div>
+  </div>  
+    </div>
+</>
 
 
 // {/* <>

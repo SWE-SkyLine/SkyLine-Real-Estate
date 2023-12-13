@@ -2,7 +2,7 @@
 /* CSS */
 .container {
     display: flex;
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     min-height: 90vh;
     margin-top: 9.2vh;
   }
@@ -18,10 +18,20 @@
   }
   .upperSlice {
     flex: 0 0 auto; /* Do not grow or shrink, and use auto for the height */
-    height: 200px; /* Set your desired fixed height */
+    height: 250px; /* Set your desired fixed height */
     background-color: rgba(0, 0, 0, 0.086);
     border-radius: 1rem;
     border: 3px solid rgb(40, 167, 222);
+    margin-left: 10rem;
+    width: 80%;
+    border-radius: 1rem;
+    display: flex;
+    justify-content:center;
+  }
+  
+  .contain_upper{
+      margin-right: 10rem;
+
   }
   
   .lowerSlice {
@@ -30,18 +40,26 @@
     background-color: rgba(76, 76, 76, 0.086);
     border-radius: 1rem;
     border: 3px solid rgb(40, 167, 222);
+    margin-left: 10rem;
+    width: 80%;
+    border-radius: 1rem;
+    justify-content: center;
+    padding: 20px; /* Optional padding */
+
   }
   
   
   .right{
     flex: 9; /* Takes up 7 parts out of 10 (70%) */
-    padding: 20px; /* Optional padding */
     border: 3px solid  rgb(40, 167, 222);
-    margin-left: 1rem;
-    margin-right: 1rem;
-    border-radius: 1rem;
+   
     background-color: rgba(0, 0, 0, 0.086);
   }
+
+  .user_data{
+    display: block;
+  }
+
   .photo {
     background-repeat: no-repeat;
     background-size: cover;
