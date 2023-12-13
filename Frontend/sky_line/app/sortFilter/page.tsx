@@ -14,6 +14,7 @@ const SortFilter: React.FC = () => {
   const [showFormModal, setShowFormModal] = useState(false);
   const [validated, setValidated] = useState(false);
   const [rentBuyValue, setRentBuyValue] = useState<string | null>(null);
+  const [area, setArea] = useState<string | null>(null);
   const [estateType, setEstateType] = useState<string>("APARTMENT");
   const [priceFrom, setPriceFrom] = useState<string>("");
   const [priceTo, setPriceTo] = useState<string>("");
@@ -32,12 +33,49 @@ const SortFilter: React.FC = () => {
     }
 
     // Correctly extract the search query
-    const searchQuery = (form.elements as any)["search"].value;
+    const searchInput = form.elements.namedItem(
+      "search"
+    ) as HTMLInputElement | null;
+    const searchQuery = searchInput ? searchInput.value : "";
 
-    // Send search query to the backend
+    // Send search query to the backend only if it's not null or undefined
+    if (searchQuery) {
+      console.log("alo");
+      try {
+        const searchResponse = await fetch(
+          `http://localhost:8080/api/get_posts_with_photos?searchQuery=${searchQuery}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (searchResponse.ok) {
+          console.log("Search request sent successfully");
+        } else {
+          console.error("Error sending search request");
+        }
+      } catch (error) {
+        console.error("Error sending search request", error);
+      }
+    }
+
+    // Build the filter query parameters
+    const filterQueryParams = new URLSearchParams();
+    filterQueryParams.append("priceFrom", priceFrom || "");
+    filterQueryParams.append("priceTo", priceTo || "");
+    filterQueryParams.append("estateType", estateType);
+    filterQueryParams.append(
+      "rent",
+      rentBuyValue === "rent" ? "true" : "false"
+    );
+
+    // Send filter data to the backend with a GET request
     try {
-      const searchResponse = await fetch(
-        `http://your-backend-api-url/search?query=${searchQuery}`,
+      const filterResponse = await fetch(
+        `http://localhost:8080/api/get_posts_with_photos?${filterQueryParams.toString()}`,
         {
           method: "GET",
           headers: {
@@ -46,35 +84,9 @@ const SortFilter: React.FC = () => {
         }
       );
 
-      if (searchResponse.ok) {
-        console.log("Search request sent successfully");
-      } else {
-        console.error("Error sending search request");
-      }
-    } catch (error) {
-      console.error("Error sending search request", error);
-    }
-
-    // Construct the filter data
-    const filterData = {
-      rentBuyValue,
-      estateType,
-      priceFrom,
-      priceTo,
-    };
-
-    // Send filter data to the backend
-    try {
-      const filterResponse = await fetch("http://your-backend-api-url/filter", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(filterData),
-      });
-
       if (filterResponse.ok) {
         console.log("Filter request sent successfully");
+        // Handle the response as needed
       } else {
         console.error("Error sending filter request");
       }
@@ -112,7 +124,9 @@ const SortFilter: React.FC = () => {
   const sendSortRequest = async (sortType: string, sortOrder: boolean) => {
     try {
       const sortResponse = await fetch(
-        `http://your-backend-api-url/sort?sortType=${sortType}&sortOrder=${sortOrder}`,
+        `http://localhost:8080/api/get_posts_with_photos?sortBy=${sortType}&sortOrder=${
+          sortOrder ? "asc" : "desc"
+        }`,
         {
           method: "GET",
           headers: {
@@ -123,11 +137,47 @@ const SortFilter: React.FC = () => {
 
       if (sortResponse.ok) {
         console.log(`Sort request for ${sortType} sent successfully`);
+        // Handle the response as needed
       } else {
         console.error(`Error sending sort request for ${sortType}`);
       }
     } catch (error) {
       console.error(`Error sending sort request for ${sortType}`, error);
+    }
+
+    // Handle search button click
+  };
+  const handleSearchButtonClick = async () => {
+    const searchInput = document.getElementsByName(
+      "search"
+    )[0] as HTMLInputElement | null;
+
+    if (searchInput) {
+      const searchQuery = searchInput.value.trim();
+
+      if (searchQuery) {
+        try {
+          const searchResponse = await fetch(
+            `http://localhost:8080/api/get_posts_with_photos?searchQuery=${searchQuery}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          console.log("Response Status:", searchResponse.status); // Log response status
+
+          const data = await searchResponse.json();
+          if (searchResponse.ok) {
+            console.log("Search request sent successfully");
+          } else {
+            console.error("Error sending search request", data);
+          }
+        } catch (error) {
+          console.error("Error sending search request", error);
+        }
+      }
     }
   };
 
@@ -148,7 +198,11 @@ const SortFilter: React.FC = () => {
                 name="search" // Assign a name to the search input
               />
               {/* Correct usage of handleFormSubmit */}
-              <button className="btn btn-primary" type="submit">
+              <button
+                className="btn btn-primary"
+                type="button" // Change type to "button"
+                onClick={handleSearchButtonClick} // Attach click event
+              >
                 <i className="bi bi-search"></i> Search
               </button>
             </div>
