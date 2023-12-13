@@ -2,7 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/no-unescaped-entities */
 'use client'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRef } from "react";
 import style from "./page.module.css"
 import 'bootstrap/dist/css/bootstrap.css'
@@ -10,6 +10,8 @@ import Navbar from '../navbar/page'
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import SortFilter from "../sortFilter/page";
 import { Post_object } from "../objects/Post_object";
+import {get_all_posts} from "../Services/PostService";
+import { AxiosResponse } from "axios";
 
  export default function Home_page() {
 
@@ -20,7 +22,7 @@ import { Post_object } from "../objects/Post_object";
   const inside1= '/assets/inside1.jpeg';
   const inside2= '/assets/inside2.jpeg';
   const inside3= '/assets/inside3.jpg';
-  const images=[inside2,inside1,inside3];
+  // const images: string[]=[];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   var post :Post_object=new Post_object();
@@ -34,15 +36,52 @@ import { Post_object } from "../objects/Post_object";
   post.price=400.000
   post.rent=true
 
-  let all_posts:Post_object[]=[]
+  const [all_posts, setAllPosts] = useState<Post_object[]>([]);
+  const [all_posts1, setAllPosts1] = useState<Post_object[]>([]);
 
-  all_posts.push(post);  
-  all_posts.push(post);  
+  // const [images, setImages] = useState<string[]>([]);
+
+
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await get_all_posts();
+        if (res.status === 200) {
+          setAllPosts(res.data);
+
+        } else {
+          // Handle error
+        }
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+        // Handle error
+      }
+    };
+
+    fetchData();
+  }, []);
+
+
+
+  useEffect(() => {
+
+    for (let i=0; i<all_posts.length; i++) {
+      for (let j=0; j<all_posts[i].photosByteArray.length; j++) {
+        let photoUrl = `data:image/jpeg;base64,${all_posts[i].photosByteArray[j]}`;
+        all_posts[i].photosByteArray[j]=photoUrl;
+      } 
+    }  setAllPosts1(all_posts)
+
+  }, [all_posts]);
+
+
 
   function handleNextImage() {
-    if (currentImageIndex < images.length - 1) {
-      setCurrentImageIndex(currentImageIndex + 1);
-    }
+    // if (currentImageIndex < images.length - 1) {
+    //   setCurrentImageIndex(currentImageIndex + 1);
+    // }
   }
 
   function handlePreviousImage() {
@@ -82,6 +121,8 @@ import { Post_object } from "../objects/Post_object";
              <label className={style.under_head}>{p.title} (<span className={style.post_type}>{p.rent && "rent"}{!p.rent && "Buy"}</span>)</label>
              <div className={style.post_head}> <label>Description:</label> </div>
              <label className={style.under_head}>{p.description}</label>   
+             <div className={style.post_head}> <label>City</label> : <span className={style.under_head}>{p.city}</span> </div>
+             <div className={style.post_head}> <label>Adress</label> : <span className={style.under_head}>{p.adress}</span> </div>
              <div className={style.post_head}> <label>Price</label> : <span className={style.under_head}>{p.price} <i className="fa-solid fa-dollar-sign"> </i></span> </div>
              <div className={style.post_head}> <label>Number OF Bathroom</label> : <span className={style.under_head}>{p.bathroom} </span> </div>
              <div className={style.post_head}> <label>Number OF Bedroom</label> : <span className={style.under_head}>{p.bedroom}</span> </div>
@@ -98,9 +139,11 @@ import { Post_object } from "../objects/Post_object";
                 >
                   &#8678; Previous Photo
                 </button>
+                1
+                {post.photosByteArray}
                 <img
-                  src={images[currentImageIndex]}
-                  style={{
+              src={all_posts1[1]?.photosByteArray[0]}
+              style={{
                     maxWidth: "70%",
                     maxHeight: "50%",
                     margin: 0,
@@ -113,8 +156,8 @@ import { Post_object } from "../objects/Post_object";
                 <button
                   className={style.btn}
                   style={{ borderRadius: "5px", padding: "5px 10px", cursor: "pointer", fontWeight: "500" }}
-                  onClick={handleNextImage}
-                  disabled={currentImageIndex === images.length - 1}
+                  // onClick={handleNextImage(}
+                  // disabled={currentImageIndex === images.length - 1}
                 >
                   Next Photo &#8680;
                 </button>
