@@ -28,7 +28,7 @@ public class Post {
 
     private String title;
     private int price;
-    private boolean rent;
+    private Boolean rent;
     private short area;
     private String description;
 

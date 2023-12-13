@@ -4,6 +4,7 @@ import com.example.SkyLine.DTO.PostRetrievalDTO;
 import com.example.SkyLine.entity.FilterData;
 import com.example.SkyLine.entity.Photo;
 import com.example.SkyLine.entity.Post;
+import com.example.SkyLine.enums.EstateTypeEnum;
 import com.example.SkyLine.repository.PhotoRepository;
 import com.example.SkyLine.repository.PostRepository;
 
@@ -73,31 +74,40 @@ public class PostController {
         }
 
         @GetMapping("/get_posts_with_photos")
-        public ResponseEntity<List<PostRetrievalDTO>> getFullPosts(
-                        @RequestParam(required = false) String searchQuery,
-                        @RequestBody(required = false) FilterData filterData,
-                        @RequestParam(required = false) String sortBy,
-                        @RequestParam(required = false) String sortOrder) throws MalformedURLException {
+public ResponseEntity<List<PostRetrievalDTO>> getFullPosts(
+                @RequestParam(required = false) String searchQuery,
+                @RequestParam(required = false) Integer priceFrom,
+                @RequestParam(required = false) Integer priceTo,
+                @RequestParam(required = false) EstateTypeEnum estateType,
+                @RequestParam(required = false) Boolean rent,
+                @RequestParam(required = false) String sortBy,
+                @RequestParam(required = false) String sortOrder) throws MalformedURLException {
 
-                List<Post> posts;
+    List<Post> posts;
+                  
+    if (searchQuery != null) {
+        // Search logic
+        posts = postService.search(searchQuery);
+    } else if (hasFilterParameters(priceFrom, priceTo, estateType, rent)) {
+        // Filter logic
+        System.out.println(rent);
+        posts = postService.filter(new FilterData(priceFrom, priceTo, estateType, rent));
+    } else if (sortBy != null && sortOrder != null) {
+        // Sort logic
+        posts = postService.sort(sortBy, sortOrder);
+    } else {
+        // Default: Get all posts
+        posts = postRepository.findAll();
+    }
 
-                if (searchQuery != null) {
-                        // Search logic
-                        posts = postService.search(searchQuery);
-                } else if (filterData != null) {
-                        // Filter logic
-                        posts = postService.filter(filterData);
-                } else if (sortBy != null && sortOrder != null) {
-                        // Sort logic
-                        posts = postService.sort(sortBy, sortOrder);
-                } else {
-                        // Default: Get all posts
-                        posts = postRepository.findAll();
-                }
+    // Convert to DTOs and return
+    List<PostRetrievalDTO> retrievalDTOS = postCreationService.PostToRetrievalEntity(posts);
+    return new ResponseEntity<>(retrievalDTOS, HttpStatus.OK);
+}
 
-                // Convert to DTOs and return
-                List<PostRetrievalDTO> retrievalDTOS = postCreationService.PostToRetrievalEntity(posts);
-                return new ResponseEntity<>(retrievalDTOS, HttpStatus.OK);
+        private boolean hasFilterParameters(Integer priceFrom, Integer priceTo, EstateTypeEnum estateType,
+                        Boolean rent) {
+                return priceFrom != null || priceTo != null || estateType != null || rent != null;
         }
 
         // @GetMapping("/test")

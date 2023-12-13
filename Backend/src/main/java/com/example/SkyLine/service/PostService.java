@@ -40,6 +40,9 @@ public class PostService {
     // New method for handling filter requests
     public List<Post> filter(FilterData filterData) {
         // Perform filter logic here, using priceFrom and priceTo
+        
+        
+        System.out.println(filterData.isRent());
         return postRepository.findFilteredPosts(
                 filterData.getPriceFrom(),
                 filterData.getPriceTo(),
@@ -47,6 +50,7 @@ public class PostService {
                 filterData.isRent()
         );
     }
+    
 
     // New method for handling sort requests
     public List<Post> sort(String sortBy, String sortOrder) {

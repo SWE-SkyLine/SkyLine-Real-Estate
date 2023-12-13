@@ -27,6 +27,6 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
                         @Param("priceFrom") Integer priceFrom,
                         @Param("priceTo") Integer priceTo,
                         @Param("estateType") EstateTypeEnum estateType,
-                        @Param("rent") boolean rent);
+                        @Param("rent") Boolean rent);
 
 }
