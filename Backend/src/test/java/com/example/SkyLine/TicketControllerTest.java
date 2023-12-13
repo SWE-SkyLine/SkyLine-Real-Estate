@@ -1,64 +1,55 @@
 package com.example.SkyLine;
 
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doThrow;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.example.SkyLine.DTO.TicketRequestDTO;
 import com.example.SkyLine.controller.TicketController;
-import com.example.SkyLine.enums.TicketCategoryEnum;
 import com.example.SkyLine.service.TicketService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
-@SpringBootTest
-@AutoConfigureMockMvc
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
 class TicketControllerTest {
-
-    @Autowired
-    private MockMvc mockMvc;
 
     @Mock
     private TicketService ticketService;
-
 
     @InjectMocks
     private TicketController ticketController;
 
     @Test
-    void testGetTicketSuccess() throws Exception {
+    void testGetTicket() {
+        // Arrange
         TicketRequestDTO ticketRequestDTO = new TicketRequestDTO();
-        ticketRequestDTO.setCategory(TicketCategoryEnum.OTHER);
-        ticketRequestDTO.setEmail("a");
-        ticketRequestDTO.setMessage("a");
-        ticketRequestDTO.setReported("a");
         doNothing().when(ticketService).sendTicket(ticketRequestDTO);
 
-        mockMvc.perform(post("/api/ticket")
-                .content(new ObjectMapper().writeValueAsString(ticketRequestDTO))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+        // Act
+        ResponseEntity<String> responseEntity = ticketController.getTicket(ticketRequestDTO);
+
+        // Assert
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals("Ticket sent successfully", responseEntity.getBody());
+        verify(ticketService, times(1)).sendTicket(ticketRequestDTO);
     }
 
     @Test
-    void testGetTicketFailure() throws Exception {
+    void testGetTicketException() {
+        // Arrange
         TicketRequestDTO ticketRequestDTO = new TicketRequestDTO();
         doThrow(new RuntimeException("Test exception")).when(ticketService).sendTicket(ticketRequestDTO);
 
-        mockMvc.perform(post("/api/ticket")
-                .content(new ObjectMapper().writeValueAsString(ticketRequestDTO))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isInternalServerError());
-    }
+        // Act
+        ResponseEntity<String> responseEntity = ticketController.getTicket(ticketRequestDTO);
 
-    
+        // Assert
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, responseEntity.getStatusCode());
+        assertEquals("Failed to send Ticket", responseEntity.getBody());
+        verify(ticketService, times(1)).sendTicket(ticketRequestDTO);
+    }
 }

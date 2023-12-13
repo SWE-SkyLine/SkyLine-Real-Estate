@@ -61,11 +61,14 @@ enum EstateType {
     LAND = 'LAND',
 }
 
-const Post: React.FC = () => {
+function  Post ({userId}:any){
     const [showModal, setShowModal] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
     const [isValid, setIsValid] = useState(true);
     const [isSend, setIsSend] = useState(0);
+
+    console.log("userid: " + userId)
+    //id_user
 
     // const [formData, setFormData] = useState<FormData>({
     //     title: '',

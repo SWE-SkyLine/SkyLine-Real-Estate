@@ -21,4 +21,5 @@ export class Post_object {
     adress: any | undefined;
     photosByteArray: string[]=[];
     photos: string[] = [];
+    fullName:any;
 }
