@@ -1,5 +1,6 @@
 package com.example.SkyLine.service;
 
+import com.example.SkyLine.entity.FilterData;
 import com.example.SkyLine.entity.Post;
 import com.example.SkyLine.enums.EstateTypeEnum;
 import com.example.SkyLine.repository.PostRepository;
@@ -23,31 +24,38 @@ public class PostService {
         return postRepository.findAll();
     }
 
-    public List<Post> getFilteredPosts(
-            String location,
-            Integer minPrice,
-            Integer maxPrice,
-            Integer area,
-            EstateTypeEnum estateType,
-            String status
-    ) {
-        System.out.println("Location: " + location);
-        System.out.println("Min Price: " + minPrice);
-        System.out.println("Max Price: " + maxPrice);
-        System.out.println("Area: " + area);
-        System.out.println("Estate Type: " + estateType);
-        System.out.println("Status: " + status);
-
-        List<Post> result = postRepository.findFilteredPosts(area, estateType, status);
-
-
-        System.out.println("Result: " + result);
-        return result;
-    }
-
 
     public List<Post> getSortedPosts(String sortBy, String sortOrder) {
         Sort sort = Sort.by(Sort.Direction.fromString(sortOrder), sortBy);
         return postRepository.findAll(sort);
     }
+
+
+    // New method for handling search requests
+    public List<Post> search(String query) {
+        // Perform search logic here, searching in both title and description
+        return postRepository.findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(query, query);
+    }
+
+    // New method for handling filter requests
+    public List<Post> filter(FilterData filterData) {
+        // Perform filter logic here, for example
+        return postRepository.findFilteredPosts(
+                filterData.getArea(),
+                filterData.getEstateType(),
+                filterData.isRent()
+        );
+    }
+
+    // New method for handling sort requests
+    public List<Post> sort(String sortBy, String sortOrder) {
+        Sort sort;
+        if ("desc".equalsIgnoreCase(sortOrder)) {
+            sort = Sort.by(Sort.Direction.DESC, sortBy);
+        } else {
+            sort = Sort.by(Sort.Direction.ASC, sortBy);
+        }
+        return postRepository.findAll(sort);
+    }
+
 }

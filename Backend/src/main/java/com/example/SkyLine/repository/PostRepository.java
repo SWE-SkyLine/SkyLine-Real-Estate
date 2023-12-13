@@ -10,22 +10,21 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-public interface PostRepository extends JpaRepository<Post, Integer> {
 
-    List<Post> findByAreaAndEstateTypeEnumAndStatus(
-            Integer area,
-            EstateTypeEnum estateType,
-            String status
-    );
+public interface PostRepository extends JpaRepository<Post, Integer> {
+    List<Post> findAll();
+    List<Post> findByTitleContainingIgnoreCase(String query);
+
+    // PostRepository.java
+    List<Post> findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String title, String description);
 
     @Query("SELECT p FROM Post p WHERE (:area IS NULL OR p.area = :area) " +
-            "AND (:estateType IS NULL OR p.estateTypeEnum = :estateType) " +
-            "AND (:status IS NULL OR p.status = :status)")
+                    "AND (:estateType IS NULL OR p.estateType = :estateType) " +
+                    "AND (:rent IS NULL OR p.rent = :rent)")
+
     List<Post> findFilteredPosts(
-            @Param("area") Integer area,
-            @Param("estateType") EstateTypeEnum estateType,
-            @Param("status") String status
-    );
+                    @Param("area") Integer area,
+                    @Param("estateType") EstateTypeEnum estateType,
+                    @Param("rent") boolean rent);
 
 }
