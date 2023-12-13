@@ -4,11 +4,11 @@ export class User{
     email:String | undefined;
     password:String | undefined;
     phone_number:String | undefined;
-    userType:UserTypeEnum | undefined;
+    userRole:userRoleEnum | undefined;
 }
 
 
-export enum UserTypeEnum {
+export enum userRoleEnum {
     SUPERADMIN = 'SUPERADMIN',
     ADMIN = 'ADMIN',
     CLIENT = 'CLIENT',

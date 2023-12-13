@@ -277,6 +277,9 @@ export interface FilterData {
               {/* Correct usage of handleFormSubmit */}
               <button
                 className="btn btn-primary"
+                style={{
+                  zIndex : '0'
+                }}
                 type="button" // Change type to "button"
                 onClick={handleSearchButtonClick} // Attach click event
               >
