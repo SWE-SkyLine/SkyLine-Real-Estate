@@ -67,6 +67,8 @@ import { AxiosResponse } from "axios";
 
   useEffect(() => {
 
+
+    console.log("ss");
     for (let i=0; i<all_posts.length; i++) {
       for (let j=0; j<all_posts[i].photosByteArray.length; j++) {
         let photoUrl = `data:image/jpeg;base64,${all_posts[i].photosByteArray[j]}`;
@@ -84,11 +86,11 @@ import { AxiosResponse } from "axios";
     // }
   }
 
-  function handlePreviousImage() {
-    if (currentImageIndex > 0) {
-      setCurrentImageIndex(currentImageIndex - 1);
-    }
-  }
+  // function handlePreviousImage() {
+  //   if (currentImageIndex > 0) {
+  //     setCurrentImageIndex(currentImageIndex - 1);
+  //   }
+  // }
 
 
 
@@ -110,7 +112,10 @@ import { AxiosResponse } from "axios";
     </div>
     <div className={style.right}>
 
-      {all_posts.map((p, index) => (
+       {/* wael search filter */}
+
+
+      {all_posts1.map((p, index) => (
             <div key={index} className={style.contain_post}>
               <div>
                 <div className={`${style.photo}`} style={{ backgroundImage: `url(${x})` }}></div>
@@ -131,18 +136,34 @@ import { AxiosResponse } from "axios";
              <div className={style.post_head}> <label>Map Link:</label> <a href={p.map_link} target="_blank">Location</a> </div>
              </div>
                <div className={style.post_imgs}>
-                <button
+                {/* <button
                   className={style.btn}
                   style={{ borderRadius: "5px", padding: "5px 10px", cursor: "pointer", fontWeight: "500" }}
                   onClick={handlePreviousImage}
                   disabled={currentImageIndex === 0}
                 >
                   &#8678; Previous Photo
-                </button>
-                1
-                {post.photosByteArray}
-                <img
-              src={all_posts1[1]?.photosByteArray[0]}
+                </button> */}
+              
+            {all_posts1[index]?.photosByteArray.map((photo, photoIndex) => (
+              <img
+                key={photoIndex}
+                src={photo}
+                style={{
+                  maxWidth: "80%",
+                  maxHeight: "50%",
+                  margin: 0,
+                  objectFit: "cover",
+                  objectPosition: "center",
+                  borderRadius: "5px",
+                  border: "3px solid rgb(27, 31, 33)",
+                  marginTop: "1rem",
+                }}
+                alt={`Displayed Photo ${photoIndex + 1}`}
+            />
+        ))}
+                {/* <img
+              src={p?.photosByteArray[0]}
               style={{
                     maxWidth: "70%",
                     maxHeight: "50%",
@@ -152,15 +173,15 @@ import { AxiosResponse } from "axios";
                     borderRadius: "5px",
                     border: "3px solid rgb(27, 31, 33)"
                   }}
-                />
-                <button
+                /> */}
+                {/* <button
                   className={style.btn}
                   style={{ borderRadius: "5px", padding: "5px 10px", cursor: "pointer", fontWeight: "500" }}
                   // onClick={handleNextImage(}
                   // disabled={currentImageIndex === images.length - 1}
                 >
                   Next Photo &#8680;
-                </button>
+                </button> */}
               </div>
             </div>
           ))}

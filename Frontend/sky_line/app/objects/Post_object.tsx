@@ -20,5 +20,4 @@ export class Post_object {
     city: any | undefined;
     adress: any | undefined;
     photosByteArray: string[]=[];
-    photos: string[] = [];
 }
