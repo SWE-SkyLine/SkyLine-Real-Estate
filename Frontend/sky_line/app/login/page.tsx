@@ -6,7 +6,7 @@ import { loginRequest, sendEmail, updatePassword, verifyCode } from "../Services
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import Gmail from "./Gmail";
 import Link from "next/link";
-
+import ProfilePage from "../profilePage/page";
 
 const LoginForm = () => {
 
@@ -79,79 +79,12 @@ const LoginForm = () => {
   };
 
   return (
-    // all page
-    <div className={style.container}>
-      {/* left and right parts */}
-      <div className={style.left_img}></div>
-
-      <div className={style.right}>
-        <div className={style.logo}></div>
-        <h2 className={style.header_text}>Login</h2>
-        {/* login form  */}
-        <form className={myStyle.loginForm} onSubmit={handleLogin}>
-          {/* add gmail button */}
-          <label className={myStyle.lable}>Email</label>
-          <div>
-            <input className={myStyle.textBox} type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-          </div>
-
-          <label className={myStyle.lable}>Password</label>
-          <div>
-            <input className={myStyle.textBox} type="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
-          </div>
-
-          {/* user type
-          <div>
-            <label className={myStyle.lable}>
-              <input
-                className={myStyle.radio}
-                type="radio"
-                value="Personal"
-                checked={selectedOption === 'Personal'}
-                required
-                name="userType"
-                onChange={(e) => setSelectedOption(e.target.value)}
-              />
-              Personal
-            </label>
-
-            <label className={myStyle.lable}>
-              <input
-                className={myStyle.radio}
-                type="radio"
-                value="company"
-                checked={selectedOption === 'company'}
-                required
-                name="userType"
-                onChange={(e) => setSelectedOption(e.target.value)}
-              />
-              company
-            </label>
-          </div> */}
-
-          <button className={style.btn_verify} type="submit">
-            Login
-          </button>
-
-          {/* forget password link and popup window  */}
-          <span className={myStyle.lable1}>Not a member? <Link className={myStyle.link1} href="/signup">Sign up now</Link></span>
-          <a className={myStyle.link} href="#" onClick={submitEmail}>
-            Forgot Password
-          </a>
-
-          
-
-          <div className={myStyle.gmaildiv}>
-          <GoogleOAuthProvider clientId="286653287539-cfsq1r439hetsrluac5hdorpjoajbd3h.apps.googleusercontent.com">
-            <Gmail/>
-          </GoogleOAuthProvider>
-          </div>
-        </form>
-        
-            
-        
+      <div>
+      <div>
+        Akeny navbar
+</div>
+    <ProfilePage></ProfilePage>
       </div>
-    </div>
   );
 };
 

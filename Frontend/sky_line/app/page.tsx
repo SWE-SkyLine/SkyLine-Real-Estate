@@ -15,6 +15,7 @@ export default function Home() {
   };
   
   return (
+
     <div className={styles.main}>
       <button className={style.btn_verify} onClick={() => handleClick("/login")}>Login</button>
     <br />
