@@ -35,9 +35,7 @@ export default function Home() {
     <Navbar/>
     {/* <SortFilter/> */}
     <Home_page/>
-    <div>
-        <h1>Welcome to Next.js</h1>
-    </div>
+  
     </>
 
 // {/* <>

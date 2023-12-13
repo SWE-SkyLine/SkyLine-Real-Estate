@@ -225,10 +225,25 @@ export interface FilterData {
   return (
     <>
     <Navbar/>
-         {/*start of sort and filter */}
-    <>
-      <div className="container mt-3">
-        <div className="row" style={{ marginTop: "70px" }}>
+    
+  <div className={style.container}>
+
+    <div className={style.left}>
+      <div className={style.upperSlice}>
+        <div className={style.photo} style={{ backgroundImage: `url(${photo})` }}></div>
+        <label className={style.name}>{first_name} {last_name}</label>
+        <div className={style.phone}><i className="fa-solid fa-phone"></i> <span>01202743255</span></div>
+       {/* <div className={style.follow}><i className="fa-solid fa-user-group"></i> <span> Followers: 50</span></div>
+       <div className={style.follow}> <i className="fa-solid fa-user-check"></i> <span>Following: 100</span></div> */}
+        <button className={style.btn_edit}>Edit Profile</button>
+      </div>
+      <div className={style.lowerSlice}></div>
+    </div>
+
+    <div className={style.right}>
+
+    <div className="container mt-3">
+        <div className="row" style={{ marginTop: "-10px",marginBottom:"2rem",marginLeft:"7rem" }}>
           {/* Search Bar */}
           <div className="col-6">
             <div className="input-group">
@@ -349,23 +364,6 @@ export interface FilterData {
           </Form>
         </Modal.Body>
       </Modal>
-    </>
-                {/*end of sort and filter */}
-
-  <div className={style.container}>
-
-    <div className={style.left}>
-      <div className={style.upperSlice}>
-        <div className={style.photo} style={{ backgroundImage: `url(${photo})` }}></div>
-        <label className={style.name}>{first_name} {last_name}</label>
-        <div className={style.phone}><i className="fa-solid fa-phone"></i> <span>01202743255</span></div>
-       {/* <div className={style.follow}><i className="fa-solid fa-user-group"></i> <span> Followers: 50</span></div>
-       <div className={style.follow}> <i className="fa-solid fa-user-check"></i> <span>Following: 100</span></div> */}
-        <button className={style.btn_edit}>Edit Profile</button>
-      </div>
-      <div className={style.lowerSlice}></div>
-    </div>
-    <div className={style.right}>
 
       {all_posts.map((p, index) => (
             <div key={index} className={style.contain_post}>
@@ -396,10 +394,8 @@ export interface FilterData {
                 >
                   &#8678; Previous Photo
                 </button>
-                1
-                {post.photosByteArray}
                 <img
-              src={all_posts1[1]?.photosByteArray[0]}
+              src={all_posts1[index]?.photosByteArray[0]}
               style={{
                     maxWidth: "70%",
                     maxHeight: "50%",
@@ -425,6 +421,7 @@ export interface FilterData {
   </div>     
 </div>
     </>
+
 
 // {/* <>
 // <button className={style.btn_verify} onClick={() => handleClick("/login")}>Login</button>
