@@ -22,11 +22,11 @@ const NavbarComponent: React.FC = () => {
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll" className="justify-content-center">
             <Nav className="me-auto my-2 my-lg-0" navbarScroll>
-            <Link href="/support" className={`nav-link ${style.navLink}`}>Home</Link>
-            <Link href="/login" className={`nav-link ${style.navLink}`}>Rent</Link>
-            <Link href="/login" className={`nav-link ${style.navLink}`}>Buy</Link>
+            <Link href="/Home" className={`nav-link ${style.navLink}`}>Home</Link>
+            <Link href="/Home" className={`nav-link ${style.navLink}`}>Rent</Link>
+            <Link href="/Home" className={`nav-link ${style.navLink}`}>Buy</Link>
             <Link href="/support" className={`nav-link ${style.navLink}`}>Support</Link>
-            <Link href="/login" className={`nav-link ${style.navLink}`}>About Us</Link>
+            <Link href="/Home" className={`nav-link ${style.navLink}`}>About Us</Link>
               {/* <Form className="d-flex">
                 <InputGroup>
                   <Form.Control
