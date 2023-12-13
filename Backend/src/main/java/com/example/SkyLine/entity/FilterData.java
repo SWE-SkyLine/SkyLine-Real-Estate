@@ -8,7 +8,8 @@ import lombok.*;
 @Setter
 public class FilterData {
 
-    private Integer area;
+    private Integer priceFrom;
+    private Integer priceTo;
     private EstateTypeEnum estateType;
     private boolean rent; 
 }

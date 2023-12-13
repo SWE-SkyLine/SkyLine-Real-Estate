@@ -39,9 +39,10 @@ public class PostService {
 
     // New method for handling filter requests
     public List<Post> filter(FilterData filterData) {
-        // Perform filter logic here, for example
+        // Perform filter logic here, using priceFrom and priceTo
         return postRepository.findFilteredPosts(
-                filterData.getArea(),
+                filterData.getPriceFrom(),
+                filterData.getPriceTo(),
                 filterData.getEstateType(),
                 filterData.isRent()
         );
