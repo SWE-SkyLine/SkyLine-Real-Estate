@@ -142,6 +142,7 @@ export interface FilterData {
       const filterResponse = await filterResponsePromise;
       if (filterResponse.status === 200) {
         console.log(filterResponse.data);
+        setAllPosts(filterResponse.data)
         console.log("Filter request sent successfully");
       } else {
         if (filterResponse.status) {
@@ -185,6 +186,7 @@ export interface FilterData {
       if (sortResponse.status === 200) {
         console.log(`Sort request for ${sortType} sent successfully`);
         console.log(sortResponse.data)
+        setAllPosts(sortResponse.data)
       } else {
         console.error(`Error sending sort request for ${sortType}`);
       }
@@ -207,6 +209,7 @@ export interface FilterData {
           if (searchResponse.status === 200) {
             console.log(`search request for ${searchQuery} sent successfully`);
             console.log(searchResponse.data)
+            setAllPosts(searchResponse.data)
           } else {
             console.error(`Error sending sort request for ${searchQuery}`);
           }
