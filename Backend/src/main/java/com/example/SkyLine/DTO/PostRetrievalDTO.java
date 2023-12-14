@@ -39,6 +39,9 @@ public class PostRetrievalDTO {
     private String address;
     private String city;
     public List<byte[]> photosByteArray = new ArrayList<>();
+    //
+    private String fullName;
+    private int postCreatorUID;
 
     public PostRetrievalDTO(Post post) throws MalformedURLException {
         this.id = post.getId();
@@ -141,5 +144,7 @@ public class PostRetrievalDTO {
     public String getCity() {
         return city;
     }
+
+    public String getFullName(){return fullName;}
 
 }
