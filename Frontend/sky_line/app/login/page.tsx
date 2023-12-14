@@ -7,7 +7,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import Gmail from "./Gmail";
 import Navbar from "../navbar/page";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
 
@@ -100,7 +100,7 @@ const LoginForm = () => {
 
                     <label className={commonStyle.head}>Password</label>
                     <div>
-                        <input className={commonStyle.emailTextBox} placeholder="Passeord" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
+                        <input className={commonStyle.emailTextBox} placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
                     </div>
 
                     <button className={commonStyle.sendBtn} type="submit">

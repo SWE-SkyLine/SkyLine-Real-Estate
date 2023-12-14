@@ -94,7 +94,10 @@ function From_signup() {
             const res = await SignupRequest(user);
             if ((res as AxiosResponse).status === 200) {
                 router.push(`/page_verify?Email=${user.email}`);
-            } else { 
+            }else if((res as AxiosResponse).status === 409){
+                alert("user already exists")
+            } 
+            else { 
                 // we popup with error message 
                 handleShow();
             }
