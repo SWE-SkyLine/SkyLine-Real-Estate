@@ -47,4 +47,8 @@ public class Post {
     @JoinColumn(name = "post_id")
     private List<Photo> photos = new ArrayList<Photo>();
 
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private User client;
+
 }

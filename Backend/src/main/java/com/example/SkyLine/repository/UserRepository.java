@@ -15,6 +15,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     public boolean existsUserByEmail(String email);
     User findByEmail(String email);
     public User findUserByEmail(String email);
+    public User findUserById(int userId);
     @Transactional
     @Modifying
     @Query("UPDATE User n SET n.userRole = :newValue WHERE n.id = :UserId")
