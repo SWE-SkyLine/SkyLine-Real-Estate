@@ -5,7 +5,7 @@ import commonStyle from "../Utility/CommonCode/common.module.css";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { User, UserTypeEnum } from "../objects/User";
+import { User, userRoleEnum } from "../objects/User";
 import {SignupRequest} from "../Services/UserSignupService"
 import { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
@@ -80,12 +80,12 @@ function From_signup() {
             user.password = data.password;
             user.phone_number = data.Phone;
             if(kind =="User"){
-                user.userType= UserTypeEnum.CLIENT; 
+                user.userRole= userRoleEnum.CLIENT; 
                 user.firstName = data.firstName;
                 user.lastName = data.lastName;
             }
             else{
-                user.userType= UserTypeEnum.COMPANY;
+                user.userRole= userRoleEnum.COMPANY;
                 user.firstName = data.companyName;
                 user.lastName = "";
             }
@@ -94,7 +94,10 @@ function From_signup() {
             const res = await SignupRequest(user);
             if ((res as AxiosResponse).status === 200) {
                 router.push(`/page_verify?Email=${user.email}`);
-            } else { 
+            }else if((res as AxiosResponse).status === 409){
+                alert("user already exists")
+            } 
+            else { 
                 // we popup with error message 
                 handleShow();
             }

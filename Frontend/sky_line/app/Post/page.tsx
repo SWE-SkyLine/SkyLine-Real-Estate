@@ -61,25 +61,14 @@ enum EstateType {
     LAND = 'LAND',
 }
 
-const Post: React.FC = () => {
+function Post({ userId }: { userId: string }) {
     const [showModal, setShowModal] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
     const [isValid, setIsValid] = useState(true);
     const [isSend, setIsSend] = useState(0);
 
-    // const [formData, setFormData] = useState<FormData>({
-    //     title: '',
-    //     price: '',
-    //     isRent: false,
-    //     area: '',
-    //     description: '',
-    //     estateType: EstateType.APARTMENT,
-    //     mapLink: '',
-    //     bedroom: '',
-    //     bathroom: '',
-    //     level: '',
-    //     photos: [],
-    // });
+    //console.log("userid: " + userId)
+
     const [formData, setFormData] = useState<FormDataState>({
         title: '',
         price: '',
@@ -88,8 +77,8 @@ const Post: React.FC = () => {
         description: '',
         estateType: EstateType.APARTMENT,
         mapLink: '',
-        address:'',
-        city:'',
+        address: '',
+        city: '',
         bedroom: '',
         bathroom: '',
         level: '',
@@ -104,12 +93,55 @@ const Post: React.FC = () => {
     };
 
 
-    const handlePost = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    // const handlePost = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    //     // Close the open modal 
+    //     setShowModal(false);
+    //     // Post sending
+    //     event.preventDefault();
+    //     let data = new FormData();
+    //     data.append(`UID`, userId)
+    //     for (const key in formData) {
+    //         console.log(key + " : values :");
+    //         if (key === 'photos' && Array.isArray(formData.photos)) {
+    //             console.log(formData.photos);
+    //             formData.photos.forEach((photo) => {
+    //                 data.append(`photos`, photo);
+    //             });
+    //         } else {
+    //             console.log(formData[key as keyof FormDataState] as string + " ")
+    //             data.append(key, formData[key as keyof FormDataState] as string);
+    //         }
+    //     }
+
+    //     const res = await publishPostRequest(data);
+    //     console.log("post request formData : "+ data.get(`UID`));
+    //     console.log(data.values);
+
+    //     if (typeof res === 'object' && 'status' in res) {
+    //         console.log(res.status);
+    //         if (res.status === 200) {
+    //             setIsSend(1); // Display successful message
+    //         } else {
+    //             setIsSend(2); // Display error message
+    //         }
+    //     } else {
+    //         setIsSend(2); // Display error message
+    //         console.error(res); // Log the error message
+    //     }
+    // };
+
+
+
+
+
+
+    const handlePost = async (event: React.FormEvent<HTMLFormElement>) => {
         // Close the open modal 
         setShowModal(false);
         // Post sending
         event.preventDefault();
         let data = new FormData();
+        data.append(`UID`, userId)
         for (const key in formData) {
             console.log(key + " : values :");
             if (key === 'photos' && Array.isArray(formData.photos)) {
@@ -122,11 +154,11 @@ const Post: React.FC = () => {
                 data.append(key, formData[key as keyof FormDataState] as string);
             }
         }
-    
+
         const res = await publishPostRequest(data);
-        console.log(data);
+        console.log("post request formData : " + data.get(`UID`));
         console.log(data.values);
-    
+
         if (typeof res === 'object' && 'status' in res) {
             console.log(res.status);
             if (res.status === 200) {
@@ -143,39 +175,18 @@ const Post: React.FC = () => {
 
 
 
-    /**test photo */
-    // const handlePhotoTest = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    //     // Close the open modal 
-    //     setShowModal(false);
-    //     // Prevent the default form submission
-    //     event.preventDefault();
-
-    //     // Ensure there is at least one photo
-    //     if (formData.photos.length === 0) {
-    //         console.error("No photos to send");
-    //         setIsSend(2); // Display wrong message
-    //         return;
-    //     }
-
-    //     // Send all the photos
-    //     const res = await testPhotoApi(formData.photos);
-    //     console.log(formData.photos);
-
-    //     if (typeof res === 'object' && 'status' in res) {
-    //         console.log(res.status);
-    //         if (res.status === 200) {
-    //             setIsSend(1); // Display successful message
-    //         } else {
-    //             setIsSend(2); // Display wrong message
-    //         }
-    //     } else {
-    //         setIsSend(2); // Display wrong message
-    //         console.error(res); // Log the error message
-    //     }
-    // };
 
 
-    //
+
+
+
+
+
+
+
+
+
+
 
     const handleChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFormData(prevState => ({
@@ -366,169 +377,173 @@ const Post: React.FC = () => {
                         </h2>
                     </div>
 
-                    <div style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}>
-                        <React.Fragment>
-                            <Grid container spacing={3}>
-                                <Grid item xs={12}>
-                                    <TextField
-                                        required
-                                        label="Title"
-                                        fullWidth
-                                        variant="outlined"
-                                        onChange={handleChangeTitle}
-                                    />
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <FormControl required sx={{ minWidth: 120 }}>
-                                        <InputLabel id="demo-simple-select-required-label">Type</InputLabel>
-                                        <Select
-                                            value={formData.estateType}
-                                            label="Type *"
-                                            onChange={(event: SelectChangeEvent<EstateType>) => handleChangeType(event)}
-                                        >
-                                            <MenuItem value={EstateType.APARTMENT}>Apartment</MenuItem>
-                                            <MenuItem value={EstateType.HOUSE}>House</MenuItem>
-                                            <MenuItem value={EstateType.VILLA}>Villa</MenuItem>
-                                            <MenuItem value={EstateType.LAND}>Land</MenuItem>
-
-                                        </Select>
-                                        <FormHelperText>Required</FormHelperText>
-                                    </FormControl>
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <FormControl>
-                                        <RadioGroup
-                                            defaultValue="Sale"
-                                            name="radio-buttons-group"
-                                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleRentOrBuyChange(event)}
-                                        >
-                                            <FormControlLabel value="sale" control={<Radio />} label="Sale" />
-                                            <FormControlLabel value="rent" control={<Radio />} label="Rent" />
-                                        </RadioGroup>
-                                    </FormControl>
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <InputLabel htmlFor="outlined-adornment-amount">Price</InputLabel>
-                                    <OutlinedInput
-                                        id="outlined-adornment-amount"
-                                        onChange={handlePriceChange}
-                                        startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                                        label="Price"
-                                        error={!isValid}
-                                    />
-                                    {!isValid && <FormHelperText error>Value must be greater than 10$</FormHelperText>}
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <TextField
-                                        required
-                                        label="Area (m²)"
-                                        fullWidth
-                                        variant="outlined"
-                                        onChange={handleAreaChange}
-                                    />
-                                </Grid>
-                                <Grid item xs={12} sm={3}>
-                                    <TextField
-                                        required
-                                        label="Location Link"
-                                        fullWidth
-                                        variant="outlined"
-                                        onChange={handleLocationLinkChange}
-                                    />
-                                </Grid>
-                                
-                                <Grid item xs={12} sm={6}>
-                                    <TextField
-                                        required
-                                        label="Adress"
-                                        fullWidth
-                                        variant="outlined"
-                                        onChange={handleAdressChange}
-                                    />
-                                </Grid>
-                                <Grid item xs={12} sm={3}>
-                                    <TextField
-                                        required
-                                        label="City"
-                                        fullWidth       
-                                        variant="outlined"
-                                        onChange={handleCityChange}
-                                    />
-                                </Grid>
-                                
-                                <Grid item xs={6} sm={4}>
-                                    <TextField
-                                        required
-                                        label="Bedrooms"
-                                        fullWidth
-                                        variant="outlined"
-                                        onChange={handleBedroomChange}
-                                    />
-                                </Grid>
-                                <Grid item xs={6} sm={4}>
-                                    <TextField
-                                        required
-                                        label="Bathrooms"
-                                        fullWidth
-                                        variant="outlined"
-                                        onChange={handleBathroomChange}
-                                    />
-                                </Grid>
-                                <Grid item xs={6} sm={4}>
-                                    <TextField
-                                        required
-                                        label="Level"
-                                        fullWidth
-                                        variant="outlined"
-                                        onChange={handleLevelChange}
-                                    />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <TextField
-                                        required
-                                        label="Description"
-                                        fullWidth
-                                        variant="outlined"
-                                        multiline
-                                        rows={4}
-                                        onChange={handleDescChange}
-                                    />
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <div className="mb-3">
-                                        <label htmlFor="photos" className="form-label">
-                                            Photos
-                                        </label>
-                                        <input
-                                            type="file"
-                                            className="form-control"
-                                            id="photos"
-                                            name="photos"
-                                            multiple
-                                            onChange={handleFileChange}
+                    <form onSubmit={handlePost}>
+                        <div style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}>
+                            <React.Fragment>
+                                <Grid container spacing={3}>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            required
+                                            label="Title"
+                                            fullWidth
+                                            variant="outlined"
+                                            onChange={handleChangeTitle}
                                         />
-                                    </div>
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <FormControl required sx={{ minWidth: 120 }}>
+                                            <InputLabel id="demo-simple-select-required-label">Type</InputLabel>
+                                            <Select
+                                                value={formData.estateType}
+                                                label="Type *"
+                                                onChange={(event: SelectChangeEvent<EstateType>) => handleChangeType(event)}
+                                            >
+                                                <MenuItem value={EstateType.APARTMENT}>Apartment</MenuItem>
+                                                <MenuItem value={EstateType.HOUSE}>House</MenuItem>
+                                                <MenuItem value={EstateType.VILLA}>Villa</MenuItem>
+                                                <MenuItem value={EstateType.LAND}>Land</MenuItem>
+
+                                            </Select>
+                                            <FormHelperText>Required</FormHelperText>
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <FormControl>
+                                            <RadioGroup
+                                                defaultValue="Sale"
+                                                name="radio-buttons-group"
+                                                onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleRentOrBuyChange(event)}
+                                            >
+                                                <FormControlLabel value="sale" control={<Radio />} label="Sale" />
+                                                <FormControlLabel value="rent" control={<Radio />} label="Rent" />
+                                            </RadioGroup>
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <InputLabel htmlFor="outlined-adornment-amount">Price</InputLabel>
+                                        <OutlinedInput
+                                            id="outlined-adornment-amount"
+                                            onChange={handlePriceChange}
+                                            startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                                            label="Price"
+                                            error={!isValid}
+                                        />
+                                        {!isValid && <FormHelperText error>Value must be greater than 10$</FormHelperText>}
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <TextField
+                                            required
+                                            label="Area (m²)"
+                                            fullWidth
+                                            variant="outlined"
+                                            onChange={handleAreaChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={3}>
+                                        <TextField
+                                            required
+                                            label="Location Link"
+                                            fullWidth
+                                            variant="outlined"
+                                            onChange={handleLocationLinkChange}
+                                        />
+                                    </Grid>
+
+                                    <Grid item xs={12} sm={6}>
+                                        <TextField
+                                            required
+                                            label="Adress"
+                                            fullWidth
+                                            variant="outlined"
+                                            onChange={handleAdressChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={3}>
+                                        <TextField
+                                            required
+                                            label="City"
+                                            fullWidth
+                                            variant="outlined"
+                                            onChange={handleCityChange}
+                                        />
+                                    </Grid>
+
+                                    <Grid item xs={6} sm={4}>
+                                        <TextField
+                                            required
+                                            label="Bedrooms"
+                                            fullWidth
+                                            variant="outlined"
+                                            onChange={handleBedroomChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={6} sm={4}>
+                                        <TextField
+                                            required
+                                            label="Bathrooms"
+                                            fullWidth
+                                            variant="outlined"
+                                            onChange={handleBathroomChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={6} sm={4}>
+                                        <TextField
+                                            required
+                                            label="Level"
+                                            fullWidth
+                                            variant="outlined"
+                                            onChange={handleLevelChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            required
+                                            label="Description"
+                                            fullWidth
+                                            variant="outlined"
+                                            multiline
+                                            rows={4}
+                                            onChange={handleDescChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <div className="mb-3">
+                                            <label htmlFor="photos" className="form-label">
+                                                Photos
+                                            </label>
+                                            <input
+                                                type="file"
+                                                className="form-control"
+                                                id="photos"
+                                                name="photos"
+                                                multiple
+                                                required
+                                                onChange={handleFileChange}
+                                            />
+                                        </div>
+                                    </Grid>
                                 </Grid>
-                            </Grid>
-                            <div style={{ display: 'flex' }}>
-                                <Grid item xs={12} sm={6} style={{ margin: '10px' }}>
-                                    <Button variant="outlined" fullWidth onClick={handleCloseModal} style={{ margin: '10px' }}>
-                                        Cancel
-                                    </Button>
-                                </Grid>
-                                <Grid item xs={12} sm={6} style={{ margin: '10px' }}>
-                                    <Button variant="contained" fullWidth endIcon={<SendIcon />} onClick={handlePost} style={{ margin: '10px' }}>
-                                        Publish
-                                    </Button>
-                                </Grid>
-                            </div>
-                        </React.Fragment>
-                    </div>
+                                <div style={{ display: 'flex' }}>
+                                    <Grid item xs={12} sm={6} style={{ margin: '10px' }}>
+                                        <Button variant="outlined" fullWidth onClick={handleCloseModal} style={{ margin: '10px' }}>
+                                            Cancel
+                                        </Button>
+                                    </Grid>
+                                    <Grid item xs={12} sm={6} style={{ margin: '10px' }}>
+                                        <Button variant="contained" fullWidth endIcon={<SendIcon />} type="submit" style={{ margin: '10px' }}>
+                                            Publish
+                                        </Button>
+                                    </Grid>
+                                </div>
+                            </React.Fragment>
+                        </div>
+                    </form>
+
                 </Modal>
             </CSSTransition>
         </div>

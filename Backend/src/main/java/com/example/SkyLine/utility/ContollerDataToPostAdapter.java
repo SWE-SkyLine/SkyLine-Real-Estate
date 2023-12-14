@@ -22,7 +22,8 @@ public class ContollerDataToPostAdapter {
                                            String city,
                                            String bedroom,
                                            String bathroom,
-                                           String level) {
+                                           String level
+                                           ) {
         // create entity without photoes due to concurrency problems if I fetch the coming id of the post
         Post post = new Post()
                 .setPublishDate(Date.valueOf(LocalDate.now()))

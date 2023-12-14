@@ -7,6 +7,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import Gmail from "./Gmail";
 import Navbar from "../navbar/page";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
 
@@ -59,19 +60,20 @@ const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [selectedOption, setSelectedOption] = useState('');
   const [loginResult, setLoginResult] = useState(false);
-
+  let router =useRouter();
   // on submit handler
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("login buton")
-    console.log(email)
-    console.log(password)
-    console.log(selectedOption)
+    // console.log("login buton")
+    // console.log(email)
+    // console.log(password)
+    // console.log(selectedOption)
     const res = await loginRequest(email, password, selectedOption);
     // setLoginResult(res);
     //console.log(res)
     if((res as Response).status ==200){
-      window.location.assign('/')
+        // id first, last name
+        router.push(`/Home?id=${res.data}`)
     }
     else{
       alert("User is not registered")
@@ -98,7 +100,7 @@ const LoginForm = () => {
 
                     <label className={commonStyle.head}>Password</label>
                     <div>
-                        <input className={commonStyle.emailTextBox} placeholder="Passeord" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
+                        <input className={commonStyle.emailTextBox} placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
                     </div>
 
                     <button className={commonStyle.sendBtn} type="submit">

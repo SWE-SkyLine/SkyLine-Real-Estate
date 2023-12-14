@@ -13,10 +13,12 @@ import Navbar from './navbar/page'
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import router from "next/navigation";
 import { useRouter } from "next/navigation";  
+import Home_page from './Home/page'
 
 
 import PostCreate from './PostCreate/page'
 import SortFilter from './sortFilter/page'
+import Post from "./Post/page";
  
 
 
@@ -32,11 +34,10 @@ export default function Home() {
 
      <>
     <Navbar/>
-    <SortFilter/>
-
-    <div>
-        <h1>Welcome to Next.js</h1>
-    </div>
+    {/* <SortFilter/> */}
+    <Post/>
+    <Home_page/>
+  
     </>
 
 // {/* <>

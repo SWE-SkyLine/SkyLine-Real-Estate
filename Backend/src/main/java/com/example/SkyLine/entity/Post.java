@@ -28,8 +28,9 @@ public class Post {
 
     private String title;
     private int price;
-    private boolean rent;
+    private Boolean rent;
     private short area;
+    @Column(columnDefinition = "LONGTEXT")
     private String description;
 
     @Enumerated(value = EnumType.STRING)
@@ -46,5 +47,9 @@ public class Post {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
     private List<Photo> photos = new ArrayList<Photo>();
+
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private User client;
 
 }

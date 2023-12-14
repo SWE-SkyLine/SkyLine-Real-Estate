@@ -12,10 +12,13 @@ import java.util.List;
 @Getter
 @DiscriminatorValue(value = "Client")
 public class Client extends User {
- ///////////////////////              محدش يمسح ام الكومنت ده بدل ما اعمل معاه الصح
-//    @OneToMany(cascade = CascadeType.ALL)
+
+    //    @OneToMany(cascade = CascadeType.ALL)
 //    @JoinColumn(name="client_id")
 //    private List<Post> posts = new ArrayList<Post>();
+    @OneToMany(mappedBy = "client",cascade = CascadeType.ALL)
+    private List<Post> posts = new ArrayList<Post>();
+
     @OneToMany(mappedBy = "client")
     private List<Bid> bids = new ArrayList<>();
 

@@ -1,5 +1,7 @@
 // api.ts
 
+import axios from "axios";
+
 const apiUrl = 'http://localhost:8080';
 
 // interface LoginResponse {
@@ -8,37 +10,50 @@ const apiUrl = 'http://localhost:8080';
 // }
 
 const loginRequest = async (email: string, password: string, type: string) => {
-  const loginUrl = `${apiUrl}/register/user/login`
-  // if(type === "company")
-  //   loginUrl = `${apiUrl}/register/company`;
-  // else
-  //   loginUrl = `${apiUrl}/register/user/login`;
-
-  const requestBody = {
-    email: email,
-    password: password,
-  };
+  const url = `${apiUrl}/register/user/login`
 
   try {
-    const response = await fetch(loginUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(requestBody),
-    });
-
-    // if (!response.ok) {
-    //   throw new Error('Network response was not ok');
-    // }
-
+    const response = await axios.post(url, { email, password, type });
     return response;
-  } catch (error) {
-
-    console.error('Error during login:', error);
-    return 403;   
+  }
+  catch (error:any) {
+    console.log(error.response);
+    return error.response
   }
 };
+
+// const loginRequest = async (email: string, password: string, type: string) => {
+//   const loginUrl = `${apiUrl}/register/user/login`
+//   // if(type === "company")
+//   //   loginUrl = `${apiUrl}/register/company`;
+//   // else
+//   //   loginUrl = `${apiUrl}/register/user/login`;
+
+//   const requestBody = {
+//     email: email,
+//     password: password,
+//   };
+
+//   try {
+//     const response = await fetch(loginUrl, {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify(requestBody),
+//     });
+
+//     // if (!response.ok) {
+//     //   throw new Error('Network response was not ok');
+//     // }
+
+//     return response;
+//   } catch (error) {
+
+//     console.error('Error during login:', error);
+//     return 403;   
+//   }
+// };
 
 const sendEmail = async (email: string): Promise<void> => {
   try {  

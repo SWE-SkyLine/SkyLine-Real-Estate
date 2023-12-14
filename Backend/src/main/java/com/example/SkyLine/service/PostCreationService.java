@@ -3,8 +3,10 @@ package com.example.SkyLine.service;
 import com.example.SkyLine.DTO.PostRetrievalDTO;
 import com.example.SkyLine.entity.Photo;
 import com.example.SkyLine.entity.Post;
+import com.example.SkyLine.entity.User;
 import com.example.SkyLine.repository.PhotoRepository;
 import com.example.SkyLine.repository.PostRepository;
+import com.example.SkyLine.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,8 +25,10 @@ import java.util.List;
 public class PostCreationService {
     @Autowired
     private PostRepository postRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-    public int createPost(Post post, MultipartFile[] photos) {
+    public int createPost(Post post, MultipartFile[] photos, String postCreatorUID) {
         Post newPost = postRepository.save(post);
         int postId = newPost.getId();
         try {
@@ -44,14 +48,20 @@ public class PostCreationService {
         } catch (IOException e) {
             e.getMessage();
         }
+        // save UID post creator
+        User postCreator = userRepository.findUserById(Integer.valueOf(postCreatorUID));
+
+        newPost.setClient(postCreator);
+
         postRepository.save(newPost);
 
         return postId;
 
     }
+
     public List<PostRetrievalDTO> PostToRetrievalEntity(List<Post> posts) throws MalformedURLException {
-        List<PostRetrievalDTO>  retrievalDTOS = new ArrayList<>();
-        for(Post p : posts){
+        List<PostRetrievalDTO> retrievalDTOS = new ArrayList<>();
+        for (Post p : posts) {
             try {
                 retrievalDTOS.add(new PostRetrievalDTO(p));
             } catch (MalformedURLException e) {

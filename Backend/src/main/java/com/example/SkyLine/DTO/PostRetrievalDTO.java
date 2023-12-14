@@ -28,7 +28,7 @@ public class PostRetrievalDTO {
     private Date expiryDate;
     private String title;
     private int price;
-    private boolean rent;
+    private Boolean rent;
     private short area;
     private String description;
     private EstateTypeEnum estateType;
@@ -38,6 +38,8 @@ public class PostRetrievalDTO {
     private String mapLink;
     private String address;
     private String city;
+    private String fullName;
+    private int postCreatorUID;
     public List<byte[]> photosByteArray = new ArrayList<>();
 
     public PostRetrievalDTO(Post post) throws MalformedURLException {
@@ -46,7 +48,7 @@ public class PostRetrievalDTO {
         this.expiryDate = post.getExpiryDate();
         this.title = post.getTitle();
         this.price = post.getPrice();
-        this.rent = post.isRent();
+        this.rent = post.getRent();
         this.area = post.getArea();
         this.description = post.getDescription();
         this.estateType = post.getEstateType();
@@ -56,24 +58,14 @@ public class PostRetrievalDTO {
         this.mapLink = post.getMapLink();
         this.address = post.getAddress();
         this.city = post.getCity();
+        this.postCreatorUID = post.getClient().getId();
+        this.fullName = post.getClient().getFirstName() + " " + post.getClient().getLastName();
+
 
         try {
             for (Photo photo : post.getPhotos()) {
                 Path filePath = Paths.get(photo.getPostPhotoURL()).toAbsolutePath();
-
-                String os = System.getProperty("os.name").toLowerCase();
-                if (os.contains("win")) {
-
-                    Path modifiedParent = filePath.getParent().resolveSibling("Backend").resolve("uploads");
-                    filePath = modifiedParent.resolve(filePath.getFileName());
-                } else {
-
-                    filePath = filePath.resolveSibling("Backend").resolve("uploads").resolve(filePath.getFileName());
-                }
-
-                URL fileUrl = filePath.toUri().toURL();
-
-                Resource resource = new UrlResource(fileUrl);
+                Resource resource = new UrlResource(Paths.get(photo.getPostPhotoURL()).toUri());
                 photosByteArray.add(StreamUtils.copyToByteArray(resource.getInputStream()));
             }
         } catch (Exception e) {
@@ -102,7 +94,7 @@ public class PostRetrievalDTO {
         return price;
     }
 
-    public boolean isRent() {
+    public Boolean isRent() {
         return rent;
     }
 
@@ -140,6 +132,10 @@ public class PostRetrievalDTO {
 
     public String getCity() {
         return city;
+    }
+
+    public String getFullName() {
+        return fullName;
     }
 
 }
