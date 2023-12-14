@@ -30,6 +30,7 @@ public class Post {
     private int price;
     private Boolean rent;
     private short area;
+    @Column(columnDefinition = "LONGTEXT")
     private String description;
 
     @Enumerated(value = EnumType.STRING)

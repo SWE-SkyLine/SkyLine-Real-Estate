@@ -29,7 +29,7 @@ public class RegisterationController {
     @PostMapping("/user/signup")
     public ResponseEntity<?> signUp(@RequestBody UserRequestDTO user){
         if(regesterationService.userExists(user.getEmail())){
-            return new ResponseEntity<String>("user already exists", HttpStatus.IM_USED);
+            return new ResponseEntity<String>("user already exists", HttpStatus.CONFLICT);
         }
         else{
             return new ResponseEntity<User>(regesterationService.register(user), HttpStatus.OK);

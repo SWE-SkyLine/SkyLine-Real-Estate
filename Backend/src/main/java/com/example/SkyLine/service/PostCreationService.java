@@ -50,6 +50,7 @@ public class PostCreationService {
         }
         // save UID post creator
         User postCreator = userRepository.findUserById(Integer.valueOf(postCreatorUID));
+
         newPost.setClient(postCreator);
 
         postRepository.save(newPost);
