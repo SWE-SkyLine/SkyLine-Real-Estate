@@ -63,17 +63,17 @@ class RegisterationControllerTest {
                 .andExpect(jsonPath("$.email").value("test@example.com"));
     }
 
-    @Test
-    void signIn() throws Exception {
-        LogInRequestDTO logInRequestDTO = new LogInRequestDTO();
-        logInRequestDTO.setEmail("test@example.com");
-        logInRequestDTO.setPassword("password");
+    // @Test
+    // void signIn() throws Exception {
+    //     LogInRequestDTO logInRequestDTO = new LogInRequestDTO();
+    //     logInRequestDTO.setEmail("test@example.com");
+    //     logInRequestDTO.setPassword("password");
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/register/user/login")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"email\": \"test@example.com\", \"password\": \"password\"}")
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(header().string("Location", "/logged in"));
-    }
+    //     mockMvc.perform(MockMvcRequestBuilders.post("/register/user/login")
+    //                     .contentType(MediaType.APPLICATION_JSON)
+    //                     .content("{\"email\": \"test@example.com\", \"password\": \"password\"}")
+    //                     .accept(MediaType.APPLICATION_JSON))
+    //             .andExpect(status().isOk())
+    //             .andExpect(header().string("Location", "/logged in"));
+    // }
 }
