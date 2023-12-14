@@ -15,6 +15,7 @@ import {filter_all_posts} from "../Services/PostService";
 import { sort_all_posts } from "../Services/PostService";
 import { search_all_posts } from "../Services/PostService";
 import { AxiosResponse } from "axios";
+import { useRouter } from "next/navigation";
 
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -34,31 +35,20 @@ export interface FilterData {
 
  export default function Home_page() {
 
-  let first_name="KARIM",last_name="TAREK";
-  let photo="../assets/user3.jpeg"
+  
+  let first_name="Nagui",last_name="Mostafa";
+  let photo="/img.png"
   const x = '/assets/user.jpg';
-  const home= '/assets/home1.jpeg';
-  const inside1= '/assets/inside1.jpeg';
-  const inside2= '/assets/inside2.jpeg';
-  const inside3= '/assets/inside3.jpg';
-  // const images: string[]=[];
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+ 
 
   var post :Post_object=new Post_object();
-  // post.area=10;
-  // post.title="Charming Family Home with Modern Elegance and Picturesque Views"
-  // post.description="Welcome to this beautifully designed family home that seamlessly combines modern elegance with the warmth of a welcoming retreat. Nestled in a serene neighborhood, this residence offers a perfect blend of comfort and style. The thoughtful layout ensures ample space for family gatherings, entertaining guests, and creating lasting memories."
-  // post.bathroom=4
-  // post.level=1;
-  // post.map_link="https://www.bing.com/ck/a?!&&p=23e5b8e8a975aad9JmltdHM9MTcwMjMzOTIwMCZpZ3VpZD0zOTM4ZWFmOS1jYWI4LTY1YTMtMTcxNS1mOTQwY2JjZjY0ZGQmaW5zaWQ9NTc2Mg&ptn=3&ver=2&hsh=3&fclid=3938eaf9-cab8-65a3-1715-f940cbcf64dd&u=a1L21hcHM_Jm1lcGk9MTA3fkxvY2FsflVua25vd25-RW50aXR5X1ZlcnRpY2FsX0xpc3RfQ2FyZCZ0eT0xNyZxPXNlZGliZXNociUyMGxvY2F0aW9uJnNlZ21lbnQ9TG9jYWwmcHBvaXM9MzEuMjU1MjEwODc2NDY0ODQ0XzI5Ljk3NzYyMTA3ODQ5MTIxX0FwYXJ0bWVudCUyMFNlZGklMjBCZXNocl9ZTjgwNTR4MTQ0MjE4NjQ3NDUyODQyMTAxMTF-MzEuMjYzMjgwODY4NTMwMjczXzI5Ljk4NTg0OTM4MDQ5MzE2NF9TZWElMjB2aWV3JTIwYXBhcnRtZW50JTIwU2lkaSUyMGJlc2hyX1lOODA1NHgxMDU1NDEwODcyOTI2NDA2Mjk5fiZzZWk9MCZjcD0zMS4yNTUyMTF-MjkuOTc3NjIxJmNoaWxkPSUyNnR5JTNEMTglMjZxJTNEQXBhcnRtZW50JTI1MjBTZWRpJTI1MjBCZXNociUyNnNzJTNEeXBpZC5ZTjgwNTR4MTQ0MjE4NjQ3NDUyODQyMTAxMTElMjZzZWdtZW50JTNETG9jYWwlMjZwcG9pcyUzRDMxLjI1NTIxMDg3NjQ2NDg0NF8yOS45Nzc2MjEwNzg0OTEyMV9BcGFydG1lbnQlMjUyMFNlZGklMjUyMEJlc2hyX1lOODA1NHgxNDQyMTg2NDc0NTI4NDIxMDExMX4lMjZjcCUzRDMxLjI1NTIxMX4yOS45Nzc2MjElMjZFbmFibGVNYXBWaWV3Q2hhbmdlJTNEdHJ1ZSZGT1JNPU1QU1JQTA&ntb=1"
-  // post.bedroom="4"
-  // post.price=400.000
-  // post.rent=true
+
   const initialIndexArray = Array.from({ length: 100 }, () => 0);
   const [all_posts, setAllPosts] = useState<Post_object[]>([]);
   const [all_posts1, setAllPosts1] = useState<Post_object[]>([]);
   const [indexArray, setIndexArray] = useState<number[]>(initialIndexArray);
   const [userId,setUserId] = useState("");
+  let router = useRouter();
   // const [images, setImages] = useState<string[]>([]);
 
  
@@ -264,10 +254,10 @@ export interface FilterData {
        {/* <div className={style.follow}><i className="fa-solid fa-user-group"></i> <span> Followers: 50</span></div>
        <div className={style.follow}> <i className="fa-solid fa-user-check"></i> <span>Following: 100</span></div> */}
        
-        <button className={style.btn_edit}>Edit Profile</button>
+        <button className={style.btn_edit} onClick={()=>{router.push("/profilePage")}}>Edit Profile</button>
       </div>
       </div>
-       
+        
     
     <div className={style.lowerSlice}>
 
