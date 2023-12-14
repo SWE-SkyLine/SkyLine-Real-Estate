@@ -39,8 +39,11 @@ public class User {
     @Column(name = "is_enable", columnDefinition = "boolean default false")
     private boolean isEnable;
 
+
+
     public void setIsEnable(Boolean isEnable) {
         this.isEnable = isEnable;
+
     }
 
     public Boolean getIsEnable() {
