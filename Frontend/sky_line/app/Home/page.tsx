@@ -58,7 +58,7 @@ export interface FilterData {
   const [all_posts, setAllPosts] = useState<Post_object[]>([]);
   const [all_posts1, setAllPosts1] = useState<Post_object[]>([]);
   const [indexArray, setIndexArray] = useState<number[]>(initialIndexArray);
-  const [userId,setUserId] = useState(0);
+  const [userId,setUserId] = useState("");
   // const [images, setImages] = useState<string[]>([]);
 
  
@@ -411,7 +411,7 @@ export interface FilterData {
              <label className={style.under_head}>{p.title} (<span className={style.post_type}>{p.rent && "rent"}{!p.rent && "Buy"}</span>)</label>
              <div className={style.post_head}> <label>Description:</label> </div>
              <label className={style.under_head}>{p.description}</label>   
-             <div className={style.post_head}> <label>EstateType</label> : <span className={style.under_head}>{p.EstateType}</span> </div>
+             <div className={style.post_head}> <label>EstateType</label> : <span className={style.under_head}>{p.estate_type}</span> </div>
              <div className={style.post_head}> <label>City</label> : <span className={style.under_head}>{p.city}</span> </div>
              <div className={style.post_head}> <label>Adress</label> : <span className={style.under_head}>{p.adress}</span> </div>
              <div className={style.post_head}> <label>Price</label> : <span className={style.under_head}>{p.price} <i className="fa-solid fa-dollar-sign"> </i></span> </div>
