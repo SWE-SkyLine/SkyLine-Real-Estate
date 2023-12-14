@@ -4,7 +4,7 @@ import com.example.SkyLine.enums.UserRoleEnum;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Entity(name = "Users")
+@Entity
 @Setter
 @Getter
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -37,31 +37,17 @@ public class User {
     private Integer verificationCodeForgetPassword;
 
     @Column(name = "is_enable", columnDefinition = "boolean default false")
-    private boolean is_enable;
+    private boolean isEnable;
 
-    public String getFirstName() {
-        return firstName;
+
+
+    public void setIsEnable(Boolean isEnable) {
+        this.isEnable = isEnable;
+
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setIs_enable(boolean is_enable) {
-        this.is_enable = is_enable;
-    }
-
-
-    public Boolean getIs_enable() {
-        return is_enable;
+    public Boolean getIsEnable() {
+        return isEnable;
     }
 
     public int getId() {

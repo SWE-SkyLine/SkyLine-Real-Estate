@@ -47,6 +47,7 @@ public class PostCreationService {
 
         } catch (IOException e) {
             e.getMessage();
+
         }
         // save UID post creator
         User postCreator = userRepository.findUserById(Integer.valueOf(postCreatorUID));
