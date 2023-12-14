@@ -9,40 +9,44 @@
     "lint": "next lint"
   },
   "dependencies": {
-
-     "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@fontsource/roboto": "^5.0.8",
-    "@mui/icons-material": "^5.14.19",
+    "@mui/icons-material": "^5.15.0",
     "@mui/material": "^5.14.20",
     "@react-oauth/google": "^0.12.1",
-    "@syncfusion/ej2-react-notifications": "^23.2.5",
-
+    "@remix-run/react": "^2.3.1",
     "axios": "^1.6.2",
     "bootstrap": "^5.3.2",
     "bootstrap-icons": "^1.11.2",
+    "chroma-js": "^2.4.2",
+    "flowbite-react": "^0.7.0",
     "jwt-decode": "^4.0.0",
-    "next": "14.0.2",
-    "react": "^18",
+    "next": "^14.0.4",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
     "react-bootstrap": "^2.9.1",
     "react-dom": "^18",
     "react-hook-form": "^7.48.2",
     "react-modal": "^3.16.1",
-    "react-router-dom": "^6.20.1"
+    "react-router-dom": "^6.20.0"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
-    "@types/bootstrap": "^5.2.10",
     "@types/node": "^20",
+    "@types/prop-types": "^15.7.11",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-modal": "^3.16.3",
-    "eslint": "^8",
+    "@typescript-eslint/eslint-plugin": "^6.13.2",
+    "@typescript-eslint/parser": "^6.13.2",
+    "eslint": "^8.55.0",
     "eslint-config-next": "14.0.2",
     "typescript": "^5"
+  },
+  "volta": {
+    "node": "18.17.0"
   }
 }

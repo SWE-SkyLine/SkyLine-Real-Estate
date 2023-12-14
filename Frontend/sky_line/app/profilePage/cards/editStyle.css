@@ -1,0 +1,102 @@
+/* Add these styles to your existing stylesheet or create a new one */
+
+/* Center the modal on the page */
+.Modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+/* Style for the modal body */
+.ModalBody {
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Style for the form */
+.space-y-6 {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Style for the buttons */
+/* Add these styles to your existing stylesheet or create a new one */
+
+.Button {
+    border: 1px solid #2391da; /* Initial border color (blue) */
+    background-color: transparent; /* Initial background color (transparent) */
+    color: #1085ce; /* Initial font color (blue) */
+    transition: background-color 0.3s, color 0.3s; /* Transition effect for background and color changes */
+    padding: 7px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+
+}
+.EditButton {
+    border: 2px solid #2391da; /* Initial border color (blue) */
+    background-color: transparent; /* Initial background color (transparent) */
+    color: #1085ce; /* Initial font color (blue) */
+    transition: background-color 0.3s, color 0.3s; /* Transition effect for background and color changes */
+    padding: 5px 8px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 15px;
+    rotate: 90deg;
+
+}
+.Button:hover {
+    background-color: #3498db; /* Hover background color (blue) */
+    color: #fff; /* Hover font color (white) */
+    border-color: #fff; /* Hover border color (white) */
+}
+.Auction {
+    /* Initial border color (blue) */
+    background-color: transparent; /* Initial background color (transparent) */
+    transition: background-color 0.3s, color 0.3s; /* Transition effect for background and color changes */
+
+}
+.Auction:hover {
+    background-color: rgba(110, 141, 166, 0.52); /* Hover background color (blue) */
+    color: #fff; /* Hover font color (white) */
+    border-color: #fff; /* Hover border color (white) */
+}
+.EditButton:hover {
+    background-color: #3498db; /* Hover background color (blue) */
+    color: #fff; /* Hover font color (white) */
+    border-color: #fff; /* Hover border color (white) */
+}
+
+/* Input styles */
+.TextInput {
+    padding: 1px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+/* Label styles */
+.Label {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+/* Checkbox styles */
+.Checkbox {
+    margin-right: 8px;
+}
+
+/* Optional: Add styles to make the form responsive */
+@media (max-width: 600px) {
+    .ModalBody {
+        max-width: 100%;
+    }
+}

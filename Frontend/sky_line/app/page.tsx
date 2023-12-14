@@ -19,7 +19,7 @@ import Home_page from './Home/page'
 import PostCreate from './PostCreate/page'
 import SortFilter from './sortFilter/page'
 import Post from "./Post/page";
- 
+ import { useEffect } from "react";
 
 
 export default function Home() {
@@ -27,17 +27,13 @@ export default function Home() {
   const handleClick = (path: string) => {
     router.push(`${path}`);
   };
-  
+  useEffect(() => {
+
+handleClick("/login")
+}, []);
+
   return (
-
-
-
      <>
-    <Navbar/>
-    {/* <SortFilter/> */}
-    <Post/>
-    <Home_page/>
-  
     </>
 
 // {/* <>

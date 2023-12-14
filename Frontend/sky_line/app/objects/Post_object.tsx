@@ -22,4 +22,5 @@ export class Post_object {
     photosByteArray: string[]=[];
     photos: string[] = [];
     fullName:any;
+
 }
