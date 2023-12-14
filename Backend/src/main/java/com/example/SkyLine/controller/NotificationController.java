@@ -37,7 +37,7 @@ public class NotificationController {
     @PutMapping("/update/approve")
     public void approveRequest(@RequestBody Notification request) {
         notificationService.approveRequest(request);
-        userService.PromoteUser(request.getCandidate_id());
+        userService.PromoteUser(String.valueOf(request.getCandidate_id()));
     }
 
     @PutMapping("/update/reject")

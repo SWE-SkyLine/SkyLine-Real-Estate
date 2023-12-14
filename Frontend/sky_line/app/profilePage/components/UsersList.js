@@ -31,15 +31,15 @@ function List(props) {
 
     return (
         <ul>
-            {filteredData.map(({ id, images, label, title, auction, description, price, area, status, rooms, bathrooms, floors, link, phone, date, address, bid, maxbid }) => (
-                <div key={id} className={"Auction"} style={{ padding: "5px 15px", borderRadius: "15px", backgroundColor: "white", border: "1px solid #3498db", marginTop: "2px", width: "665px" }}>
+            {filteredData.map( user => (
+                <div key={user.id} className={"Auction"} style={{ padding: "5px 15px", borderRadius: "15px", backgroundColor: "white", border: "1px solid #3498db", marginTop: "2px", width: "665px" }}>
                     <MDBox component="li" display="flex" alignItems="center" py={1} mb={1}>
                         <MDBox mr={2}>
-                            <MDAvatar src={images[0]} alt="something here" shadow="md" />
+                            <MDAvatar src={"/userPhoto.webp"} alt="something here" shadow="md" />
                         </MDBox>
                         <MDBox display="flex" flexDirection="column" alignItems="flex-start" justifyContent="center">
                             <MDTypography variant="h7" fontWeight="medium">
-                                {title}
+                                {user.firstName+" "+user.lastName}
                             </MDTypography>
                             <Button className={"Visit"} style={{ backgroundColor: "transparent", color: "#3498db", border: "none", cursor: "pointer", textDecoration: "underline", fontStyle: "italic" }}>
                            Visit Profile
@@ -52,12 +52,12 @@ function List(props) {
                                     padding: "8px 21px",
                                     marginRight: "0px",
                                     marginLeft: "0px",
-                                    backgroundColor: isPromoted(id) ? "grey" : "transparent",
-                                    color: isPromoted(id) ? "white" : "#3498db",
+                                    backgroundColor: isPromoted(user.id) ? "grey" : "transparent",
+                                    color: isPromoted(user.id) ? "white" : "#3498db",
                                 }}
-                                onClick={() => handlePromoteClick(id)}
+                                onClick={() => handlePromoteClick(user.id)}
                             >
-                                {isPromoted(id) ? "Requested" : "Promote"}
+                                {isPromoted(user.id) ? "Requested" : "Promote"}
                             </Button>
                         </MDBox>
                     </MDBox>
@@ -68,28 +68,6 @@ function List(props) {
 }
 
 List.propTypes = {
-    profiles: PropTypes.arrayOf(
-        PropTypes.shape({
-            id: PropTypes.number.isRequired,
-            images: PropTypes.arrayOf(PropTypes.string).isRequired,
-            label: PropTypes.string.isRequired,
-            title: PropTypes.string.isRequired,
-            auction: PropTypes.string.isRequired,
-            description: PropTypes.string.isRequired,
-            price: PropTypes.string.isRequired,
-            area: PropTypes.string.isRequired,
-            status: PropTypes.string.isRequired,
-            rooms: PropTypes.string.isRequired,
-            bathrooms: PropTypes.string.isRequired,
-            floors: PropTypes.string.isRequired,
-            link: PropTypes.string.isRequired,
-            phone: PropTypes.string.isRequired,
-            date: PropTypes.string.isRequired,
-            address: PropTypes.string.isRequired,
-            bid: PropTypes.string.isRequired,
-            maxbid: PropTypes.string.isRequired,
-        })
-    ).isRequired,
     input: PropTypes.string.isRequired,
 };
 

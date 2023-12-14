@@ -21,12 +21,11 @@ public class UserDetailsServiceImp implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findUserByEmail(email);
         if(user == null) throw new UsernameNotFoundException("This email is not found");
-        UserDetails details  = org.springframework.security.core.userdetails.User.withUsername(user.getEmail())
+        return org.springframework.security.core.userdetails.User.withUsername(user.getEmail())
                 .password(user.getPassword())
                 .roles(new UserRoleEnumAdapter().UserRoleEnumToString(user.getUserRole()))
                 .disabled(!user.getIsEnable())
                 .build();
-        return details;
     }
     //.password(passwordEncoder.encode(user.getPassword()))
 }

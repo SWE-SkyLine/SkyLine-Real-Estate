@@ -43,7 +43,7 @@ public class UserController {
     }
     @GetMapping("/allUsersToPromote")
     public List<User> getAllUsersToPromote() {
-        return userService.getAllUsersByAccountType(UserRoleEnum.CLIENT);
+        return userService.getAllUsersByAccountType("Client");
     }
 
     @PostMapping
@@ -136,6 +136,20 @@ public class UserController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Password update failed");
         }
+    }
+
+
+    @PostMapping("/promote-user")
+    public boolean promoteUser(@RequestParam String id){
+       try {
+           System.out.println("id: " + id);
+           userService.PromoteUser(id);
+           return true;
+       }
+       catch (Exception e){
+           return false;
+       }
+
     }
 
 

@@ -13,7 +13,8 @@ import Card from "@mui/material/Card";
 import { React } from "react";
 import TextField from "@mui/material/TextField";
 import UsersList from "@/app/profilePage/components/UsersList";
-import { Scrollbar } from 'react-scrollbars-custom';
+import {getClients} from "@/app/Services/NotificationService";
+
 function Component({ title, profiles, shadow }) {
     const [openModal, setOpenModal] = useState(false);
 
@@ -26,13 +27,25 @@ function Component({ title, profiles, shadow }) {
         const lowerCase = e.target.value.toLowerCase();
         setInputText(lowerCase);
     };
+    const [userProfiles, setUserProfiles] = useState([]);
+    const onPromoteUsersClick = async () => {
+        setOpenModal(true);
+        // Call getClients to get user profiles
+        try {
+            const response = await getClients();
+            setUserProfiles(response.data); // Assuming the user profiles are in the 'data' property of the response
+        } catch (error) {
+            console.error(error);
+            alert("Error fetching user profiles");
+        }
+    };
 
     return (
         <>
             <Button
                 className="Button"
                 style={{ padding: "8px 21px", marginRight: "0px", marginLeft: "0px" }}
-                onClick={() => setOpenModal(true)}
+                onClick={onPromoteUsersClick}
             >
                 Promote Users
             </Button>
@@ -61,7 +74,7 @@ function Component({ title, profiles, shadow }) {
                         <MDBox>
                             <MDBox  component="ul" display="flex" flexDirection="column">
                                 <div style={{height:"290px",width:"auto", overflowY:"scroll", border:"none", borderRadius:"15px",paddingRight:"2px", paddingLeft:"2px", paddingTop:"0px", backgroundColor:"transparent"}}>
-                                    <UsersList input={inputText} profiles={profiles}/>
+                                    <UsersList input={inputText} profiles={userProfiles}/>
                                 </div>
                             </MDBox>
                         </MDBox>
