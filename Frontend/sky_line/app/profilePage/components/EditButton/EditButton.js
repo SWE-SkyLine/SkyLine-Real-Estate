@@ -42,7 +42,7 @@ function Component({ info, onUpdate }) {
         <Modal.Header />
         <Modal.Body className="Body">
           <div className="space-y-6">
-            <h3 className="text-xl font-medium text-gray-900 dark:text-white">
+            <h3 className="Label" style={{fontSize:"30px"}}>
               Profile Information
             </h3>
             <div>
@@ -192,7 +192,7 @@ function Component({ info, onUpdate }) {
             <Button
               className="Button"
               onClick={onSave}
-              style={{ padding: "8px 21px", marginRight: "8px", marginLeft: "13px" }}
+              style={{ padding: "8px 21px", marginRight: "8px", marginLeft: "55px" }}
             >
               Save
             </Button>

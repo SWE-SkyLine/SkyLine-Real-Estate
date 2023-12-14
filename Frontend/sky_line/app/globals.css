@@ -85,7 +85,7 @@ body {
   overflow-x: hidden;
 }
 
-body {
+/* body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -93,7 +93,17 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+} */
+
+body.modal-open {
+  padding-right: 0 !important;
 }
+
+body.modal-close {
+  padding-right: 0 !important;
+}
+
+
 
 a {
   color: inherit;
@@ -105,3 +115,9 @@ a {
     color-scheme: dark;
   }
 }
+
+.container mt-4{
+  margin-top : 5rem;
+}
+
+

@@ -57,7 +57,7 @@ function Component({ info, onUpdate }) {
       <Modal show={openModal} onClose={() => setOpenModal(false)} className="Modal">
         <Modal.Header></Modal.Header>
         <Modal.Body className="Body" style={{backgroundColor:"white"}}>
-          <div className="flex w-full items-center justify-center">
+          <div className="flex w-full items-center justify-center ">
             {/* Hidden file input */}
             <FileInput
                 id="dropzone-file"

@@ -13,7 +13,7 @@ import Card from "@mui/material/Card";
 import { React } from "react";
 import TextField from "@mui/material/TextField";
 import UsersList from "@/app/profilePage/components/UsersList";
-import { Scrollbar } from 'react-scrollbars-custom';
+
 function Component({ title, profiles, shadow }) {
     const [openModal, setOpenModal] = useState(false);
 

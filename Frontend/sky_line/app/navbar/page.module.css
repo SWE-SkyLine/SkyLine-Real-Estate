@@ -1,0 +1,27 @@
+.navbar{
+background-color: rgb(27, 31, 33) !important;
+ }
+.bell-icon:hover {
+    color: #0071ff; /* Change this to your desired hover color */
+}
+.navLink{
+    color:rgb(70, 192, 252) !important;
+}
+.navLink:hover {
+    color: white!important;
+    transition: 50ms !important;
+}
+.brand{
+    color:rgb(70, 192, 252) !important;
+    font-weight: 600;
+    cursor: pointer;
+}
+.btn{
+    background-color:rgb(70, 192, 252);
+    margin-left: 1rem;
+}
+.btn:hover {
+    color: rgb(70, 192, 252);
+    background-color: white;
+    transition: .5s;
+}

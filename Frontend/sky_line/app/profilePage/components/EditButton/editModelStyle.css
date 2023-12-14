@@ -26,6 +26,7 @@
     border-radius: 10px;
     box-shadow: black;
     max-width: 800Px;
+    border: 1px solid #1085ce;
     width: auto!important;
 }
 
@@ -100,13 +101,15 @@
     border-radius: 5px;
     margin-top: 5px;
     font-size: 14px;
+    background-color: white!important;
 }
 
 /* Label styles */
 .Label {
     font-size: 14px;
-    color: #333;
+    color: #0c70b2 !important;
     margin-bottom: 5px;
+    font-weight: bolder;
 }
 
 /* Checkbox styles */

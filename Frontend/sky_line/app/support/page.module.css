@@ -1,0 +1,65 @@
+.ticketPage{
+    height: 105vh;
+    background-color:white;   
+    background-size: contain;
+    color: black;
+    margin-top: 8vh;
+}
+
+.allItems{
+    margin: 20px;
+    display: grid;
+    grid-template-rows: auto auto 2Fr;
+    row-gap: 10px;
+}
+
+@media(min-width: 768px){
+    .allItems{
+        position: absolute;
+        left: 20%;
+        right: 20%;
+    }
+}
+
+.message{
+    background-color: white;
+    color: black;
+    border: 3px solid rgb(52, 50, 50);
+    width: 44vw;
+    height: 25vh;
+    border-radius: .5rem;
+    padding: 5px;
+    font-size: 22px;
+    font-weight: 530;
+    font-family: Arial, Helvetica, sans-serif;
+    min-height: 5vh;
+}
+
+.errorMessage{
+    font-size: 16px;
+    color: red;
+}
+
+@media (min-width: 320px) {
+    .message{
+        width: 80vw;
+    }
+}
+
+@media (min-width: 768px) {
+    .message{
+        width: 45vw;
+    }
+}
+/* medium */
+@media (min-width: 950px) {
+    .message{
+        width: 55vw;
+    }
+}
+/* larg */
+@media (min-width: 1200px) {
+    .message{
+        width: 45vw;
+    }
+}

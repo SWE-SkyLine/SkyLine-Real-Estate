@@ -1,12 +1,12 @@
 'use client'
 import { useState } from "react";
 import myStyle from "./page.module.css"
-import style from "../page_verify/page.module.css"
+import commonStyle from "../Utility/CommonCode/common.module.css"
 import { loginRequest, sendEmail, updatePassword, verifyCode } from "../Services/LoginService"
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import Gmail from "./Gmail";
+import Navbar from "../navbar/page";
 import Link from "next/link";
-import ProfilePage from "../profilePage/page";
 
 const LoginForm = () => {
 
@@ -79,12 +79,49 @@ const LoginForm = () => {
   };
 
   return (
-      <div>
-      <div>
-        Akeny navbar
-</div>
-    <ProfilePage></ProfilePage>
-      </div>
+    <div className={commonStyle.allComponents}>  
+        {/*  all page */}
+        <div className={commonStyle.container}>
+            {/* left and right parts */}
+            <div className={myStyle.left_img}></div>
+
+            <div className={commonStyle.right}>
+                <div className={commonStyle.logo}></div>
+                <h2 className={commonStyle.header_text}>Login</h2>
+                {/* login form  */}
+                <form className={commonStyle.Form} onSubmit={handleLogin}>
+                    {/* add gmail button */}
+                    <label className={commonStyle.head}>Email</label>
+                    <div>
+                        <input className={commonStyle.emailTextBox} placeholder="E-mail" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                    </div>
+
+                    <label className={commonStyle.head}>Password</label>
+                    <div>
+                        <input className={commonStyle.emailTextBox} placeholder="Passeord" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
+                    </div>
+
+                    <button className={commonStyle.sendBtn} type="submit">
+                        Login
+                    </button>
+
+                    {/* forget password link and popup window  */}
+                    <span className={commonStyle.lable}>Not a member? <Link className={commonStyle.link} href="/signup">Sign up now</Link></span>
+                    <a className={commonStyle.link} href="#" onClick={submitEmail}>
+                        Forgot Password
+                    </a>
+
+                    <div className={myStyle.gmaildiv}>
+                    <GoogleOAuthProvider clientId="286653287539-cfsq1r439hetsrluac5hdorpjoajbd3h.apps.googleusercontent.com">
+                        <Gmail/>
+                    </GoogleOAuthProvider>
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+    
   );
 };
 

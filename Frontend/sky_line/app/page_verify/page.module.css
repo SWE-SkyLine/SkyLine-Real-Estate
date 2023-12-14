@@ -11,6 +11,7 @@
   text-align: center;
   color: darkslategray;
   margin-top: 2rem;
+  margin-bottom: 1rem;
 
   
 }
@@ -19,8 +20,14 @@
   font-weight: 500;
   font-size: 18px;
   color: rgb(62, 144, 225);
+  cursor: pointer;
 }
-
+.error{
+  margin-left: 1rem;
+  font-weight: 500;
+  font-size: 18px;
+  color:red;
+}
 
 
 .header_text{
@@ -49,16 +56,6 @@
   display: block;
 
 }
-
-.logo{
-  background-image:url("../../assets/logo.jpg");
-  background-repeat: no-repeat;
-  background-size: contain;
-  width:44vw;
-  height:20vh;
-  margin-left: 16rem;
-  
- }
 
 .container {
   display: flex;
