@@ -2,6 +2,7 @@ package com.example.SkyLine;
 
 import com.example.SkyLine.DTO.LogInRequestDTO;
 import com.example.SkyLine.DTO.UserRequestDTO;
+import com.example.SkyLine.DTO.VerifyCodeRequestDTO;
 import com.example.SkyLine.controller.RegisterationController;
 import com.example.SkyLine.entity.User;
 import com.example.SkyLine.service.RegesterationService;
@@ -20,9 +21,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import java.util.concurrent.TimeoutException;
 
 class RegisterationControllerTest {
 
@@ -63,17 +68,57 @@ class RegisterationControllerTest {
                 .andExpect(jsonPath("$.email").value("test@example.com"));
     }
 
-    // @Test
-    // void signIn() throws Exception {
-    //     LogInRequestDTO logInRequestDTO = new LogInRequestDTO();
-    //     logInRequestDTO.setEmail("test@example.com");
-    //     logInRequestDTO.setPassword("password");
+    @Test
+    void testSignUpAlreadyExists(){
+        UserRequestDTO userRequestDTO = new UserRequestDTO();
+        userRequestDTO.setEmail("test@example.com");
+        doReturn(Boolean.TRUE).when(regesterationService).userExists(userRequestDTO.getEmail());
+        ResponseEntity<?> responseEntity = registerationController.signUp(userRequestDTO);
+        assertEquals(HttpStatus.CONFLICT, responseEntity.getStatusCode());
+        assertEquals("user already exists", responseEntity.getBody());
+    }
 
-    //     mockMvc.perform(MockMvcRequestBuilders.post("/register/user/login")
-    //                     .contentType(MediaType.APPLICATION_JSON)
-    //                     .content("{\"email\": \"test@example.com\", \"password\": \"password\"}")
-    //                     .accept(MediaType.APPLICATION_JSON))
-    //             .andExpect(status().isOk())
-    //             .andExpect(header().string("Location", "/logged in"));
-    // }
+    @Test
+    void testSignUpNew(){
+        UserRequestDTO userRequestDTO = new UserRequestDTO();
+        userRequestDTO.setEmail("test@example.com");
+        doReturn(Boolean.FALSE).when(regesterationService).userExists(userRequestDTO.getEmail());
+        ResponseEntity<?> responseEntity = registerationController.signUp(userRequestDTO);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+    }
+
+    @Test
+    void testVerifyTrue(){
+        VerifyCodeRequestDTO  verifyCodeRequestDTO = new VerifyCodeRequestDTO();
+        verifyCodeRequestDTO.setCode("1234");
+        verifyCodeRequestDTO.setEmail("test@example.com");
+        doReturn(Boolean.TRUE).when(regesterationService).UserVerify(verifyCodeRequestDTO.getEmail(), verifyCodeRequestDTO.getCode());
+        assertEquals(HttpStatus.OK, registerationController.verify(verifyCodeRequestDTO).getStatusCode());
+    }
+
+    @Test
+    void testVerifyFalse(){
+        VerifyCodeRequestDTO  verifyCodeRequestDTO = new VerifyCodeRequestDTO();
+        verifyCodeRequestDTO.setCode("1234");
+        verifyCodeRequestDTO.setEmail("test@example.com");
+        doReturn(Boolean.FALSE).when(regesterationService).UserVerify(verifyCodeRequestDTO.getEmail(), verifyCodeRequestDTO.getCode());
+        assertEquals(HttpStatus.NOT_ACCEPTABLE, registerationController.verify(verifyCodeRequestDTO).getStatusCode());
+    }
+
+    @Test 
+    void testLogin(){
+        LogInRequestDTO logInRequestDTO = new LogInRequestDTO();
+        logInRequestDTO.setEmail("Test@example.com");
+        logInRequestDTO.setPassword("password");
+        assertEquals(logInRequestDTO.getPassword(), "password");
+        assertEquals(logInRequestDTO.getEmail(), "Test@example.com");
+        assertEquals(HttpStatus.OK, registerationController.signIn(logInRequestDTO).getStatusCode());
+    }
+
+    @Test 
+    void testSendAgain() throws TimeoutException{
+        VerifyCodeRequestDTO verifyCodeRequestDTO = new VerifyCodeRequestDTO();
+        assertEquals(HttpStatus.OK, registerationController.sendCodeAgain(verifyCodeRequestDTO).getStatusCode());
+    }
+    
 }
