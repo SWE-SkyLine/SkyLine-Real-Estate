@@ -39,7 +39,7 @@ public class EmailService implements Runnable {
         javaMailSender.send(message);
     }
 
-    public void  SendCodeVerifySignup(String Email, String VerificationCode){
+    public void  sendCodeVerifySignup(String Email, String VerificationCode){
         sendEmail(Email, "VerificationCode", "Dear [" + Email + "],\n" +
                 "\n" +
                 "To complete your registration, please use the following verification code: "
@@ -52,7 +52,7 @@ public class EmailService implements Runnable {
     @Override
     public void run() {
         try {
-            this.SendCodeVerifySignup(this.email, this.VerificationCode);
+            this.sendCodeVerifySignup(this.email, this.VerificationCode);
         }
         catch (Exception e){
             System.out.println(e.getMessage()+" I am Runnable :(");

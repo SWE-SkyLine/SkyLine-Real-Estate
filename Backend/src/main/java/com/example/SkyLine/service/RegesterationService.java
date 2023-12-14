@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.concurrent.TimeoutException;
 
 @Service
 public class RegesterationService {
@@ -35,12 +36,10 @@ public class RegesterationService {
 
     // here we can direct the creation respect to the userType
     public User register(UserRequestDTO user) {
-
         User userToBeSaved = userFactory.userFactory(user.getUserRole().toString());
         String VerificationCode = VerificationCodeGenerator.generateVerificationCode();
         EmailService.setEmail(user.getEmail());
         EmailService.setVerificationCode(VerificationCode);
-//        EmailService.SendCodeVerifySignup(user.getEmail(),VerificationCode);
         Thread verificationCodeSenderThread = new Thread(EmailService);
         verificationCodeSenderThread.start();
         userToBeSaved.setFirstName(user.getFirstName());
@@ -53,6 +52,19 @@ public class RegesterationService {
 
         return (User) repositoryFactory.repositoryFactory(user.getUserRole().toString()).save(userToBeSaved);
     }
+    public User sendVerifyCodeAgain(String email) throws TimeoutException {
+        try {
+            String verificationCode = VerificationCodeGenerator.generateVerificationCode();
+            EmailService.sendCodeVerifySignup(email, verificationCode);
+            User user = userRepository.findByEmail(email);
+            user.setVerificationCode(verificationCode);
+            return userRepository.save(user);
+        } catch (Exception e) {
+            // Optionally, you can throw a custom exception or return an error response
+            throw new TimeoutException("Error sending verification code: " + e.getMessage());
+        }
+    }
+
 
     public boolean UserVerify(String Email, String code) {
         User user = userRepository.findByEmail(Email);
