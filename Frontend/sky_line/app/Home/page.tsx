@@ -96,6 +96,8 @@ export interface FilterData {
 
   useEffect(() => {
 
+
+    console.log("ss");
     for (let i=0; i<all_posts.length; i++) {
       for (let j=0; j<all_posts[i].photosByteArray.length; j++) {
         let photoUrl = `data:image/jpeg;base64,${all_posts[i].photosByteArray[j]}`;
@@ -127,6 +129,7 @@ export interface FilterData {
       newArray[index]--; 
       setIndexArray(newArray);    }
   }
+
 
 
   const [showFormModal, setShowFormModal] = useState(false);
@@ -394,7 +397,10 @@ export interface FilterData {
         </Modal.Body>
       </Modal>
 
-      {all_posts.map((p, index) => (
+       {/* wael search filter */}
+
+
+      {all_posts1.map((p, index) => (
             <div key={index} className={style.contain_post}>
               <div>
                 <div className={`${style.photo}`} style={{ backgroundImage: `url(${x})` }}></div>
@@ -416,7 +422,7 @@ export interface FilterData {
              <div className={style.post_head}> <label>Map Link:</label> <a href={p.map_link} target="_blank">Location</a> </div>
              
              </div>
-               <div className={style.post_imgs}>
+                 <div className={style.post_imgs}>
                 <button
                   className={style.btn}
                   style={{ borderRadius: "5px", padding: "5px 10px", cursor: "pointer", fontWeight: "500" }}

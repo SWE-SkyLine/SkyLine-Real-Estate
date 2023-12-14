@@ -1,0 +1,160 @@
+/* Add these styles to your existing stylesheet or create a new one */
+
+/* Center the modal on the page */
+.Modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}
+
+
+.ModalBody {
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0) !important;
+    border-radius: 10px;
+    box-shadow: none !important;
+    max-width: 800Px!important;
+    height: 0!important;
+    width: auto!important;
+}
+.Body {
+    padding: 30px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    box-shadow: black;
+    max-width: 800Px;
+    width: auto!important;
+}
+
+/* Style for the form */
+.space-y-6 {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Style for the buttons */
+/* Add these styles to your existing stylesheet or create a new one */
+
+.Button {
+    border: 2px solid #2391da; /* Initial border color (blue) */
+    background-color: transparent; /* Initial background color (transparent) */
+    color: #1085ce; /* Initial font color (blue) */
+    transition: background-color 0.3s, color 0.3s; /* Transition effect for background and color changes */
+    padding: 7px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+
+}
+.EditPostButton {
+    border: 2px solid #757575; /* Initial border color (blue) */
+    background-color: transparent; /* Initial background color (transparent) */
+    color: #000000; /* Initial font color (blue) */
+    transition: background-color 0.3s, color 0.3s; /* Transition effect for background and color changes */
+    padding: 5px 8px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 15px;
+    rotate: 90deg;
+
+
+}
+.EditPostButton:hover {
+    background-color: #757575; /* Hover background color (blue) */
+    color: #fff; /* Hover font color (white) */
+    border-color: #fff; /* Hover border color (white) */
+}
+.EditButton {
+    border: 2px solid #2391da; /* Initial border color (blue) */
+    background-color: transparent; /* Initial background color (transparent) */
+    color: #1085ce; /* Initial font color (blue) */
+    transition: background-color 0.3s, color 0.3s; /* Transition effect for background and color changes */
+    padding: 5px 8px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 15px;
+    rotate: 90deg;
+
+}
+.Button:hover {
+    background-color: #3498db!important; /* Hover background color (blue) */
+    color: #fff!important; /* Hover font color (white) */
+    border-color: #3498db!important; /* Hover border color (white) */
+}
+
+.EditButton:hover {
+    background-color: #3498db; /* Hover background color (blue) */
+    color: #fff; /* Hover font color (white) */
+    border-color: #fff; /* Hover border color (white) */
+}
+
+/* Input styles */
+.TextInput {
+    padding: 1px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+/* Label styles */
+.Label {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+/* Checkbox styles */
+.Checkbox {
+    margin-right: 8px;
+}
+.custom-table {
+    border-collapse: collapse;
+    width: 100%;
+    height: fit-content;
+    background-color: #ffffff;
+}
+
+
+
+.custom-table td {
+    border: 1px solid rgba(129, 129, 129, 0.68);
+
+    background-color: #ffffff;
+    padding: 8px;
+}
+
+.light-grey-bg {
+    background-color: #f2f2f2; /* Light grey background color */
+}
+
+
+.first-column {
+    border-right: 1px solid #ddd; /* Light grey border */
+    color: #333; /* Black font color */
+    font-weight: bold; /* Bold font weight */
+    padding: 8px; /* Adjust padding as needed */
+}
+.Visit {
+    background-color: transparent;
+    color: #3498db;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    font-style: italic;
+}
+
+.Visit:hover {
+    color: #054185 !important;
+}
+/* Optional: Add styles to make the form responsive */
+@media (max-width: 600px) {
+    .ModalBody {
+        max-width: 100%;
+    }
+}
