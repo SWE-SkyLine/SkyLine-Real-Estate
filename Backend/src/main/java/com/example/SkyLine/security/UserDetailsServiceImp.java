@@ -24,7 +24,7 @@ public class UserDetailsServiceImp implements UserDetailsService {
         UserDetails details  = org.springframework.security.core.userdetails.User.withUsername(user.getEmail())
                 .password(user.getPassword())
                 .roles(new UserRoleEnumAdapter().UserRoleEnumToString(user.getUserRole()))
-                .disabled(!user.getIsEnable())
+                .disabled(!user.getIs_enable())
                 .build();
         return details;
     }

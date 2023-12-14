@@ -39,9 +39,26 @@ public class User {
     @Column(name = "is_enable", columnDefinition = "boolean default false")
     private boolean is_enable;
 
-    public void setIs_enable(Boolean is_enable) {
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setIs_enable(boolean is_enable) {
         this.is_enable = is_enable;
     }
+
 
     public Boolean getIs_enable() {
         return is_enable;
