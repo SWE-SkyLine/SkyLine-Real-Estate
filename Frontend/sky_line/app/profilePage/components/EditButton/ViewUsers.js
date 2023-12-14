@@ -10,41 +10,22 @@ import MDAvatar from "../index";
 import MDTypography from "../MDtypoindex";
 import ViewAuction from "./ViewAuction";
 import Card from "@mui/material/Card";
-
+import { React } from "react";
+import TextField from "@mui/material/TextField";
+import UsersList from "@/app/profilePage/components/UsersList";
+import { Scrollbar } from 'react-scrollbars-custom';
 function Component({ title, profiles, shadow }) {
     const [openModal, setOpenModal] = useState(false);
-    const renderProfiles = profiles.map(({images, label, title, auction, description, price, area, status, rooms, bathrooms, floors, link, phone, date,address, bid, maxbid}) => (
-        <div key={label}  className={"Auction"} style={{ padding:"5px 15px", borderRadius:"15px" , backgroundColor:"white", border:"1px solid #3498db",marginTop:"1px"}}>
-            <MDBox component="li" display="flex" alignItems="center" py={1} mb={1}>
-                <MDBox mr={2}>
-                    <MDAvatar src={images[0]} alt="something here" shadow="md" />
-                </MDBox>
-                <MDBox display="flex" flexDirection="column" alignItems="flex-start" justifyContent="center">
-                    <MDTypography variant="h7" fontWeight="medium">
-                        {title}
-                    </MDTypography>
-                    <MDTypography variant="button" color="text">
-                        {description}
-                    </MDTypography>
-                </MDBox>
-
-                <MDBox ml="auto">
-                    <Button
-                        className="Button"
-                        style={{ padding: "8px 21px", marginRight: "0px", marginLeft: "0px" }}
-                       >
-                        Promote
-                    </Button>
-                </MDBox>
-            </MDBox>
-        </div>
-
-    ));
-
 
     function onCloseModal() {
         setOpenModal(false);
     }
+    const [inputText, setInputText] = useState("");
+    let inputHandler = (e) => {
+        //convert input text to lower case
+        const lowerCase = e.target.value.toLowerCase();
+        setInputText(lowerCase);
+    };
 
     return (
         <>
@@ -58,21 +39,34 @@ function Component({ title, profiles, shadow }) {
             <Modal show={openModal} size="xl" onClose={onCloseModal} popup className="Modal" style={{ transform: 'translate(0%, -380%)' }}>
                 <Modal.Header />
                 <Modal.Body className="ModalBody">
+                    <div className="space-y-6" style={{backgroundColor:"white", borderRadius:"15px" , border:"1.5px solid #3498db", paddingBottom:"3px"}}>
                     <Card sx={{ height: "100%", boxShadow: !shadow && "black", backgroundColor:"white"}}>
-                        <div className={"Auction"} style={{ padding:"5px 15px", borderRadius:"15px" , backgroundColor:"#3498db", border:"1px solid #3498db",marginTop:"1px", color:"white"}}>
-                        <MDBox pt={1} px={30}>
-                            <MDTypography variant="h5" fontWeight="medium" textTransform="capitalize" color={"white"}>
-                                {title}
-                            </MDTypography>
-                        </MDBox>
-                            </div>
+                        <div className={"Auction"} style={{ padding:"5px 15px", borderRadius:"10px" , backgroundColor:"#3498db", border:"none",marginTop:"0px", color:"white"}}>
+                            <MDBox pt={1} px={25} >
+                                <MDTypography variant="h5" fontWeight="medium" textTransform="capitalize" color={"white"} px={3}>
+                                    {title}
+                                </MDTypography>
+                            </MDBox>
+                        </div>
+
+                        <div className="search" style={{backgroundColor:"white", width:"670px", border:"2px solid white", borderRadius:"20px" , marginTop:"0px", marginBottom:"2px"}} >
+                            <TextField
+                                id="outlined-basic"
+                                onChange={inputHandler}
+                                variant="outlined"
+                                fullWidth
+                                label="Search Users &#128269;"
+                            />
+                        </div>
                         <MDBox>
                             <MDBox  component="ul" display="flex" flexDirection="column">
-                                {renderProfiles}
+                                <div style={{height:"290px",width:"auto", overflowY:"scroll", border:"none", borderRadius:"15px",paddingRight:"2px", paddingLeft:"2px", paddingTop:"0px", backgroundColor:"transparent"}}>
+                                    <UsersList input={inputText} profiles={profiles}/>
+                                </div>
                             </MDBox>
                         </MDBox>
                     </Card>
-
+                    </div>
                 </Modal.Body>
 
             </Modal>
@@ -83,6 +77,7 @@ Component.propTypes = {
     title: PropTypes.string.isRequired,
     profiles: PropTypes.arrayOf(
         PropTypes.shape({
+            id: PropTypes.number.isRequired,
             images: PropTypes.arrayOf(PropTypes.string).isRequired,
             label: PropTypes.string.isRequired,
             title: PropTypes.string.isRequired,

@@ -41,7 +41,7 @@ function Component({ name,profiles}) {
             <Modal show={openModal} size="xl" onClose={onCloseModal} popup className="Modal" style={{ transform: 'translate(0%, -380%)' }}>
                 <Modal.Header />
                 <Modal.Body className="ModalBody">
-                    <div className="space-y-6">
+                    <div className="space-y-6" style={{backgroundColor:"white", borderRadius:"20px"}}>
                         <MDBox
                             position="relative"
                             width="100%"
@@ -78,6 +78,8 @@ function Component({ name,profiles}) {
                                 Next Photo &#8680;
                             </Button>
                         </div>
+                        <div style={{height:"275px",width:"auto", overflowY:"scroll", border:"2px solid #ddd", borderRadius:"20px",paddingRight:"12px", paddingLeft:"0px", paddingTop:"0px", backgroundColor:"#ddd"}}>
+                            <ul>
                         <div className="overflow-x-auto" style={{ color: "black", marginTop: "2px" }}>
                             <Table hoverable className="custom-table">
 
@@ -242,11 +244,12 @@ function Component({ name,profiles}) {
                                 <div style={{marginLeft:"10px"}}>Posted : {date} </div>
                             </div>
                         </div>
-
+                            </ul>
+                            </div>
 
 
                     </div>
-                    <div className="grid grid-cols-2 gap-16" style={{ marginTop: "20px" }}>
+                    <div className="grid grid-cols-2 gap-16" style={{ marginTop: "3px" }}>
                         <Button className="Button" onClick={onCloseModal} style={{ padding: "8px 15px", backgroundColor:"black" , border:"white", color:"white"}}>
                             Close
                         </Button>

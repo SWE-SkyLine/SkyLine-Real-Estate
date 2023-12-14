@@ -82,9 +82,9 @@
 
 }
 .Button:hover {
-    background-color: #3498db; /* Hover background color (blue) */
-    color: #fff; /* Hover font color (white) */
-    border-color: #fff; /* Hover border color (white) */
+    background-color: #3498db!important; /* Hover background color (blue) */
+    color: #fff!important; /* Hover font color (white) */
+    border-color: #3498db!important; /* Hover border color (white) */
 }
 
 .EditButton:hover {
@@ -140,7 +140,18 @@
     font-weight: bold; /* Bold font weight */
     padding: 8px; /* Adjust padding as needed */
 }
+.Visit {
+    background-color: transparent;
+    color: #3498db;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    font-style: italic;
+}
 
+.Visit:hover {
+    color: #054185 !important;
+}
 /* Optional: Add styles to make the form responsive */
 @media (max-width: 600px) {
     .ModalBody {

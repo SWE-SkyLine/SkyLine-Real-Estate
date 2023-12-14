@@ -5,6 +5,7 @@ import Header from '../layout/header.js';
 import profilesListData from '../data/AuctionsBidIn';
 import postsListData from '../data/Posts';
 import profileInfo from '../data/ProfileInfo.js';
+import users from "../data/Users";
 
 
 function Overview() {
@@ -29,7 +30,8 @@ function Overview() {
                 postsListData={postsListData}
                 onUpdate={handleUpdate}
                 onUpdatePhoto={handleUpdatePhoto}
-             />
+                users={users}
+            />
         </DashboardLayout>
 
     );
