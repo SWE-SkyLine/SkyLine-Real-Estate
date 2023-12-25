@@ -23,13 +23,14 @@ import ProfilesList from "../cards/userAuctions.js";
 import DefaultProjectCard from "../cards/userPosts.js";
 import ViewUsers from "@/app/profilePage/components/EditButton/ViewUsers";
 
+
 function Header({ profileInfo, profilesListData, postsListData, onUpdate, onUpdatePhoto, users}) {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
   const { image, role, firstName, lastName, mobile, email, location } = profileInfo;
-  console.log("hahaaaaaa");
-  console.log(profileInfo);
-  console.log("first image is "+image);
+  // console.log("hahaaaaaa");
+  // console.log(profileInfo);
+  // console.log("first image is "+image);
 
   useEffect(() => {
     // A function that sets the orientation state of the tabs.
@@ -53,7 +54,9 @@ function Header({ profileInfo, profilesListData, postsListData, onUpdate, onUpda
 
 
   return (
+      
       <MDBox key={email} position="relative" mb={5}>
+        
         <MDBox
             display="flex"
             alignItems="center"
