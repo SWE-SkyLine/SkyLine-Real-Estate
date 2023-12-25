@@ -77,7 +77,7 @@ public class RegesterationService {
     public boolean UserVerify(String Email, String code) {
         User user = userRepository.findByEmail(Email);
         if (Objects.equals(user.getVerificationCode(), code)) {
-            user.setIs_enable(true);
+            user.setIsEnable(true);
             userRepository.save(user);
             return true;
         }
