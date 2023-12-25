@@ -41,12 +41,12 @@ public class User {
 
 
 
-    public void setIsEnable(Boolean isEnable) {
+    public void setIs_enable(Boolean isEnable) {
         this.isEnable = isEnable;
 
     }
 
-    public Boolean getIsEnable() {
+    public Boolean getIs_enable() {
         return isEnable;
     }
 
