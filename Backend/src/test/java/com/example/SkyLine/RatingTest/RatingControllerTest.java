@@ -81,7 +81,7 @@ public class RatingControllerTest {
 
     @Test
     void testSuucessfulGetRate(){
-        doReturn(3).when(rateService).getRate(1, 2);
+        doReturn((byte)3).when(rateService).getRate(1, 2);
         // Act
         ResponseEntity<?> responseEntity = ratingController.getRate(1,2);
 
