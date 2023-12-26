@@ -1,5 +1,6 @@
 package com.example.SkyLine.controller;
 
+import com.example.SkyLine.DTO.UserPromoteDTO;
 import com.example.SkyLine.entity.User;
 import com.example.SkyLine.enums.UserRoleEnum;
 import com.example.SkyLine.repository.UserRepository;
@@ -138,6 +139,18 @@ public class UserController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Password update failed");
+        }
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<UserPromoteDTO>> searchUsersforPromotion(@RequestParam String query) {
+        try {
+            List<UserPromoteDTO> matchingUsers = userService.searchClientUsers(query);
+            System.out.println("Matching users: " + matchingUsers);
+            return ResponseEntity.ok(matchingUsers);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 

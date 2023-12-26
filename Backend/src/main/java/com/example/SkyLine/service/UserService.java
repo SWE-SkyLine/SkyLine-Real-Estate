@@ -1,5 +1,6 @@
 package com.example.SkyLine.service;
 
+import com.example.SkyLine.DTO.UserPromoteDTO;
 import com.example.SkyLine.entity.User;
 import com.example.SkyLine.enums.UserRoleEnum;
 import com.example.SkyLine.repository.UserRepository;
@@ -41,8 +42,21 @@ public class UserService {
         // update the account_type field of the candidate user in the user table in DB to Admin
     }
 
+    public List<UserPromoteDTO> searchClientUsers(String query) {
+        List<User> matchingUsers = userRepository.findClientsByFirstNameOrLastName(query, UserRoleEnum.CLIENT);
 
-    // Add more methods as needed
+        List<UserPromoteDTO> userDTOs = new ArrayList<>();
+
+        for (User user : matchingUsers) {
+            // Assuming User entity has getters for first name, last name, and profile photo
+            UserPromoteDTO userDTO = new UserPromoteDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getProfile_photo());
+            userDTOs.add(userDTO);
+        }
+
+        return userDTOs;
+    }
+    
+
 
 }
 
