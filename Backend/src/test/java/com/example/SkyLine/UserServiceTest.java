@@ -50,7 +50,7 @@ class UserServiceTest {
         when(userRepository.getAllUsersByAccountType(roleEnum)).thenReturn(userList);
 
         // Act
-        ArrayList<User> result = userService.getAllUsersByAccountType(roleEnum);
+        ArrayList<User> result = userService.getAllUsersByAccountType(String.valueOf(roleEnum));
 
         // Assert
         assertEquals(userList, result);
@@ -102,7 +102,7 @@ class UserServiceTest {
         int userId = 1;
 
         // Act
-        userService.PromoteUser(userId);
+        userService.PromoteUser(String.valueOf(userId));
 
         // Assert
         verify(userRepository, times(1)).promoteToAdmin(userId, UserRoleEnum.ADMIN);

@@ -6,18 +6,18 @@ import lombok.*;
 
 import java.util.Date;
 
-@Entity(name = "Notifications")
+@Entity(name = "Notification")
 @Setter
 @Getter
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="Notifications")
+@Table(name="Notification")
 
 public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int notification_id;
+    private int id;
     private int responder_id;
     private int requester_id;
     private int candidate_id;
@@ -42,8 +42,20 @@ public class Notification {
 
     }
 
+    public Notification(int requester_id, int responder_id) {
+        this.responder_id = responder_id;
+        this.requester_id = requester_id;
+        this.date_requested = new java.sql.Date(System.currentTimeMillis());
+        this.date_answered =null;
+        this.approved =null;
+        this.seen =false;
+        this.answered=false;
+    }
 
 
+    public boolean isApproved() {
+        return approved;
+    }
 
     public int getCandidate_id() {
         return candidate_id;
@@ -58,8 +70,8 @@ public class Notification {
         return responder_id;
     }
 
-    public void setNotification_id(int notification_id) {
-        this.notification_id = notification_id;
+    public void setId(int notification_id) {
+        this.id = notification_id;
     }
 
     public boolean isSeen() {

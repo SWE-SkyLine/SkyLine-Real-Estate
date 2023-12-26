@@ -46,10 +46,10 @@ public class UserController {
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
-    @GetMapping("/allUsersToPromote")
-    public List<User> getAllUsersToPromote() {
-        return userService.getAllUsersByAccountType(UserRoleEnum.CLIENT);
-    }
+//    @GetMapping("/allUsersToPromote")
+//    public List<User> getAllUsersToPromote() {
+//        return userService.getAllUsersByAccountType(UserRoleEnum.CLIENT);
+//    }
 
     @PostMapping
     public User createUser(@RequestBody User user) {

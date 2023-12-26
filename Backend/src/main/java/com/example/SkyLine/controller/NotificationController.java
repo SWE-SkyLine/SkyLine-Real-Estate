@@ -1,4 +1,5 @@
 package com.example.SkyLine.controller;
+import com.example.SkyLine.DTO.NotificationRequestDTO;
 import com.example.SkyLine.entity.Notification;
 import com.example.SkyLine.service.NotificationService;
 import com.example.SkyLine.service.UserService;
@@ -10,44 +11,35 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("/api/notifications")
 public class NotificationController {
-    private final UserService userService;
     private final NotificationService notificationService;
 
     @Autowired
-    public NotificationController(UserService userService, NotificationService notificationService) {
-        this.userService = userService;
+    public NotificationController( NotificationService notificationService) {
         this.notificationService = notificationService;
     }
-    @GetMapping("/admin/pending-requests")
-    public ArrayList<Notification> getAdminPendingRequests(@RequestParam int adminId) {
-        return notificationService.getAdminPendingRequests(adminId);
-    }
 
-    @GetMapping("/admin/answered-requests")
-    @ResponseBody
-    public ArrayList<Notification> getAdminAnsweredRequests(@RequestParam int adminId) {
-        return notificationService.getAdminAnsweredRequests(adminId);
-    }
 
-    @GetMapping("/super-admin/requests")
-    public ArrayList<Notification> getSuperAdminRequests(@RequestParam int superAdminId) {
-        return notificationService.getSuperAdminRequests(superAdminId);
-    }
+
+@GetMapping()
+public ArrayList<NotificationRequestDTO> getNotifications(@RequestParam int userId){
+
+        return this.notificationService.getUserNotifications(userId);
+}
+
 
     @PutMapping("/update/approve")
-    public void approveRequest(@RequestBody Notification request) {
-        notificationService.approveRequest(request);
-        userService.PromoteUser(request.getCandidate_id());
+    public void approveRequest(@RequestParam int NotificationId) {
+        notificationService.approveRequest(NotificationId);
     }
 
     @PutMapping("/update/reject")
-    public void rejectRequest(@RequestBody Notification request) {
-        notificationService.rejectRequest(request);
+    public void rejectRequest(@RequestParam int NotificationId) {
+        notificationService.rejectRequest(NotificationId);
     }
 
     @PutMapping("/update/notify")
     public boolean notify(@RequestParam int requesterId, @RequestParam int candidateId) {
-        return notificationService.notify(requesterId, candidateId);
+        return notificationService.request(requesterId, candidateId);
     }
     @PutMapping("/update/markSeen")
     public void markSeen(@RequestBody Notification request){

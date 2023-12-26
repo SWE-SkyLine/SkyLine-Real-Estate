@@ -65,7 +65,7 @@ public class RegesterationServiceTest {
 
         assertTrue(registrationService.UserVerify("test@example.com", "123456"));
 
-        assertTrue(user.getIsEnable());
+        assertTrue(user.getIs_enable());
         verify(userRepository, times(1)).findByEmail("test@example.com");
         verify(userRepository, times(1)).save(any(User.class));
     }
