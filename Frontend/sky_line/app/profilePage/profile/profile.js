@@ -12,7 +12,7 @@ function Overview() {
     profile_photo: "",
     firstName: "",
     lastName: "",
-    role: "",
+    account_type: "",
     mobile: "",
     email: "",
   });
@@ -58,7 +58,7 @@ function Overview() {
      
         profileInfo={{
           image: profile.profile_photo.toString(),
-          role: profile.role,
+          account_type: profile.account_type,
           firstName: profile.firstName,
           lastName: profile.lastName,
           mobile: profile.mobile,

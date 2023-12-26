@@ -27,7 +27,7 @@ import ViewUsers from "@/app/profilePage/components/EditButton/ViewUsers";
 function Header({ profileInfo, profilesListData, postsListData, onUpdate, onUpdatePhoto, users}) {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
-  const { image, role, firstName, lastName, mobile, email, location } = profileInfo;
+  const { image, account_type, firstName, lastName, mobile, email, location } = profileInfo;
   // console.log("hahaaaaaa");
   // console.log(profileInfo);
   // console.log("first image is "+image);
@@ -86,7 +86,7 @@ function Header({ profileInfo, profilesListData, postsListData, onUpdate, onUpda
           <Grid container spacing={3} alignItems="center">
             <Grid item>
               <div style={{marginTop:"4px"}}>
-                <EditPhoto info={ {image, role, firstName, lastName, mobile, email, location} } onUpdate={onUpdatePhoto} />
+                <EditPhoto info={ {image, account_type, firstName, lastName, mobile, email, location} } onUpdate={onUpdatePhoto} />
               </div>
               <MDAvatar  src={image} alt="profile-image" size="xxl" shadow="sm" />
               {/*<div>{image}</div>*/}
@@ -96,7 +96,7 @@ function Header({ profileInfo, profilesListData, postsListData, onUpdate, onUpda
                     {firstName}
                   </MDTypography>
                   <MDTypography variant="h7" color="text" fontWeight="regular">
-                    {role}
+                    {account_type}
                   </MDTypography>
                 </MDBox>
               </Grid>
@@ -104,7 +104,7 @@ function Header({ profileInfo, profilesListData, postsListData, onUpdate, onUpda
             <Grid item x={10} md={10} xl={4}>
               <ProfileInfoCard
                   title="profile information"
-                  info={{ image, role, firstName, lastName, mobile, email, location }}
+                  info={{ image, account_type, firstName, lastName, mobile, email, location }}
                   shadow={false}
                   onUpdate={onUpdate}
               />
@@ -144,7 +144,7 @@ Header.propTypes = {
     image: PropTypes.string.isRequired,
     firstName: PropTypes.string.isRequired,
     lastName: PropTypes.string.isRequired,
-    role: PropTypes.string.isRequired,
+    account_type: PropTypes.string.isRequired,
     mobile: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
     location: PropTypes.string.isRequired,

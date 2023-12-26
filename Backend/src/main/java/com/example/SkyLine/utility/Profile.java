@@ -1,5 +1,7 @@
 package com.example.SkyLine.utility;
 
+import com.example.SkyLine.enums.UserRoleEnum;
+
 import lombok.Getter;
 import lombok.Setter;
 

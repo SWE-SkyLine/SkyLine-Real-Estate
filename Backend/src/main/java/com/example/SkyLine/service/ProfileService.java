@@ -23,7 +23,7 @@ public class ProfileService {
             Profile profile = new Profile();
             profile.setFirstName(user.getFirstName());
             profile.setLastName(user.getLastName());
-            profile.setAccount_type(user.getUserRole().name());
+            profile.setAccount_type(user.getUserRole().toString());
             profile.setEmail(user.getEmail());
             profile.setMobile(user.getPhoneNumber());
             profile.setProfile_photo(user.getProfile_photo());
