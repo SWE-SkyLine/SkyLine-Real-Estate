@@ -41,4 +41,14 @@ public class ProfileService {
         });
     }
 
+
+    public void updateProfileInfo(Integer userId, Profile profileInfo) {
+        userRepository.findById(userId).ifPresent(user -> {
+            user.setFirstName(profileInfo.getFirstName());
+            user.setLastName(profileInfo.getLastName());
+            user.setPhoneNumber(profileInfo.getMobile());
+            userRepository.save(user);
+        });
+    }
+
 }

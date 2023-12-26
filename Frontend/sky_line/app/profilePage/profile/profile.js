@@ -31,7 +31,7 @@ function Overview() {
 
         let photoUrl = `data:image/jpeg;base64,${profileData.profile_photo}`;
         // Create a data URL from the blob
-        console.log(photoUrl);
+        //console.log(photoUrl);
         profileData.profile_photo = photoUrl;
         //setProfile(profile);
         setProfile(profileData);
@@ -47,7 +47,7 @@ function Overview() {
       setUserId(userIdFromParams);
       fetchProfileInfoData(userIdFromParams);
     }
-  }, [profile]);
+  }, []);
 
   return (
     

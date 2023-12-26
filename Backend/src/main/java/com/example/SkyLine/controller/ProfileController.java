@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,9 +37,7 @@ public class ProfileController {
         return profileService.getProfileData(id);
     }
 
-    
-
-      @PostMapping("/{id}/updateProfilePhoto")
+    @PostMapping("/{id}/updateProfilePhoto")
     public ResponseEntity<String> updateProfilePhoto(
             @PathVariable Integer id,
             @RequestParam("profilePhoto") MultipartFile profilePhoto) {
@@ -54,6 +54,20 @@ public class ProfileController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.SC_INTERNAL_SERVER_ERROR)
                     .body("Failed to update profile photo");
+        }
+    }
+
+    @RequestMapping(value = "/{id}/updateProfileInfo", method = RequestMethod.POST)
+    public ResponseEntity<String> updateProfileInfo(@PathVariable Integer id, @RequestBody Profile updatedProfile) {
+        try {
+
+            profileService.updateProfileInfo(id, updatedProfile);
+
+            return ResponseEntity.ok("Profile information updated successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.SC_INTERNAL_SERVER_ERROR)
+                    .body("Failed to update profile information");
         }
     }
 
