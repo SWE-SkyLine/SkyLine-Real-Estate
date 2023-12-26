@@ -40,7 +40,7 @@ public class RatingController {
             return ResponseEntity.ok(rateService.getAvRate(targetId));
         } catch (Exception e) {
             System.out.println(e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No ratings found for this user");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(0);
         }
     }
 
@@ -50,7 +50,7 @@ public class RatingController {
             return ResponseEntity.ok(rateService.getRate(userId, targetId));
         } catch (Exception e) {
             System.out.println();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No rating found from " + userId + " to " + targetId);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(0);
         }
     }
 
