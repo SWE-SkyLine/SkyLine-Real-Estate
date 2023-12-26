@@ -16,8 +16,8 @@ import java.util.List;
 @Getter
 @DiscriminatorValue(value = "auction")
 public class Auction extends Post{
-    private Date start_time;
-    private Date end_time;
+    private String start_time;
+    private String end_time;
 
     private boolean status;
     @OneToMany(mappedBy = "auction")

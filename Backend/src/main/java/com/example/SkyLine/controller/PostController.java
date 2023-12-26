@@ -1,6 +1,7 @@
 package com.example.SkyLine.controller;
 
 import com.example.SkyLine.DTO.PostRetrievalDTO;
+import com.example.SkyLine.entity.Auction;
 import com.example.SkyLine.entity.FilterData;
 import com.example.SkyLine.entity.Photo;
 import com.example.SkyLine.entity.Post;
@@ -20,11 +21,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.xml.crypto.Data;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,8 +77,44 @@ public class PostController {
         int postId = postCreationService.createPost(post, photos, postCreatorUID);
 
         return new ResponseEntity<String>("Post Added with ID : " + postId, HttpStatus.OK);
-
     }
+    @PostMapping("/publish_auction")
+    public ResponseEntity<?> publishAuction(
+            @RequestParam("title") String title,
+            @RequestParam("price") String price,
+            @RequestParam("isRent") String isRent,
+            @RequestParam("area") String area,
+            @RequestParam("description") String description,
+            @RequestParam("estateType") String estateType,
+            @RequestParam("mapLink") String mapLink,
+            @RequestParam("address") String address,
+            @RequestParam("city") String city,
+            @RequestParam("bedroom") String bedroom,
+            @RequestParam("bathroom") String bathroom,
+            @RequestParam("level") String level,
+            @RequestParam("UID") String postCreatorUID,
+            @RequestPart("photos") MultipartFile[] photos,
+            @RequestPart("start_time") String start_time,
+            @RequestPart("end_time") String end_time
+    ) {
+
+        System.out.println("there is a request to publish a Auction");
+        System.out.println(title + " " + price + " " + isRent + " " + area + " "
+                + description + " " + estateType + " " + mapLink
+                + " " + address + " " + city + " "
+                + bedroom + " " + bathroom + " " + level + " " + photos.length
+                + " UID :  " + postCreatorUID+ " stime :  " + start_time+ " end_time :  " + end_time);
+
+        Auction auction = ContollerDataToPostAdapter.contollerDataToAuction(
+                title, price, isRent, area, description, estateType,
+                mapLink, address, city, bedroom, bathroom, level,  start_time,  end_time);
+        int AuctionId = postCreationService.createAuction(auction, photos, postCreatorUID);
+
+        return new ResponseEntity<String>("AuctionId Added with ID : " + AuctionId, HttpStatus.OK);
+    }
+
+
+
 
     @GetMapping("/get_posts_with_photos")
     public ResponseEntity<List<PostRetrievalDTO>> getFullPosts(

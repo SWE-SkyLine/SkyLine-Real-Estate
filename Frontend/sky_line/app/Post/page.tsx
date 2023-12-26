@@ -51,6 +51,8 @@ interface FormDataState {
     bathroom: string;
     level: string;
     photos: File[];
+    start_time:string
+    end_time:string
 }
 
 
@@ -83,6 +85,8 @@ function Post({ userId }: { userId: string }) {
         bathroom: '',
         level: '',
         photos: [],
+        start_time:'2023-01-01',
+        end_time:'2023-05-08'
     });
     const handleButtonClick = () => {
         setShowModal(true);

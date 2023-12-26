@@ -1,6 +1,7 @@
 package com.example.SkyLine.service;
 
 import com.example.SkyLine.DTO.PostRetrievalDTO;
+import com.example.SkyLine.entity.Auction;
 import com.example.SkyLine.entity.Photo;
 import com.example.SkyLine.entity.Post;
 import com.example.SkyLine.entity.User;
@@ -55,9 +56,36 @@ public class PostCreationService {
         newPost.setClient(postCreator);
 
         postRepository.save(newPost);
-
         return postId;
+    }
+    public int createAuction(Auction auction, MultipartFile[] photos, String postCreatorUID) {
+        Auction newAuction = postRepository.save(auction);
+        int auctionId = newAuction.getId();
+        try {
+            for (MultipartFile file : photos) {
+                Path path = Paths.get("uploads/" + auctionId + "-" + file.getOriginalFilename());
+                File directory = path.toFile().getParentFile();
+                if (!directory.exists()) {
+                    directory.mkdirs();
+                }
+                // Save the file
+                file.transferTo(path);
 
+                //save the file path into DB after saving the photo in the server
+                newAuction.getPhotos().add(new Photo(path.toString()));
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error while saving auction photos: " + e.getMessage());
+
+        }
+        // save UID post creator
+        User postCreator = userRepository.findUserById(Integer.parseInt(postCreatorUID));
+
+        newAuction.setClient(postCreator);
+
+        postRepository.save(newAuction);
+        return auctionId;
     }
 
     public List<PostRetrievalDTO> PostToRetrievalEntity(List<Post> posts) throws MalformedURLException {
