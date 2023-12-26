@@ -33,7 +33,7 @@ public class RateService {
         return ratingRepository.findAverageRatingByTargetId(targetId);
     }
 
-    public int getRate(int userId, int targetId){
+    public byte getRate(int userId, int targetId){
         return ratingRepository.findByIdUserIdAndIdTargetId(userId, targetId).getRate();
     }
 
