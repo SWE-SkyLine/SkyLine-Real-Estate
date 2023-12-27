@@ -58,7 +58,7 @@ public class RateServiceTest {
 
         when(ratingRepository.findAverageRatingByTargetId(targetId)).thenReturn(expectedAverage);
 
-        double actualAverage = rateService.getAvRate(targetId);
+        double actualAverage = rateService.getAvgRate(targetId);
 
         verify(ratingRepository, times(1)).findAverageRatingByTargetId(targetId);
 

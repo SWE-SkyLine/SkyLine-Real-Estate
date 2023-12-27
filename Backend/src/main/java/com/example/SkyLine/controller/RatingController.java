@@ -37,7 +37,7 @@ public class RatingController {
     @GetMapping("/avgRate")
     public ResponseEntity<?> getAvgRateFor(@RequestParam int targetId) {
         try {
-            return ResponseEntity.ok(rateService.getAvRate(targetId));
+            return ResponseEntity.ok(rateService.getAvgRate(targetId));
         } catch (Exception e) {
             System.out.println(e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(0);

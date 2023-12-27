@@ -59,7 +59,7 @@ public class RatingControllerTest {
 
     @Test
     void testSuccessfulGetAvg() {
-        doReturn(4.5).when(rateService).getAvRate(1);
+        doReturn(4.5).when(rateService).getAvgRate(1);
 
         // Act
         ResponseEntity<?> responseEntity = ratingController.getAvgRateFor(1);
@@ -70,7 +70,7 @@ public class RatingControllerTest {
 
     @Test
     void testGetAvgRatingFail() {
-        doThrow(new RuntimeException("Test exception")).when(rateService).getAvRate(1);
+        doThrow(new RuntimeException("Test exception")).when(rateService).getAvgRate(1);
 
         // Act
         ResponseEntity<?> responseEntity = ratingController.getAvgRateFor(1);

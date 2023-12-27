@@ -29,7 +29,7 @@ public class RateService {
         ratingRepository.save(toSave);
     }
 
-    public double getAvRate(int targetId){
+    public double getAvgRate(int targetId){
         return ratingRepository.findAverageRatingByTargetId(targetId);
     }
 
