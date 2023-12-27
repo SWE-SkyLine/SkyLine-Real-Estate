@@ -4,7 +4,7 @@ import style from './page.module.css';
 import {sendRate, getRate, getAvgRate} from '../Services/RatingService';
 import { Rate, RatingEnum } from '../objects/Rate';
 
-const Rating  = () => {
+const Rating  = (props: { targetId: Number; userId: Number }) => {
     const [rating, setRating] = useState(0); 
     const [avgRate, setAvgRate] = useState(0);
 
@@ -30,7 +30,7 @@ const Rating  = () => {
 
     useEffect(() => {
         const getAvg = async () => {
-        const defaultRating = await getAvgRate(2);
+        const defaultRating = await getAvgRate(props.targetId);
         setAvgRate(defaultRating)
         };
         getAvg();
@@ -40,7 +40,7 @@ const Rating  = () => {
         // create rate object   
         let rating = new Rate();
         rating.userId = 1 //////// set current user Id
-        rating.targetId = 2 ///////// set taregt Id
+        rating.targetId = props.targetId ///////// set taregt Id
         rating.rate = setRateEnum(value)
 
         const res = await sendRate(rating);

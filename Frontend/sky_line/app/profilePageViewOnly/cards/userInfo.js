@@ -8,11 +8,13 @@ import Card from "@mui/material/Card";
 // Material Dashboard 2 React components
 import MDBox from "../components/MDBoxindex";
 import MDTypography from "../components/MDtypoindex";
+import Rating  from "../../rating/page";
 
 
 function ProfileInfoCard({ title, info, shadow }) {
   const { firstName, lastName, image, role, ...restInfo } = info;
-
+  const urlParams = new URLSearchParams(window.location.search);
+  const userIdFromParams = urlParams.get("id");
   const labels = ["fullName", ...Object.keys(restInfo)];
   const values = [`${firstName} ${lastName}`, ...Object.values(restInfo)];
 
@@ -38,6 +40,7 @@ function ProfileInfoCard({ title, info, shadow }) {
         <MDBox opacity={10}></MDBox>
         <MDBox pt={0} px={4}>
           {renderItems}
+          <Rating targetId={userIdFromParams}/>
         </MDBox>
       </MDBox>
     </Card>
