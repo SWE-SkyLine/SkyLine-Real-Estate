@@ -1,34 +1,25 @@
 package com.example.SkyLine.service;
 
+import lombok.Data;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service
+@Data
+@Accessors(chain = true)
 public class EmailService implements Runnable {
 
     @Autowired
     private JavaMailSender javaMailSender;
 
     private String email;
-    private String VerificationCode;
+    private String verificationCode;
 
-    public String getEmail() {
-        return email;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getVerificationCode() {
-        return VerificationCode;
-    }
-
-    public void setVerificationCode(String verificationCode) {
-        VerificationCode = verificationCode;
-    }
 
     public void sendEmail(String to, String subject, String body) {
         SimpleMailMessage message = new SimpleMailMessage();
@@ -52,10 +43,10 @@ public class EmailService implements Runnable {
     @Override
     public void run() {
         try {
-            this.sendCodeVerifySignup(this.email, this.VerificationCode);
+            this.sendCodeVerifySignup(this.email, this.verificationCode);
         }
         catch (Exception e){
-            System.out.println(e.getMessage()+" I am Runnable :(");
+            System.out.println(e.getMessage()+"\nI am Runnable :(");
         }
 
     }

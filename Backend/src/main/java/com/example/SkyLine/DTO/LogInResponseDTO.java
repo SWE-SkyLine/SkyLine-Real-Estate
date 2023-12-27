@@ -1,19 +1,13 @@
 package com.example.SkyLine.DTO;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
+
+@Data
+@Accessors(chain = true)
 public class LogInResponseDTO {
-    private String firstName;
-    private String lastName;
-    private int UID;
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public int getUID() {
-        return UID;
-    }
+    private int id;
+    private String name;
+    private String email;
+    private String jwtToken;
 }

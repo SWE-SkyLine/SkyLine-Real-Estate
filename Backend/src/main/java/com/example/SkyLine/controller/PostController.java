@@ -11,6 +11,7 @@ import com.example.SkyLine.repository.PostRepository;
 import com.example.SkyLine.service.PostCreationService;
 import com.example.SkyLine.service.PostService;
 import com.example.SkyLine.utility.ContollerDataToPostAdapter;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -34,12 +35,8 @@ import java.util.List;
 public class PostController {
     @Autowired
     private PostCreationService postCreationService;
-    //
-    @Autowired
-    private PhotoRepository photoRepository;
     @Autowired
     private PostRepository postRepository;
-
     @Autowired
     private PostService postService;
     //
@@ -58,7 +55,7 @@ public class PostController {
             @RequestParam("bedroom") String bedroom,
             @RequestParam("bathroom") String bathroom,
             @RequestParam("level") String level,
-            @RequestParam("UID") String postCreatorUID,
+            @NonNull @RequestParam("UID") String postCreatorUID,
             @RequestPart("photos") MultipartFile[] photos) {
 
         System.out.println("there is a request to publish a post");
@@ -113,13 +110,6 @@ public class PostController {
                                         Boolean rent) {
         return priceFrom != null || priceTo != null || estateType != null || rent != null;
     }
-
-    // @GetMapping("/test")
-    // public ResponseEntity<Resource> test() throws MalformedURLException {
-    // Resource resource = new
-    // UrlResource(Paths.get("Backend\\uploads\\52-cat.jpeg").toUri());
-    // return new ResponseEntity<Resource>(resource, HttpStatus.OK);
-    // }
 
     @GetMapping("/search")
     public ResponseEntity<List<Post>> search(@RequestParam String query) {

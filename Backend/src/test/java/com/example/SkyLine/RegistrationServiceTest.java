@@ -1,31 +1,25 @@
 package com.example.SkyLine;
 
-import com.example.SkyLine.DTO.UserRequestDTO;
 import com.example.SkyLine.entity.User;
 import com.example.SkyLine.repository.UserOauthRepository;
 import com.example.SkyLine.repository.UserRepository;
 import com.example.SkyLine.service.EmailService;
-import com.example.SkyLine.service.RegesterationService;
+import com.example.SkyLine.service.RegistrationService;
 import com.example.SkyLine.utility.RepositoryFactory;
 import com.example.SkyLine.utility.UserFactory;
-import com.example.SkyLine.utility.VerificationCodeGenerator;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import com.example.SkyLine.enums.UserRoleEnum;
 
-
-import java.util.Optional;
-import java.util.concurrent.TimeoutException;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class RegesterationServiceTest {
+public class RegistrationServiceTest {
 
     @Mock
     private UserRepository userRepository;
@@ -46,7 +40,7 @@ public class RegesterationServiceTest {
     private RepositoryFactory repositoryFactory;
 
     @InjectMocks
-    private RegesterationService registrationService;
+    private RegistrationService registrationService;
 
     @Before
     public void setUp() {
@@ -65,7 +59,7 @@ public class RegesterationServiceTest {
 
         assertTrue(registrationService.UserVerify("test@example.com", "123456"));
 
-        assertTrue(user.getIs_enable());
+        assertTrue(user.isEnable());
         verify(userRepository, times(1)).findByEmail("test@example.com");
         verify(userRepository, times(1)).save(any(User.class));
     }

@@ -1,15 +1,17 @@
 package com.example.SkyLine.entity;
 
 import com.example.SkyLine.enums.UserRoleEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.Accessors;
 
 @Entity
-@Setter
-@Getter
+@Data
+@Accessors(chain = true)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="UserType"
-, discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "UserType"
+        , discriminatorType = DiscriminatorType.STRING)
 @Table(name = "User")
 public class User {
     @Id
@@ -20,15 +22,16 @@ public class User {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
-    @Enumerated(value=EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "account_type")
     private UserRoleEnum userRole;
-    @Column(name = "email", unique=true)
+    @Column(name = "email", unique = true)
     private String email;
     @Column(name = "profile_photo")
     private byte[] profile_photo;
     @Column(name = "password")
-    private String password; 
+    @JsonIgnore
+    private String password;
     @Column(name = "phone_number")
     private String PhoneNumber;
 
@@ -40,75 +43,4 @@ public class User {
     @Column(name = "is_enable", columnDefinition = "boolean default false")
     private boolean isEnable;
 
-
-
-    public void setIs_enable(Boolean isEnable) {
-        this.isEnable = isEnable;
-
-    }
-
-    public Boolean getIs_enable() {
-        return isEnable;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public UserRoleEnum getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(UserRoleEnum userRole) {
-        this.userRole = userRole;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPhoneNumber() {
-        return PhoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        PhoneNumber = phoneNumber;
-    }
-
-
-    public String getVerificationCode() {
-        return verificationCode;
-    }
-
-    public void setVerificationCodeForgetPassword(Integer verificationCodeForgetPassword) {
-        this.verificationCodeForgetPassword = verificationCodeForgetPassword;
-    }
-
-  
-    public Integer getVerificationCodeForgetPassword() {
-        return verificationCodeForgetPassword;
-    }
-
-
-
-
-    public void setVerificationCode(String verificationCode) {
-        this.verificationCode = verificationCode;
-    }
 }

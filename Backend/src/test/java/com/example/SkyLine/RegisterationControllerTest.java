@@ -5,7 +5,7 @@ import com.example.SkyLine.DTO.UserRequestDTO;
 import com.example.SkyLine.DTO.VerifyCodeRequestDTO;
 import com.example.SkyLine.controller.RegisterationController;
 import com.example.SkyLine.entity.User;
-import com.example.SkyLine.service.RegesterationService;
+import com.example.SkyLine.service.RegistrationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -21,7 +21,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
@@ -32,7 +31,7 @@ import java.util.concurrent.TimeoutException;
 class RegisterationControllerTest {
 
     @Mock
-    private RegesterationService regesterationService;
+    private RegistrationService registrationService;
 
     @Mock
     private AuthenticationManager authenticationManager;
@@ -57,8 +56,8 @@ class RegisterationControllerTest {
         User mockUser = new User(); // Change this line based on your actual User entity
         mockUser.setEmail("test@example.com");
 
-        when(regesterationService.userExists("test@example.com")).thenReturn(false);
-        when(regesterationService.register(any(UserRequestDTO.class))).thenReturn(mockUser);
+        when(registrationService.userExists("test@example.com")).thenReturn(false);
+        when(registrationService.register(any(UserRequestDTO.class))).thenReturn(mockUser);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/register/user/signup")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -72,7 +71,7 @@ class RegisterationControllerTest {
     void testSignUpAlreadyExists(){
         UserRequestDTO userRequestDTO = new UserRequestDTO();
         userRequestDTO.setEmail("test@example.com");
-        doReturn(Boolean.TRUE).when(regesterationService).userExists(userRequestDTO.getEmail());
+        doReturn(Boolean.TRUE).when(registrationService).userExists(userRequestDTO.getEmail());
         ResponseEntity<?> responseEntity = registerationController.signUp(userRequestDTO);
         assertEquals(HttpStatus.CONFLICT, responseEntity.getStatusCode());
         assertEquals("user already exists", responseEntity.getBody());
@@ -82,7 +81,7 @@ class RegisterationControllerTest {
     void testSignUpNew(){
         UserRequestDTO userRequestDTO = new UserRequestDTO();
         userRequestDTO.setEmail("test@example.com");
-        doReturn(Boolean.FALSE).when(regesterationService).userExists(userRequestDTO.getEmail());
+        doReturn(Boolean.FALSE).when(registrationService).userExists(userRequestDTO.getEmail());
         ResponseEntity<?> responseEntity = registerationController.signUp(userRequestDTO);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
@@ -92,7 +91,7 @@ class RegisterationControllerTest {
         VerifyCodeRequestDTO  verifyCodeRequestDTO = new VerifyCodeRequestDTO();
         verifyCodeRequestDTO.setCode("1234");
         verifyCodeRequestDTO.setEmail("test@example.com");
-        doReturn(Boolean.TRUE).when(regesterationService).UserVerify(verifyCodeRequestDTO.getEmail(), verifyCodeRequestDTO.getCode());
+        doReturn(Boolean.TRUE).when(registrationService).UserVerify(verifyCodeRequestDTO.getEmail(), verifyCodeRequestDTO.getCode());
         assertEquals(HttpStatus.OK, registerationController.verify(verifyCodeRequestDTO).getStatusCode());
     }
 
@@ -101,7 +100,7 @@ class RegisterationControllerTest {
         VerifyCodeRequestDTO  verifyCodeRequestDTO = new VerifyCodeRequestDTO();
         verifyCodeRequestDTO.setCode("1234");
         verifyCodeRequestDTO.setEmail("test@example.com");
-        doReturn(Boolean.FALSE).when(regesterationService).UserVerify(verifyCodeRequestDTO.getEmail(), verifyCodeRequestDTO.getCode());
+        doReturn(Boolean.FALSE).when(registrationService).UserVerify(verifyCodeRequestDTO.getEmail(), verifyCodeRequestDTO.getCode());
         assertEquals(HttpStatus.NOT_ACCEPTABLE, registerationController.verify(verifyCodeRequestDTO).getStatusCode());
     }
 
