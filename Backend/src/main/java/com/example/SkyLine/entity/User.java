@@ -25,9 +25,10 @@ public class User {
     private UserRoleEnum userRole;
     @Column(name = "email", unique=true)
     private String email;
+    @Column(name = "profile_photo")
     private byte[] profile_photo;
     @Column(name = "password")
-    private String password;
+    private String password; 
     @Column(name = "phone_number")
     private String PhoneNumber;
 

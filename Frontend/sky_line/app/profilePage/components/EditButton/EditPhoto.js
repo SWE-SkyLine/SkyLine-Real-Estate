@@ -6,44 +6,50 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import "./editModelStyle.css";
 import MDAvatar from "../index";
-function Component({ info, onUpdate }) {
-  const { image, firstName, lastName, role, mobile, email, location } = info;
+function Component({ info }) {
+
   const [selectedFile, setSelectedFile] = useState(null);
   const [openModal, setOpenModal] = useState(false);
-  const [email1, setEmail] = useState(email);
-  const [firstName1, setFirstName] = useState(firstName);
-  const [mobile1, setMobile] = useState(mobile);
-  const [lastName1, setLastName] = useState(lastName);
-  const [location1, setLocation] = useState(location);
-  const [role1, setRole] = useState(role);
   const handleFileChange = (event) => {
     // Handle file change and update selectedFile state
     const file = event.target.files[0];
     setSelectedFile(file);
   };
   const handleSetProfilePhoto = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const userIdFromParams = urlParams.get("id");
     if (selectedFile) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-
-        const dataUrl = reader.result;
-        onUpdate({
-          image: dataUrl,
-          firstName: firstName1,
-          lastName: lastName1,
-          role: role1,
-          email: email1,
-          mobile: mobile1,
-          location: location1,
-        });
+      const formData = new FormData();
+      formData.append('profilePhoto', selectedFile);
+  
+      fetch(`http://localhost:8080/api/profile/${userIdFromParams}/updateProfilePhoto`, {
+        method: 'POST',
+        body: formData,
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.text(); // Change to text() if the response is not JSON
+      })
+      .then(result => {
+        console.log('Success:', result);
         setOpenModal(false);
-      };
-      reader.readAsDataURL(selectedFile);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        // Handle error if needed
+      });
     } else {
       alert("Please choose a file before setting the profile photo.");
-
     }
   };
+  
+
+  Component.defaultProps = {
+    onUpdate: () => {},
+  };
+
 
   return (
     <>
@@ -116,13 +122,7 @@ function Component({ info, onUpdate }) {
 
 Component.propTypes = {
   info: PropTypes.shape({
-    role: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
-    firstName: PropTypes.string.isRequired,
-    lastName: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    mobile: PropTypes.string.isRequired,
-    location: PropTypes.string.isRequired,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
 };

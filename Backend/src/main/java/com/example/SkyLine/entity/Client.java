@@ -22,5 +22,9 @@ public class Client extends User {
     @OneToMany(mappedBy = "client")
     private List<Bid> bids = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
+
 
 }

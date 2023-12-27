@@ -254,7 +254,7 @@ export interface FilterData {
        {/* <div className={style.follow}><i className="fa-solid fa-user-group"></i> <span> Followers: 50</span></div>
        <div className={style.follow}> <i className="fa-solid fa-user-check"></i> <span>Following: 100</span></div> */}
        
-        <button className={style.btn_edit} onClick={()=>{router.push("/profilePage")}}>Edit Profile</button>
+        <button className={style.btn_edit} onClick={()=>{router.push(`/profilePage?id=${userId}`)}}>Edit Profile</button>
       </div>
       </div>
         

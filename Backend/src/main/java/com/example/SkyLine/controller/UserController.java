@@ -1,5 +1,6 @@
 package com.example.SkyLine.controller;
 
+import com.example.SkyLine.DTO.UserPromoteDTO;
 import com.example.SkyLine.entity.User;
 import com.example.SkyLine.enums.UserRoleEnum;
 import com.example.SkyLine.repository.UserRepository;
@@ -46,10 +47,10 @@ public class UserController {
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
-    @GetMapping("/allUsersToPromote")
-    public List<User> getAllUsersToPromote() {
-        return userService.getAllUsersByAccountType(UserRoleEnum.CLIENT);
-    }
+//    @GetMapping("/allUsersToPromote")
+//    public List<User> getAllUsersToPromote() {
+//        return userService.getAllUsersByAccountType(UserRoleEnum.CLIENT);
+//    }
 
     @PostMapping
     public User createUser(@RequestBody User user) {
@@ -140,6 +141,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Password update failed");
         }
     }
+
 
 
 
