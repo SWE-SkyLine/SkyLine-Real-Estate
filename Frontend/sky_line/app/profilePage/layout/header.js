@@ -21,7 +21,7 @@ import EditPhoto from "../components/EditButton/EditPhoto";
 import ProfileInfoCard from "../cards/userInfo.js";
 import ProfilesList from "../cards/userAuctions.js";
 import DefaultProjectCard from "../cards/userPosts.js";
-import ViewUsers from "@/app/profilePage/components/EditButton/ViewUsers";
+import ViewUsers from "../components/EditButton/ViewUsers";
 
 
 function Header({ profileInfo, profilesListData, postsListData, onUpdate, onUpdatePhoto, users}) {

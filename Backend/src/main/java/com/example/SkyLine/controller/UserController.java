@@ -142,17 +142,6 @@ public class UserController {
         }
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<List<UserPromoteDTO>> searchUsersforPromotion(@RequestParam String query) {
-        try {
-            List<UserPromoteDTO> matchingUsers = userService.searchClientUsers(query);
-            System.out.println("Matching users: " + matchingUsers);
-            return ResponseEntity.ok(matchingUsers);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
-    }
 
 
 

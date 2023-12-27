@@ -19,8 +19,9 @@ import ViewAuction from "./ViewAuction";
 import Card from "@mui/material/Card";
 import { React } from "react";
 import TextField from "@mui/material/TextField";
-import UsersList from "@/app/profilePage/components/UsersList";
+import UsersList from "../UsersList";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 function Component({ title, profiles, shadow }) {
   const [openModal, setOpenModal] = useState(false);
@@ -38,18 +39,19 @@ function Component({ title, profiles, shadow }) {
 
   const handleSearch = async () => {
     try {
-        const response = await axios.get(`http://localhost:8080/api/users/search?query=${inputText}`);
+        const response = await axios.get(`http://localhost:8080/api/notifications/search?query=${inputText}`);
 
         const profileData = response.data;
-        let photoUrl = `data:image/jpeg;base64,${profileData.profile_photo}`
-        profileData.profile_photo = photoUrl;
-      
-        setSearchResults([profileData]);
+        let photoUrl = `data:image/jpeg;base64,${profileData[0].profilePhoto}`
+        profileData[0].profilePhoto = photoUrl;
+         console.log(profileData[0]);
+        setSearchResults(profileData);
         console.log(searchResults);
     } catch (error) {
         console.error("Error during search:", error);
     }
 };
+
 
   return (
     <>
