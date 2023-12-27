@@ -57,7 +57,8 @@ public class ContollerDataToPostAdapter {
                                                  String bathroom,
                                                  String level,
                                                  String end_time,
-                                                 String start_time
+                                                 String start_time,
+                                                 String start_bid
 
     ) {
         // create entity without photoes due to concurrency problems if I fetch the coming id of the post
@@ -78,6 +79,7 @@ public class ContollerDataToPostAdapter {
         auction.setLevel((byte) Integer.parseInt(level));
         auction.setStart_time(start_time);
         auction.setEnd_time(end_time);
+        auction.setStart_bid(start_bid);
         auction.setStatus(true);
 
         return auction ;

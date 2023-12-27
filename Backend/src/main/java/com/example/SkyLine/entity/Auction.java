@@ -18,8 +18,8 @@ import java.util.List;
 public class Auction extends Post{
     private String start_time;
     private String end_time;
-
     private boolean status;
+    private String start_bid;
     @OneToMany(mappedBy = "auction")
     private List<Bid> bids = new ArrayList<>();
 }

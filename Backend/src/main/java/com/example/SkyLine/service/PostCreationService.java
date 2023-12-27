@@ -1,5 +1,6 @@
 package com.example.SkyLine.service;
 
+import com.example.SkyLine.DTO.AuctionRetrievalDTO;
 import com.example.SkyLine.DTO.PostRetrievalDTO;
 import com.example.SkyLine.entity.Auction;
 import com.example.SkyLine.entity.Photo;
@@ -95,6 +96,17 @@ public class PostCreationService {
                 retrievalDTOS.add(new PostRetrievalDTO(p));
             } catch (MalformedURLException e) {
                 e.printStackTrace();
+            }
+        }
+        return retrievalDTOS;
+    }
+    public List<AuctionRetrievalDTO> AuctionToRetrievalEntity(List<Auction> auctions) throws MalformedURLException {
+        List<AuctionRetrievalDTO> retrievalDTOS = new ArrayList<>();
+        for (Auction A : auctions) {
+            try {
+                retrievalDTOS.add(new AuctionRetrievalDTO(A));
+            } catch (MalformedURLException e) {
+                System.out.println("Error while Retrieve auctions : " + e.getMessage());
             }
         }
         return retrievalDTOS;
