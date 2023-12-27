@@ -43,6 +43,7 @@ function Component({ info }) {
     } else {
       alert("Please choose a file before setting the profile photo.");
     }
+    location.reload();
   };
   
 

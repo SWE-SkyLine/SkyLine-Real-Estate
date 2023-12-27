@@ -24,6 +24,10 @@ public class PostService {
         return postRepository.findAll();
     }
 
+    public List<Post> getPostsByUserId(Integer userId) {
+        return postRepository.findByClient_Id(userId);
+    }
+
 
     public List<Post> getSortedPosts(String sortBy, String sortOrder) {
         Sort sort = Sort.by(Sort.Direction.fromString(sortOrder), sortBy);

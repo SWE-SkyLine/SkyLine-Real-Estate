@@ -27,6 +27,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -110,16 +111,29 @@ public class PostController {
     }
 
     private boolean hasFilterParameters(Integer priceFrom, Integer priceTo, EstateTypeEnum estateType,
-                                        Boolean rent) {
+            Boolean rent) {
         return priceFrom != null || priceTo != null || estateType != null || rent != null;
     }
 
-    // @GetMapping("/test")
-    // public ResponseEntity<Resource> test() throws MalformedURLException {
-    // Resource resource = new
-    // UrlResource(Paths.get("Backend\\uploads\\52-cat.jpeg").toUri());
-    // return new ResponseEntity<Resource>(resource, HttpStatus.OK);
-    // }
+    @PostMapping("/get_posts_for_profile_with_photos")
+    public ResponseEntity<?> getPostsByUserId(
+            @RequestBody Map<String, Integer> requestBody) throws MalformedURLException {
+
+        Integer userId = requestBody.get("userId");
+
+        if (userId == null) {
+            return ResponseEntity.badRequest().body("User ID is required in the request body");
+        }
+
+        List<Post> posts = postService.getPostsByUserId(userId);
+
+        if (posts == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<PostRetrievalDTO> retrievalDTOS = postCreationService.PostToRetrievalEntity(posts);
+        return ResponseEntity.ok(retrievalDTOS);
+    }
 
     @GetMapping("/search")
     public ResponseEntity<List<Post>> search(@RequestParam String query) {

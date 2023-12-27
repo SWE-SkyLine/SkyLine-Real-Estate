@@ -23,8 +23,9 @@ import ViewPost from "../components/EditButton/ViewPost";
 function DefaultProjectCard({ posts }) {
 
 
-  return posts.map(({images, label, title, auction, description, price, area, status, rooms, bathrooms, floors, link, phone, date,address}) => (
-    <Grid key={label} item xs={12}  xl={3}>
+
+  return posts.map(({id, publishDate, expiryDate, title, price, rent, area, description, estateType, bedroom, bathroom, level, mapLink,address, city, fullName, postCreatorUID,photosByteArray}) => (
+    <Grid key={id} item xs={12}  xl={3}>
       <Card
         sx={{
           display: "flex",
@@ -36,7 +37,7 @@ function DefaultProjectCard({ posts }) {
       >
         <MDBox position="relative" width="100.25%" shadow="xl" borderRadius="xl">
           <CardMedia
-            src={images[0]}
+            src={photosByteArray[0]}
             component="img"
             title={title}
             sx={{
@@ -54,7 +55,7 @@ function DefaultProjectCard({ posts }) {
             color="text"
             textTransform="capitalize"
           >
-            {label}
+            {id}
           </MDTypography>
           <MDBox mb={1}>
               <MDTypography
@@ -62,7 +63,7 @@ function DefaultProjectCard({ posts }) {
               >
                 {title + " "}
                 <MDTypography variant="button" fontWeight={"light"}>
-                  {auction}
+                  {rent}
                 </MDTypography>
               </MDTypography>
           </MDBox>
@@ -72,7 +73,7 @@ function DefaultProjectCard({ posts }) {
             </MDTypography>
           </MDBox>
           <MDBox display="flex" justifyContent="space-between" alignItems="center">
-              <ViewPost postInfo={{images, label, title, auction, description, price, area, status, rooms, bathrooms, floors, link, phone, date,address}}/>
+              <ViewPost postInfo={{id, publishDate, expiryDate, title, price, rent, area, description, estateType, bedroom, bathroom, level, mapLink,address, city, fullName, postCreatorUID,photosByteArray}}/>
           </MDBox>
         </MDBox>
       </Card>

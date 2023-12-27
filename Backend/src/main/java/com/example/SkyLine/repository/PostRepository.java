@@ -12,23 +12,24 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Integer> {
-    List<Post> findAll();
+        List<Post> findAll();
 
-    List<Post> findByTitleContainingIgnoreCase(String query);
+        List<Post> findByTitleContainingIgnoreCase(String query);
 
-    // PostRepository.java
-    List<Post> findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String title, String description);
+        // PostRepository.java
+        List<Post> findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String title, String description);
 
-    @Query("SELECT p FROM Post p WHERE " +
-            "(:priceFrom IS NULL OR p.price >= :priceFrom) " +
-            "AND (:priceTo IS NULL OR p.price <= :priceTo) " +
-            "AND (:estateType IS NULL OR p.estateType = :estateType) " +
-            "AND (:rent IS NULL OR p.rent = :rent)")
-    List<Post> findFilteredPosts(
-            @Param("priceFrom") Integer priceFrom,
-            @Param("priceTo") Integer priceTo,
-            @Param("estateType") EstateTypeEnum estateType,
-            @Param("rent") Boolean rent);
+        @Query("SELECT p FROM Post p WHERE " +
+                        "(:priceFrom IS NULL OR p.price >= :priceFrom) " +
+                        "AND (:priceTo IS NULL OR p.price <= :priceTo) " +
+                        "AND (:estateType IS NULL OR p.estateType = :estateType) " +
+                        "AND (:rent IS NULL OR p.rent = :rent)")
+        List<Post> findFilteredPosts(
+                        @Param("priceFrom") Integer priceFrom,
+                        @Param("priceTo") Integer priceTo,
+                        @Param("estateType") EstateTypeEnum estateType,
+                        @Param("rent") Boolean rent);
 
+        List<Post> findByClient_Id(Integer userId);
 
 }

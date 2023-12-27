@@ -105,7 +105,7 @@ function Header({ profileInfo, profilesListData, postsListData, onUpdate, onUpda
             <Grid item x={10} md={10} xl={4}>
               <ProfileInfoCard
                   title="profile information"
-                  info={{ image, account_type, firstName, lastName, mobile, email, location }}
+                  info={{ image, account_type, firstName, lastName, mobile, email }}
                   shadow={false}
                   onUpdate={onUpdate}
               />
