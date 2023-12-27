@@ -22,6 +22,7 @@ import ProfileInfoCard from "../cards/userInfo.js";
 import ProfilesList from "../cards/userAuctions.js";
 import DefaultProjectCard from "../cards/userPosts.js";
 import ViewUsers from "../components/EditButton/ViewUsers";
+import HomeButton from "../components/HomeButton";
 
 
 function Header({ profileInfo, profilesListData, postsListData, onUpdate, onUpdatePhoto, users}) {
@@ -56,7 +57,7 @@ function Header({ profileInfo, profilesListData, postsListData, onUpdate, onUpda
   return (
       
       <MDBox key={email} position="relative" mb={5}>
-        
+        <HomeButton />  
         <MDBox
             display="flex"
             alignItems="center"
