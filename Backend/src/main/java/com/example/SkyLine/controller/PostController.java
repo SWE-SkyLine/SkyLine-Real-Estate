@@ -1,9 +1,6 @@
 package com.example.SkyLine.controller;
 
-import com.example.SkyLine.DTO.AuctionRetrievalDTO;
-import com.example.SkyLine.DTO.BidDTO;
-import com.example.SkyLine.DTO.PostRetrievalDTO;
-import com.example.SkyLine.DTO.UserRequestDTO;
+import com.example.SkyLine.DTO.*;
 import com.example.SkyLine.entity.*;
 import com.example.SkyLine.enums.EstateTypeEnum;
 import com.example.SkyLine.repository.PhotoRepository;
@@ -81,6 +78,7 @@ public class PostController {
 
         return new ResponseEntity<String>("Post Added with ID : " + postId, HttpStatus.OK);
     }
+
     @PostMapping("/publish_auction")
     public ResponseEntity<?> publishAuction(
             @RequestParam("title") String title,
@@ -108,12 +106,12 @@ public class PostController {
                 + description + " " + estateType + " " + mapLink
                 + " " + address + " " + city + " "
                 + bedroom + " " + bathroom + " " + level + " " + photos.length
-                + " UID :  " + postCreatorUID+ " stime :  " + start_time+ " end_time :  " + end_time
+                + " UID :  " + postCreatorUID + " stime :  " + start_time + " end_time :  " + end_time
                 + " min_bid :  " + start_bid);
 
         Auction auction = ContollerDataToPostAdapter.contollerDataToAuction(
                 title, price, isRent, area, description, estateType,
-                mapLink, address, city, bedroom, bathroom, level, start_time, end_time,start_bid);
+                mapLink, address, city, bedroom, bathroom, level, start_time, end_time, start_bid);
         int AuctionId = postCreationService.createAuction(auction, photos, postCreatorUID);
 
         return new ResponseEntity<String>("AuctionId Added with ID : " + AuctionId, HttpStatus.OK);
@@ -121,31 +119,22 @@ public class PostController {
 
     @PostMapping("/add_bid")
     public ResponseEntity<?> addBid(@RequestBody BidDTO bid) {
-        boolean noError= bidService.addBid(bid);
-        if(!noError){
-            return new ResponseEntity<String>( HttpStatus.REQUEST_TIMEOUT);
+        boolean noError = bidService.addBid(bid);
+        if (!noError) {
+            return new ResponseEntity<String>(HttpStatus.REQUEST_TIMEOUT);
         }
-        return new ResponseEntity<String>( HttpStatus.OK);
+        return new ResponseEntity<String>(HttpStatus.OK);
     }
 
-//    @GetMapping("/bids/{auctionId}")
-//    public ResponseEntity<?> getBids(@PathVariable int auctionId) throws MalformedURLException {
-//
-//        try {
-//            List<Bid> bids=bidService.getBids(auctionId);
-//            List<BidDTO> retrievalDTOS = bidService.bidsToRetrievalEntity(bids);
-//            return new ResponseEntity<>(retrievalDTOS, HttpStatus.OK);
-//        }
-//        catch (Exception e){
-//            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
-//        }
-//
-//
-//    }
-
-
-
-
+    @GetMapping("/get_bids/{auctionId}")
+    public ResponseEntity<?> getBids(@PathVariable int auctionId) throws MalformedURLException {
+        // Use auctionId in your logic, for example:
+        ArrayList<BidRetrievalDTO> bids = bidService.getBidsOfAuction(auctionId);
+        if(bids==null){
+            return new ResponseEntity<>( HttpStatus.BAD_GATEWAY);
+        }
+        return new ResponseEntity<>(bids, HttpStatus.OK);
+    }
 
     @GetMapping("/get_posts_with_photos")
     public ResponseEntity<List<PostRetrievalDTO>> getFullPosts(
@@ -180,9 +169,10 @@ public class PostController {
     }
 
     @GetMapping("/get_auctions_with_photos")
-    public ResponseEntity<List<AuctionRetrievalDTO>> getFullauctions()throws MalformedURLException {
+    public ResponseEntity<List<AuctionRetrievalDTO>> getFullauctions() throws MalformedURLException {
 
-        List<Auction> auctions=postRepository.findAllAuctions();;
+        List<Auction> auctions = postRepository.findAllAuctions();
+
         // Convert to DTOs and return
         List<AuctionRetrievalDTO> retrievalDTOS = postCreationService.AuctionToRetrievalEntity(auctions);
         return new ResponseEntity<>(retrievalDTOS, HttpStatus.OK);

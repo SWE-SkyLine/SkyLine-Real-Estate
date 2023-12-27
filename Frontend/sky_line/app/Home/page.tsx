@@ -10,13 +10,13 @@ import Navbar from '../navbar/page'
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import SortFilter from "../sortFilter/page";
 import { Post_object } from "../objects/Post_object";
-import {get_all_posts,get_all_Auctions} from "../Services/PostService";
+import {get_all_posts,get_all_Auctions, get_bid} from "../Services/PostService";
 import {filter_all_posts} from "../Services/PostService";
 import { sort_all_posts } from "../Services/PostService";
 import { search_all_posts } from "../Services/PostService";
 import { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
-import { Popup_respone } from "../Utility/Popup/Popup";
+import { Popup_respone,Pop_addbid,Popu_show_score} from "../Utility/Popup/Popup";
 
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -49,6 +49,8 @@ export interface FilterData {
   const [all_posts1, setAllPosts1] = useState<Post_object[]>([]);
   const [indexArray, setIndexArray] = useState<number[]>(initialIndexArray);
   const [userId,setUserId] = useState("");
+  let [inputValue, setInputValue] = useState<string>('');
+
   let router = useRouter();
   // const [images, setImages] = useState<string[]>([]);
 
@@ -144,16 +146,42 @@ export interface FilterData {
 
   
   const [showModal, setShowModal] = useState(false);
-  const handleShow = () => setShowModal(true);
+  const [showModalbid, setShowModalbid] = useState(true);
+
+  const handleShow = async (auction_id:any) =>{
+    setauction_id(auction_id)
+    const res =await get_bid(auction_id);
+    if (res.status === 200) {
+      set_bids(res.data);
+      // Assuming setAllPosts is a state-setting function
+       } else {
+      // Handle error
+    }
+
+    setShowModal(true)
+  };
+  const handleadd = (auction_id:any) => {
+    setauction_id(auction_id)
+
+    setShowModalbid(true);
+  };
+
+  let [bids,set_bids]=useState([])
+  let [auction_id,setauction_id]=useState()
 
   let [title,settitle]=useState("Score board")
   let [body,setbody]=useState("Please double-check the code in your email and try again.")
   let btn_text="Close"
-  function btn_action() {
+  function btn_action_show() {
     
-
       setShowModal(false);
   }
+  function btn_action_add() {
+
+    console.log(auction_id);
+    console.log(inputValue)
+    setShowModalbid(false);
+}
 
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -260,8 +288,11 @@ export interface FilterData {
     <>
     <Post userId={userId}/>
     <Navbar/>
-    <Popup_respone showModal={showModal} setShowModal={setShowModal}
-            title={title} body={body} btn_text={btn_text} btn_action={btn_action}
+    <Popu_show_score showModal={showModal} setShowModal={setShowModal}
+            title={"Score Board"} bids={bids}
+            />
+    <Pop_addbid showModal={showModalbid} setShowModal={setShowModalbid}
+            title={"Add Bid"} setinput={setInputValue} btn_text={"Add +"} btn_action={btn_action_add}
             />
   <div className={style.container}>
 
@@ -475,6 +506,8 @@ export interface FilterData {
               {p.post_type=="auction"&&
               <div className={style.score_div}>
                 <button className={style.score_btn} onClick={handleShow}>Score Board</button>
+                <button className={style.score_btn} onClick={() => handleadd(p.id)} style={{marginTop:"1rem"}} >Add Bid</button>
+
               </div>
               }
             </div>

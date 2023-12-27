@@ -1,6 +1,7 @@
 package com.example.SkyLine.service;
 
 import com.example.SkyLine.DTO.BidDTO;
+import com.example.SkyLine.DTO.BidRetrievalDTO;
 import com.example.SkyLine.DTO.PostRetrievalDTO;
 import com.example.SkyLine.entity.Bid;
 import com.example.SkyLine.entity.Post;
@@ -41,10 +42,22 @@ public class BidService {
         }
     }
 
-//    public List<Bid> getBids(int Auction_id){
-//        List<Bid> Bids= bidAuctionsRepository.findAllByAuction_Id(Auction_id);
-//        return Bids;
-//    }
+    public ArrayList<BidRetrievalDTO> getBidsOfAuction(int Auction_id){
+
+        try {
+            ArrayList<Bid> Bids= bidAuctionsRepository.findAllByAuction_Id(Auction_id);
+            ArrayList<BidRetrievalDTO> b=new ArrayList<>() ;
+            for (Bid bid : Bids) {
+                b.add(new BidRetrievalDTO(bid));
+            }
+            return b;
+
+        }
+        catch (Exception e){
+            return null;
+        }
+
+    }
 
 //    public List<BidDTO> bidsToRetrievalEntity(List<Bid> bids) throws MalformedURLException {
 //        List<BidDTO> retrievalDTOS = new ArrayList<>();

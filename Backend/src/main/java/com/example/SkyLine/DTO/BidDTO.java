@@ -25,6 +25,11 @@ public class BidDTO {
                 '}';
     }
 
+    public BidDTO(Bid bid) {
+        this.id = bid.getId();
+        this.bid_price=bid.getBidPrice();
+    }
+
     public int getClient_id() {
         return client_id;
     }
@@ -59,9 +64,5 @@ public class BidDTO {
 
 
 
-//    public BidDTO(Bid bid) {
-//        this.id = String.valueOf(bid.getId());
-//        this.bid_price=bid.getBidPrice();
-//        this.client=userRepository.findUserById(Integer.parseInt(bid.getClient_id())).getEmail();
-//    }
+
 }

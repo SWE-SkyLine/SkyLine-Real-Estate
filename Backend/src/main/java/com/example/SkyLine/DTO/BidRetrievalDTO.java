@@ -1,11 +1,7 @@
 package com.example.SkyLine.DTO;
 
 import com.example.SkyLine.entity.Bid;
-import com.example.SkyLine.repository.UserRepository;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Data
 public class BidRetrievalDTO {

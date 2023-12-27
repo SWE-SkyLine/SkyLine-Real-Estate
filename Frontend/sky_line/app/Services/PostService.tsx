@@ -18,6 +18,23 @@ const get_all_posts = async () => {
     return error.response
   }
 };
+
+const get_bid = async (auction_id:any) => {
+  const url = `${apiUrl}/api/get_bids/902`;
+  try {
+    const response = await axios.get(url);
+     return response;
+  }
+  catch (error:any) {
+    console.log(error.response);
+    return error.response
+  }
+};
+
+
+
+
+
 const get_all_Auctions = async () => {
   const url = `${apiUrl}/api/get_auctions_with_photos`;
 
@@ -73,4 +90,4 @@ const search_all_posts = async (searchQuery:string) => {
 };
 
 
-export { get_all_posts, filter_all_posts, sort_all_posts, search_all_posts,get_all_Auctions };
+export { get_all_posts, filter_all_posts, sort_all_posts, search_all_posts,get_all_Auctions,get_bid };
