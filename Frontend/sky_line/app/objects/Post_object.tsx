@@ -16,7 +16,7 @@ export class Post_object {
     end_time: any | undefined;
     start_time: any | undefined;
     status: any | undefined;
-    client_id: any | undefined;
+    postCreatorUID: any | undefined;
     city: any | undefined;
     address: any | undefined;
     photosByteArray: string[]=[];

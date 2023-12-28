@@ -18,7 +18,7 @@ const get_all_posts = async () => {
     return error.response
   }
 };
-
+ 
 const get_bid = async (auction_id:any) => {
   const url = `${apiUrl}/api/get_bids/${auction_id}`;
   try {

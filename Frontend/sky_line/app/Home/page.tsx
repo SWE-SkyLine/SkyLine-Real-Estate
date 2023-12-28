@@ -145,7 +145,7 @@ export interface FilterData {
 
   
   const [showModal, setShowModal] = useState(false);
-  const [showModalbid, setShowModalbid] = useState(true);
+  const [showModalbid, setShowModalbid] = useState(false);
   const [bid_auction, setbid_auction] = useState<Post_object>(null);
 
 
@@ -296,7 +296,7 @@ export interface FilterData {
     <Post userId={userId}/>
     <Navbar/>
     <Popu_show_score showModal={showModal} setShowModal={setShowModal}
-            title={"Score Board"} bids={bids}
+            title={"Score Board"} bids={bids} myid={userId}
             />
     <Pop_addbid showModal={showModalbid} setShowModal={setShowModalbid}
             title={"Add Bid"} setinput={setInputValue} btn_text={"Add +"} btn_action={btn_action_add}
@@ -451,11 +451,11 @@ export interface FilterData {
        {/* wael search filter */}
 
 
-      {all_posts1.map((p, index) => (
+      {all_posts1.map((p, index) => ( 
             <div key={index} className={style.contain_post}>
               <div>
                 <div className={`${style.photo}`} style={{ backgroundImage: `url(${x})` }}></div>
-                <button onClick={()=>{router.push(`/profilePageViewOnly?id=${p.id}&user=${userId}`)}}  className={style.post_owner}>{p.fullName}</button>
+                <button onClick={()=>{router.push(`/profilePageViewOnly?id=${p.postCreatorUID}&user=${userId}`)}}  className={style.post_owner}><u>{p.fullName}</u></button>
               </div>
 
             <div className={style.post_body}>

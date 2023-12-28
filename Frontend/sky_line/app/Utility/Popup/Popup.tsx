@@ -2,6 +2,7 @@
 'use client'
 import React, { useState } from 'react';
 import styles from "./popup.module.css"
+import { useRouter } from "next/navigation";
 
 
 function Popup_respone({showModal,setShowModal,title,body,btn_text,btn_action}:any) {
@@ -85,10 +86,11 @@ function Pop_addbid({showModal,setShowModal,title,setinput,btn_text,btn_action}:
     );
   };
 
-  function Popu_show_score({showModal,setShowModal,title,bids}:any) {
+  function Popu_show_score({showModal,setShowModal,title,bids,myid}:any) {
     //   const [showModal, setShowModal] = useState(true);
       const handleClose = () => setShowModal(false);
-  
+      let router = useRouter();
+
     
     
       return (
@@ -110,7 +112,10 @@ function Pop_addbid({showModal,setShowModal,title,setinput,btn_text,btn_action}:
                   <ul>
                    {bids.map((bid:any) => (
                     <li key={bid.id} className="bid-item" style={{color:'black'}}>
-                     {bid.client} {'=>'} {bid.bid_price}
+                     
+                     <button style={{all:"unset",cursor:'pointer'}} onClick={()=>{router.push(`/profilePageViewOnly?id=${bid.client_id}&user=${myid}`)}}> <u style={{fontWeight:"600"}}>{bid.client}</u> </button>
+
+                     {'=>'} {bid.bid_price}
                     </li>
                      ))}
                   </ul>
