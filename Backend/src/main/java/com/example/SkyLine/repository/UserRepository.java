@@ -9,18 +9,20 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-    public boolean existsUserByEmail(String email);
+     boolean existsUserByEmail(String email);
 
     User findByEmail(String email);
 
-    public User findUserByEmail(String email);
+     User findUserByEmail(String email);
 
-    public User findUserById(int userId);
+     User findUserById(int userId);
 
     @Transactional
     @Modifying
@@ -40,6 +42,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query("SELECT u FROM User u WHERE u.userRole = :clientRole AND (LOWER(u.firstName) LIKE LOWER(CONCAT('%', :query, '%')) OR LOWER(u.lastName) LIKE LOWER(CONCAT('%', :query, '%')))")
     List<User> findClientsByFirstNameOrLastName(@Param("query") String query,
-            @Param("clientRole") UserRoleEnum clientRole);
+                                                @Param("clientRole") UserRoleEnum clientRole);
 
 }

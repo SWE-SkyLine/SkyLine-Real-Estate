@@ -8,6 +8,7 @@ import Gmail from "./Gmail";
 import Navbar from "../navbar/page";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const LoginForm = () => {
 
@@ -70,7 +71,15 @@ const LoginForm = () => {
     // console.log(selectedOption)
     const res = await loginRequest(email, password, selectedOption);
     // setLoginResult(res);
-    //console.log(res)
+    console.log(res)
+    const {jwtToken, ...userDetails} = res.data;
+    localStorage.setItem('userDetails', JSON.stringify(userDetails));
+    //console.log("userDetaels before saving : " );
+    //console.log(userDetails)
+    const detailsSaved = JSON.parse(localStorage.getItem('userDetails') as string);
+    console.log("userDetaels after saving : " );
+    console.log(detailsSaved)
+
     if((res as Response).status ==200){
         // id first, last name
         router.push(`/Home?id=${res.data}`)

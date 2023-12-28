@@ -10,7 +10,7 @@ const get_all_posts = async () => {
   const url = `${apiUrl}/api/get_posts_with_photos`;
 
   try {
-    const response = await axios.get(url);
+    const response = await axios.get(url, {withCredentials: true});
      return response;
   }
   catch (error:any) {
@@ -73,7 +73,7 @@ const filter_all_posts = async (filterData: URLSearchParams) => {
   const url = `${apiUrl}/api/get_posts_with_photos`;
   try {
     const response = await axios.get(url, {
-      params: filterData,
+      params: filterData,withCredentials: true
     });
     return response; // Return the data property of the response
   } catch (error: any) {

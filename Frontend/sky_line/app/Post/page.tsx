@@ -22,6 +22,7 @@ import { CSSTransition } from 'react-transition-group';
 // import publishPostRequest from '../Services/PublishPostService';
 import { publishPostRequest,publishAuctionRequest, testPhotoApi } from '../Services/PublishPostService';
 import { Alert } from 'react-bootstrap';
+import testHttpOnlyCookie from '../Services/HttpOnlyCookieTest';
 
 
 // interface FormData {
@@ -101,48 +102,6 @@ function Post({ userId }: { userId: string }) {
     };
 
 
-    // const handlePost = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    //     // Close the open modal 
-    //     setShowModal(false);
-    //     // Post sending
-    //     event.preventDefault();
-    //     let data = new FormData();
-    //     data.append(`UID`, userId)
-    //     for (const key in formData) {
-    //         console.log(key + " : values :");
-    //         if (key === 'photos' && Array.isArray(formData.photos)) {
-    //             console.log(formData.photos);
-    //             formData.photos.forEach((photo) => {
-    //                 data.append(`photos`, photo);
-    //             });
-    //         } else {
-    //             console.log(formData[key as keyof FormDataState] as string + " ")
-    //             data.append(key, formData[key as keyof FormDataState] as string);
-    //         }
-    //     }
-
-    //     const res = await publishPostRequest(data);
-    //     console.log("post request formData : "+ data.get(`UID`));
-    //     console.log(data.values);
-
-    //     if (typeof res === 'object' && 'status' in res) {
-    //         console.log(res.status);
-    //         if (res.status === 200) {
-    //             setIsSend(1); // Display successful message
-    //         } else {
-    //             setIsSend(2); // Display error message
-    //         }
-    //     } else {
-    //         setIsSend(2); // Display error message
-    //         console.error(res); // Log the error message
-    //     }
-    // };
-
-
-
-
-
-
     const handlePost = async (event: React.FormEvent<HTMLFormElement>) => {
         // Close the open modal 
         setShowModal(false);
@@ -185,22 +144,6 @@ function Post({ userId }: { userId: string }) {
             console.error(res); // Log the error message
         }
     };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     const handleChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFormData(prevState => ({
@@ -332,9 +275,17 @@ function Post({ userId }: { userId: string }) {
         //setLevel(event.target.value);
     };
 
-
+    const handleSecurity = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        try {
+          const res = await testHttpOnlyCookie();
+        } catch (error) {
+        }
+      };
     return (
         <div>
+            <button onClick={handleSecurity} style={{position:"relative", marginTop:"50px"} }>
+                zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+            </button>
             <button className={style['create-post-button']} onClick={handleButtonClick}>
                 <span>Post / Auction</span>
                 <CreateIcon className={style['create-icon']} />

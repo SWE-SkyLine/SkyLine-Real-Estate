@@ -9,7 +9,7 @@ const retrievePostRequest = async () => {
 
     const makeRequest = async(url: string) =>{
         try {
-            const response = await axios.get(url);
+            const response = await axios.get(url, {withCredentials: true});
             return response;
         } catch (error) {
             console.error(error);
