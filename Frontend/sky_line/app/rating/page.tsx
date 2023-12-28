@@ -4,7 +4,7 @@ import style from './page.module.css';
 import {sendRate, getRate, getAvgRate} from '../Services/RatingService';
 import { Rate, RatingEnum } from '../objects/Rate';
 
-const Rating  = () => {
+const Rating  = (props: { targetId: Number; userId: Number }) => {
     const [rating, setRating] = useState(0); 
     const [avgRate, setAvgRate] = useState(0);
 
@@ -22,7 +22,7 @@ const Rating  = () => {
 
     useEffect(() => {
         const getDefault = async () => {
-        const defaultRating = await getRate(1, 2);
+        const defaultRating = await getRate(props.userId, props.targetId);
         setRating(defaultRating);
         };
         getDefault();
@@ -30,7 +30,7 @@ const Rating  = () => {
 
     useEffect(() => {
         const getAvg = async () => {
-        const defaultRating = await getAvgRate(2);
+        const defaultRating = await getAvgRate(props.targetId);
         setAvgRate(defaultRating)
         };
         getAvg();
@@ -39,8 +39,8 @@ const Rating  = () => {
     const handleRatingChange = async (value: number) => {
         // create rate object   
         let rating = new Rate();
-        rating.userId = 1 //////// set current user Id
-        rating.targetId = 2 ///////// set taregt Id
+        rating.userId = props.userId 
+        rating.targetId = props.targetId 
         rating.rate = setRateEnum(value)
 
         const res = await sendRate(rating);
@@ -55,21 +55,21 @@ const Rating  = () => {
     return (
         <div>
             <p className={style.avgRate}>Average Rat: {avgRate}</p>
-            <div className={style.rating}>
-            {[5,4,3,2,1].map((value) => (
-                <React.Fragment key={value}>
-                <input
-                    type="radio"
-                    id={`star${value}`}
-                    name="rating"
-                    value={value}
-                    checked={rating === value}
-                    onChange={() => handleRatingChange(value)}
-                />
-                <label htmlFor={`star${value}`}></label>
-                </React.Fragment>
-            ))}
-        </div>
+            {props.userId !== undefined && props.targetId !== props.userId &&<div className={style.rating}>
+                {[5,4,3,2,1].map((value) => (
+                    <React.Fragment key={value}>
+                    <input
+                        type="radio"
+                        id={`star${value}`}
+                        name="rating"
+                        value={value}
+                        checked={rating === value}
+                        onChange={() => handleRatingChange(value)}
+                    />
+                    <label htmlFor={`star${value}`}></label>
+                    </React.Fragment>
+                ))}
+            </div>}
         </div>
     );
 };

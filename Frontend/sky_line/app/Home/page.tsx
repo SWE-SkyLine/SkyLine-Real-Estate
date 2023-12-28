@@ -394,7 +394,7 @@ export interface FilterData {
             <div key={index} className={style.contain_post}>
               <div>
                 <div className={`${style.photo}`} style={{ backgroundImage: `url(${x})` }}></div>
-                <label className={style.post_owner}>{p.fullName}</label>
+                <button onClick={()=>{router.push(`/profilePageViewOnly?id=${p.id}&user=${userId}`)}}  className={style.post_owner}>{p.fullName}</button>
               </div>
                <div className={style.post_body}>
              <div className={style.post_head}> <label>Title:</label> </div>
