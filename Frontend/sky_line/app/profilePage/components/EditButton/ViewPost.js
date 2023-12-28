@@ -45,6 +45,34 @@ function Component({ postInfo}) {
 
 
     function onCloseModal() {
+        const data = {
+            id: id,
+            title: editedValues.title,
+            description: editedValues.description,
+            bedroom: editedValues.rooms,
+            mapLink: editedValues.link,
+            price: editedValues.price,
+            area: editedValues.area,
+            address:editedValues.address,
+            level: editedValues.floors
+        };
+        console.log(data);
+        fetch(`http://localhost:8080/api/profile/updatePost`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then(response => response.text())
+            .then(result => {
+                console.log(result);
+                // Handle success response
+            })
+            .catch(error => {
+                console.error('Error updating profile information:', error);
+                // Handle error
+            });
         setOpenModal(false);
     }
 
