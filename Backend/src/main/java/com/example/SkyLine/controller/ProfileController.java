@@ -1,8 +1,13 @@
 package com.example.SkyLine.controller;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import org.apache.http.HttpStatus;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,7 +20,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.beans.BeanUtils;
 
+import com.example.SkyLine.DTO.EditPostDTO;
+import com.example.SkyLine.entity.Post;
+import com.example.SkyLine.service.PostService;
 import com.example.SkyLine.service.ProfileService;
 import com.example.SkyLine.utility.Profile;
 
@@ -27,8 +36,12 @@ public class ProfileController {
     @Autowired
     private ProfileService profileService;
 
-    public void profileController(ProfileService profileService) {
+    @Autowired
+    private PostService PostService;
+
+    public void profileController(ProfileService profileService, PostService PostService) {
         this.profileService = profileService;
+        this.PostService = PostService;
     }
 
     @GetMapping("/getProfile/{id}")
@@ -71,8 +84,42 @@ public class ProfileController {
         }
     }
 
-    
+    @PostMapping("/updatePost")
+    public ResponseEntity<String> updatePost(@RequestBody EditPostDTO updateRequest) {
+        try {
+            Integer postId = updateRequest.getId();
+            Post existingPost = PostService.getPostById(postId);
 
+            if (existingPost == null) {
+                return ResponseEntity.status(HttpStatus.SC_NOT_FOUND).body("Post not found");
+            }
 
+            // takes the request object and ignores the 3rd argument and copies the
+            // properties to the existing post
+            BeanUtils.copyProperties(updateRequest, existingPost, getNullPropertyNames(updateRequest));
+            PostService.updatePost(existingPost);
+
+            return ResponseEntity.ok("Post updated successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.SC_INTERNAL_SERVER_ERROR)
+                    .body("Failed to update post");
+        }
+    }
+
+    // this is helper function to check if the field is null or not
+    private String[] getNullPropertyNames(Object source) {
+        final BeanWrapper src = new BeanWrapperImpl(source);
+        java.beans.PropertyDescriptor[] pds = src.getPropertyDescriptors();
+
+        Set<String> emptyNames = new HashSet<>();
+        for (java.beans.PropertyDescriptor pd : pds) {
+            Object srcValue = src.getPropertyValue(pd.getName());
+            if (srcValue == null)
+                emptyNames.add(pd.getName());
+        }
+        String[] result = new String[emptyNames.size()];
+        return emptyNames.toArray(result);
+    }
 
 }
