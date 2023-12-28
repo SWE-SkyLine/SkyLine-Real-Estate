@@ -5,4 +5,5 @@ import com.example.SkyLine.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CompanyRepository extends JpaRepository<Company, Integer> {
+    Company findCompanyById(int companyId);
 }

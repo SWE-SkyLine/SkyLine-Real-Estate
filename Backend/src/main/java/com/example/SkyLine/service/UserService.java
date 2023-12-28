@@ -1,5 +1,6 @@
 package com.example.SkyLine.service;
 
+import com.example.SkyLine.DTO.UserPromoteDTO;
 import com.example.SkyLine.entity.User;
 import com.example.SkyLine.enums.UserRoleEnum;
 import com.example.SkyLine.repository.UserRepository;
@@ -14,6 +15,7 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+
     @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -22,8 +24,8 @@ public class UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
-    public ArrayList<User> getAllUsersByAccountType(UserRoleEnum roleEnum) {
-        return userRepository.getAllUsersByAccountType(roleEnum);
+    public ArrayList<User> getAllUsersByAccountType(String accountType) {
+        return userRepository.getAllUsersByAccountType(UserRoleEnum.valueOf(accountType));
     }
 
     public User getUserById(int userId) {
@@ -36,13 +38,14 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public void PromoteUser(int UserID){
-        userRepository.promoteToAdmin(UserID, UserRoleEnum.ADMIN);
+    public void PromoteUser(String UserID){
+        userRepository.promoteToAdmin(Integer.parseInt(UserID), UserRoleEnum.ADMIN);
         // update the account_type field of the candidate user in the user table in DB to Admin
     }
 
 
-    // Add more methods as needed
+    
+
 
 }
 

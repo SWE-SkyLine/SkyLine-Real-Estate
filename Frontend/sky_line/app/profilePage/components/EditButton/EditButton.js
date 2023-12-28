@@ -20,19 +20,44 @@ function Component({ info, onUpdate }) {
     setOpenModal(false);
   }
   function onSave() {
-    // Call the onUpdate callback with the updated information
-    onUpdate({
-      image: image,
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const userIdFromParams = urlParams.get("id");
+    const data = {
+      
       firstName: firstName1,
       lastName: lastName1,
       role: role1,
       email: email1,
-      mobile: mobile1,
-      location: location1,
-    });
+      mobile: mobile1
+    };
+    console.log(userIdFromParams)
+    fetch(`http://localhost:8080/api/profile/${userIdFromParams}/updateProfileInfo`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+     
+    })
+      .then(response => response.text())
+      .then(result => {
+        console.log(result);
+        // Handle success response
+      })
+      .catch(error => {
+        console.error('Error updating profile information:', error);
+        // Handle error
+      });
     // Close the modal
-    setOpenModal(false);
+    setOpenModal(false)
   }
+
+  Component.defaultProps = {
+    onUpdate: () => {},
+  };
+
+
   return (
     <>
       <Button onClick={() => setOpenModal(true)} className="EditButton">
@@ -207,13 +232,10 @@ function Component({ info, onUpdate }) {
 }
 Component.propTypes = {
   info: PropTypes.shape({
-    role: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
     firstName: PropTypes.string.isRequired,
     lastName: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
-    mobile: PropTypes.string.isRequired,
-    location: PropTypes.string.isRequired,
+    mobile: PropTypes.string.isRequired
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
 };

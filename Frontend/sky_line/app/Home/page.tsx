@@ -315,7 +315,7 @@ export interface FilterData {
        {/* <div className={style.follow}><i className="fa-solid fa-user-group"></i> <span> Followers: 50</span></div>
        <div className={style.follow}> <i className="fa-solid fa-user-check"></i> <span>Following: 100</span></div> */}
        
-        <button className={style.btn_edit} onClick={()=>{router.push("/profilePage")}}>Edit Profile</button>
+        <button className={style.btn_edit} onClick={()=>{router.push(`/profilePage?id=${userId}`)}}>Edit Profile</button>
       </div>
       </div>
         
@@ -455,7 +455,7 @@ export interface FilterData {
             <div key={index} className={style.contain_post}>
               <div>
                 <div className={`${style.photo}`} style={{ backgroundImage: `url(${x})` }}></div>
-                <label className={style.post_owner}>{p.fullName}</label>                
+                <button onClick={()=>{router.push(`/profilePageViewOnly?id=${p.id}&user=${userId}`)}}  className={style.post_owner}>{p.fullName}</button>
               </div>
 
             <div className={style.post_body}>
