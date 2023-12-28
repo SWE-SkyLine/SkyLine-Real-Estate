@@ -3,7 +3,7 @@ import MDBox from "../components/MDBoxindex";
 import DashboardLayout from "../cards/Dashboard.js";
 import Header from "../layout/header.js";
 import profilesListData from "../data/AuctionsBidIn";
-import postsListData from "../data/Posts";
+
 import users from "../data/Users";
 import axios from "axios";
 
@@ -49,7 +49,6 @@ function Overview() {
     }
   }, []);
 
-
   useEffect(() => {
     const fetchProfilePosts = async (id) => {
       try {
@@ -59,25 +58,23 @@ function Overview() {
             userId: id,
           }
         );
+        const posts = response.data;
 
-        const profileData = response.data;
-          console.log(response)
-          console.log(profileData)
-        // Convert each array of bytes to a data URL
-        // const photoUrls = profileData.photosByteArray.map((photoBytes) => {
-        //   const blob = new Blob([new Uint8Array(photoBytes)], {
-        //     type: "image/jpeg",
-        //   });
-        //   return URL.createObjectURL(blob);
-        // });
+        // Convert each array of bytes to a data URL for each post
+        const postsWithPhotoUrls = posts.map((post) => {
+          const photoUrls = post.photosByteArray.map((photoBytes) => {
+            `data:image/jpeg;base64,${photoBytes}`
+            return `data:image/jpeg;base64,${photoBytes}`;
+          });
 
-        // // Update the profile data with the photo URLs
-        // profileData.photosByteArray = photoUrls;
+          // Update the post data with the photo URLs
+          return { ...post, photosByteArray: photoUrls };
+        });
 
         // Update the state or perform other actions with the converted data
-        setPostsListData(profileData);
-        console.log(profileData)
-        console.log(PostListData)
+        setPostsListData(postsWithPhotoUrls);
+        console.log(postsWithPhotoUrls);
+        console.log(postsListData);
       } catch (error) {
         console.error("Error fetching profile:", error);
       }
@@ -92,12 +89,9 @@ function Overview() {
   }, []);
 
   return (
-    
     <DashboardLayout>
-        
       <MDBox mt={1} mb={3} />
       <Header
-     
         profileInfo={{
           image: profile.profile_photo.toString(),
           account_type: profile.account_type,
@@ -111,7 +105,7 @@ function Overview() {
         // onUpdatePhoto={updateProfile}
         users={users}
       />
-    </DashboardLayout> 
+    </DashboardLayout>
   );
 }
 

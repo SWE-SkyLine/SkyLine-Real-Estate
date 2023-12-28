@@ -454,7 +454,7 @@ function Component({ postInfo}) {
 }
 Component.propTypes = {
     postInfo: PropTypes.shape({
-        images: PropTypes.arrayOf(PropTypes.string).isRequired,
+        photosByteArray: PropTypes.arrayOf(PropTypes.string).isRequired,
         title: PropTypes.string.isRequired,
         label: PropTypes.string.isRequired,
         description: PropTypes.string.isRequired,
