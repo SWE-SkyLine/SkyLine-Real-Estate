@@ -63,12 +63,4 @@ public class BidService {
 
     }
 
-//    public List<BidDTO> bidsToRetrievalEntity(List<Bid> bids) throws MalformedURLException {
-//        List<BidDTO> retrievalDTOS = new ArrayList<>();
-//        for (Bid b : bids) {
-//            retrievalDTOS.add(new BidDTO(b));
-//        }
-//        return retrievalDTOS;
-//    }
-
 }
