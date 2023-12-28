@@ -2,9 +2,11 @@ package com.example.SkyLine.DTO;
 
 import com.example.SkyLine.entity.Bid;
 import com.example.SkyLine.repository.UserRepository;
+import lombok.Data;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 
+@Data
 public class BidDTO {
 
     private int client_id;
@@ -28,6 +30,8 @@ public class BidDTO {
     public BidDTO(Bid bid) {
         this.id = bid.getId();
         this.bid_price=bid.getBidPrice();
+    }
+    public BidDTO() {
     }
 
     public int getClient_id() {

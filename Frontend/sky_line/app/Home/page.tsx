@@ -10,7 +10,7 @@ import Navbar from '../navbar/page'
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import SortFilter from "../sortFilter/page";
 import { Post_object } from "../objects/Post_object";
-import {get_all_posts,get_all_Auctions, get_bid} from "../Services/PostService";
+import {get_all_posts,get_all_Auctions, get_bid, add_bids} from "../Services/PostService";
 import {filter_all_posts} from "../Services/PostService";
 import { sort_all_posts } from "../Services/PostService";
 import { search_all_posts } from "../Services/PostService";
@@ -99,7 +99,6 @@ export interface FilterData {
   useEffect(() => {
 
 
-    console.log("ss");
     for (let i=0; i<all_posts.length; i++) {
       for (let j=0; j<all_posts[i].photosByteArray.length; j++) {
         let photoUrl = `data:image/jpeg;base64,${all_posts[i].photosByteArray[j]}`;
@@ -147,8 +146,11 @@ export interface FilterData {
   
   const [showModal, setShowModal] = useState(false);
   const [showModalbid, setShowModalbid] = useState(true);
+  const [bid_auction, setbid_auction] = useState<Post_object>(null);
+
 
   const handleShow = async (auction_id:any) =>{
+    console.log(auction_id)
     setauction_id(auction_id)
     const res =await get_bid(auction_id);
     if (res.status === 200) {
@@ -160,27 +162,32 @@ export interface FilterData {
 
     setShowModal(true)
   };
-  const handleadd = (auction_id:any) => {
-    setauction_id(auction_id)
 
+
+  const handleadd = async (auction:any) => {
+    setbid_auction(auction)
     setShowModalbid(true);
+    
   };
 
   let [bids,set_bids]=useState([])
   let [auction_id,setauction_id]=useState()
 
-  let [title,settitle]=useState("Score board")
-  let [body,setbody]=useState("Please double-check the code in your email and try again.")
-  let btn_text="Close"
-  function btn_action_show() {
-    
-      setShowModal(false);
-  }
-  function btn_action_add() {
+ 
+  const btn_action_add= async ()=>{
 
-    console.log(auction_id);
+    console.log(userId)
     console.log(inputValue)
-    setShowModalbid(false);
+    console.log(bid_auction)
+
+    const res =await add_bids(userId,inputValue,bid_auction.id);
+    if (res.status === 200) {
+      // Assuming setAllPosts is a state-setting function
+      setShowModalbid(false);
+       } else {
+      // Handle error
+      console.error("Error");
+    }    
 }
 
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -505,8 +512,8 @@ export interface FilterData {
 
               {p.post_type=="auction"&&
               <div className={style.score_div}>
-                <button className={style.score_btn} onClick={handleShow}>Score Board</button>
-                <button className={style.score_btn} onClick={() => handleadd(p.id)} style={{marginTop:"1rem"}} >Add Bid</button>
+                <button className={style.score_btn} onClick={() => handleShow(p.id)}>Score Board</button>
+                <button className={style.score_btn} onClick={() => handleadd(p)} style={{marginTop:"1rem"}} >Add Bid</button>
 
               </div>
               }

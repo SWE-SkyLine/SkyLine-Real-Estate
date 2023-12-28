@@ -16,8 +16,18 @@ public class BidRetrievalDTO {
     public BidRetrievalDTO(Bid bid) {
         this.id = bid.getId();
         this.bid_price=bid.getBidPrice();
-        this.auction_id=bid.getAuction().getId();
         this.client=bid.getClient().getEmail();
         this.client_id=bid.getClient().getId();
+    }
+
+    @Override
+    public String toString() {
+        return "BidRetrievalDTO{" +
+                "id=" + id +
+                ", bid_price=" + bid_price +
+                ", auction_id=" + auction_id +
+                ", client='" + client + '\'' +
+                ", client_id=" + client_id +
+                '}';
     }
 }

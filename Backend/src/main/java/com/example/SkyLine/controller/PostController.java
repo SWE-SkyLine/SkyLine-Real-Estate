@@ -117,19 +117,19 @@ public class PostController {
         return new ResponseEntity<String>("AuctionId Added with ID : " + AuctionId, HttpStatus.OK);
     }
 
-    @PostMapping("/add_bid")
-    public ResponseEntity<?> addBid(@RequestBody BidDTO bid) {
-        boolean noError = bidService.addBid(bid);
+    @PostMapping("/add_bid/{client_id}/{bid_price}/{auction_id}")
+    public ResponseEntity<?> addBid(@PathVariable int client_id,@PathVariable int bid_price,@PathVariable int auction_id) {
+        boolean noError = bidService.addBid(client_id,bid_price,auction_id);
         if (!noError) {
             return new ResponseEntity<String>(HttpStatus.REQUEST_TIMEOUT);
         }
         return new ResponseEntity<String>(HttpStatus.OK);
     }
 
-    @GetMapping("/get_bids/{auctionId}")
-    public ResponseEntity<?> getBids(@PathVariable int auctionId) throws MalformedURLException {
+    @GetMapping("/get_bids/{auction_id}")
+    public ResponseEntity<?> getBids(@PathVariable int auction_id) throws MalformedURLException {
         // Use auctionId in your logic, for example:
-        ArrayList<BidRetrievalDTO> bids = bidService.getBidsOfAuction(auctionId);
+        ArrayList<BidRetrievalDTO> bids = bidService.getBidsOfAuction(auction_id);
         if(bids==null){
             return new ResponseEntity<>( HttpStatus.BAD_GATEWAY);
         }

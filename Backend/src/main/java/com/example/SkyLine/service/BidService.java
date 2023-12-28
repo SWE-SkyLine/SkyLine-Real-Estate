@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -25,14 +26,13 @@ public class BidService {
     @Autowired
     private PostRepository postRepository;
 
-    public boolean addBid(BidDTO bid) {
+    public boolean addBid(int client_id,int bid_price,int auction_id) {
         try {
             // Save the bid to the database
-            System.out.println(bid.toString());
             Bid newbid=new Bid();
-            newbid.setClient(clientRepository.findById(bid.getClient_id()));
-            newbid.setBidPrice(bid.getBid_price());
-            newbid.setAuction(postRepository.findById(bid.getAuction_id()));
+            newbid.setClient(clientRepository.findById(client_id));
+            newbid.setBidPrice(bid_price);
+            newbid.setAuction(postRepository.findById(auction_id));
             System.out.println(newbid.getBidPrice());
             bidAuctionsRepository.save(newbid);
             return true;
@@ -45,9 +45,13 @@ public class BidService {
     public ArrayList<BidRetrievalDTO> getBidsOfAuction(int Auction_id){
 
         try {
-            ArrayList<Bid> Bids= bidAuctionsRepository.findAllByAuction_Id(Auction_id);
+            ArrayList<Bid> bids = bidAuctionsRepository.findAllByAuction_Id(Auction_id);
+            Comparator<Bid> bidComparator = Comparator.comparing(Bid::getBidPrice, Comparator.reverseOrder());
+            bids.sort(bidComparator);
+            List<Bid> sorted_bids = bids.subList(0, Math.min(bids.size(), 10));
             ArrayList<BidRetrievalDTO> b=new ArrayList<>() ;
-            for (Bid bid : Bids) {
+
+            for (Bid bid : sorted_bids) {
                 b.add(new BidRetrievalDTO(bid));
             }
             return b;

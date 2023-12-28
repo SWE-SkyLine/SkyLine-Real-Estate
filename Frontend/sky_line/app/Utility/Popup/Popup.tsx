@@ -109,8 +109,8 @@ function Pop_addbid({showModal,setShowModal,title,setinput,btn_text,btn_action}:
                   <div className={`modal-body ${styles.customBody}`}>
                   <ul>
                    {bids.map((bid:any) => (
-                    <li key={bid.id} className="bid-item">
-                     Client: {bid.client} ,Price: {bid.bid_price},
+                    <li key={bid.id} className="bid-item" style={{color:'black'}}>
+                     {bid.client} {'=>'} {bid.bid_price}
                     </li>
                      ))}
                   </ul>
