@@ -205,7 +205,7 @@ function From_signup() {
                         <td>
                             <label className={commonStyle.head}>Password</label>
                             <input
-                                type="text"
+                                type="password"
                                 placeholder="Enter Password"
                                 className={commonStyle.emailTextBox}
                                 {...register("password",{required:"this is required",minLength:{value:8,message:"Min length required is 8"}})}
@@ -219,7 +219,7 @@ function From_signup() {
                         <td>
                             <label className={commonStyle.head}>Confirm Password</label>
                             <input
-                                type="text"
+                                type="password"
                                 placeholder="Enter Confirm Your Password "
                                 className={commonStyle.emailTextBox}
                                 {...register("confirmPassword",{required:"this is required",minLength:{value:8,message:"Min length required is 8"}})}

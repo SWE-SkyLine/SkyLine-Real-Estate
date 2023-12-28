@@ -9,15 +9,25 @@ import Card from "@mui/material/Card";
 import MDBox from "../components/MDBoxindex";
 import MDTypography from "../components/MDtypoindex";
 import Rating  from "../../rating/page";
+import { use, useEffect, useState } from "react";
 
 
 function ProfileInfoCard({ title, info, shadow }) {
   const { firstName, lastName, image, role, ...restInfo } = info;
-  const urlParams = new URLSearchParams(window.location.search);
-  const userIdFromParams = urlParams.get("user");
-  const targetIdFromParams = urlParams.get("id");
   const labels = ["fullName", ...Object.keys(restInfo)];
   const values = [`${firstName} ${lastName}`, ...Object.values(restInfo)];
+  const [userId, setUserId] = useState();
+  const [targetId, setTargetId] = useState();
+
+  useEffect(
+    ()=>{
+      const urlParams = new URLSearchParams(window.location.search);
+      const userIdFromParams = urlParams.get("user");
+      const targetIdFromParams = urlParams.get("id");
+      setUserId(userIdFromParams);
+      setTargetId(targetIdFromParams)}
+    ,[]
+  );
 
   // Render the card info items
   const renderItems = labels.map((label, key) => (
@@ -41,7 +51,7 @@ function ProfileInfoCard({ title, info, shadow }) {
         <MDBox opacity={10}></MDBox>
         <MDBox pt={0} px={4}>
           {renderItems}
-          <Rating targetId={targetIdFromParams} userId={userIdFromParams}/>
+          <Rating targetId={targetId} userId={userId}/>
         </MDBox>
       </MDBox>
     </Card>

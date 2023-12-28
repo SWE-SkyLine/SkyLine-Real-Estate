@@ -22,19 +22,24 @@ const Rating  = (props: { targetId: Number; userId: Number }) => {
 
     useEffect(() => {
         const getDefault = async () => {
-        const defaultRating = await getRate(props.userId, props.targetId);
-        setRating(defaultRating);
+        if(props.targetId !== undefined && props.userId !== undefined){
+            const defaultRating = await getRate(props.userId, props.targetId);
+            setRating(defaultRating);
+        }
         };
         getDefault();
-    }, []);
+    }, [props.targetId, props.userId]);
 
     useEffect(() => {
         const getAvg = async () => {
-        const defaultRating = await getAvgRate(props.targetId);
-        setAvgRate(defaultRating)
+            if(props.targetId !== undefined)
+            {
+                const defaultRating = await getAvgRate(props.targetId);
+                setAvgRate(defaultRating)
+            }
         };
         getAvg();
-    }, []);
+    }, [props.targetId]);
 
     const handleRatingChange = async (value: number) => {
         // create rate object   

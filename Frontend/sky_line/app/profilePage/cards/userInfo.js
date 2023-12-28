@@ -12,6 +12,7 @@ import MDTypography from "../components/MDtypoindex";
 import EditButton from "../components/EditButton/EditButton";
 import Grid from "@mui/material/Grid";
 import Rating  from "../../rating/page";
+import { use, useEffect, useState } from "react";
 
 function ProfileInfoCard({ title, info, shadow, onUpdate }) {
 
@@ -20,8 +21,14 @@ function ProfileInfoCard({ title, info, shadow, onUpdate }) {
 
   const labels = ["fullName", ...Object.keys(restInfo)];
   const values = [`${firstName} ${lastName}`, ...Object.values(restInfo)];
-  const urlParams = new URLSearchParams(window.location.search);
-  const userIdFromParams = urlParams.get("id");
+  const [userId, setUserId] = useState();
+ 
+  useEffect(
+    ()=>{
+      const urlParams = new URLSearchParams(window.location.search);
+      const userIdFromParams = urlParams.get("id");
+      setUserId(userIdFromParams)}
+    ,[]);
 
   // Render the card info items
   const renderItems = labels.map((label, key) => (
@@ -48,7 +55,7 @@ function ProfileInfoCard({ title, info, shadow, onUpdate }) {
         <MDBox opacity={10}></MDBox>
         <MDBox pt={0} px={4}>
           {renderItems}
-          <Rating targetId={userIdFromParams}/>
+          <Rating targetId={userId}/>
         </MDBox>
       </MDBox>
     </Card>
