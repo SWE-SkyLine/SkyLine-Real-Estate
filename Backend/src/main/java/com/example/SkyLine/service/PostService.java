@@ -1,8 +1,11 @@
 package com.example.SkyLine.service;
 
+import com.example.SkyLine.DTO.BidDTO;
+import com.example.SkyLine.entity.Bid;
 import com.example.SkyLine.entity.FilterData;
 import com.example.SkyLine.entity.Post;
 import com.example.SkyLine.enums.EstateTypeEnum;
+import com.example.SkyLine.repository.BidAuctionsRepository;
 import com.example.SkyLine.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -14,6 +17,7 @@ import java.util.List;
 public class PostService {
 
     private final PostRepository postRepository;
+
 
     @Autowired
     public PostService(PostRepository postRepository) {
@@ -62,5 +66,8 @@ public class PostService {
         }
         return postRepository.findAll(sort);
     }
+
+
+
 
 }

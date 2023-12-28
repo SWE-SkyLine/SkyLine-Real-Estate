@@ -5,19 +5,31 @@ import MDTypography from "./MDtypoindex";
 import { Button } from "flowbite-react";
 import PropTypes from "prop-types";
 import Component from "./EditButton/ViewUsers";
-
+import axios from "axios";
+import { useRouter } from "next/navigation";
 function List(props) {
     const [promotedItems, setPromotedItems] = useState([]);
-
-    const handlePromoteClick = (id) => {
+    let router = useRouter();
+    const handlePromoteClick = async (id) => {
         if (promotedItems.includes(id)) {
             // If already promoted, remove from the list
-            setPromotedItems(promotedItems.filter((item) => item !== id));
+            // setPromotedItems(promotedItems.filter((item) => item !== id));
         } else {
             // If not promoted, add to the list
             setPromotedItems([...promotedItems, id]);
+            const urlParams = new URLSearchParams(window.location.search);
+            const userIdFromParams = urlParams.get("id");
+            console.log(userIdFromParams);
+            console.log(id);
+            const response = await axios.put(`http://localhost:8080/api/notifications/update/notify?requesterId=${userIdFromParams}&candidateId=${id}`);
+            console.log(response);
         }
     };
+    const handleVisitProfile = (userId) => {
+        router.push(`/profilePageViewOnly?id=${userId}`)
+        // location.reload();
+    }
+
 
     const isPromoted = (id) => promotedItems.includes(id);
 
@@ -25,40 +37,62 @@ function List(props) {
         if (props.input === '') {
             return el;
         } else {
-            return el.title.toLowerCase().startsWith(props.input.toLowerCase());
+            return el.firstName.toLowerCase().startsWith(props.input.toLowerCase());
         }
     });
 
     return (
         <ul>
-            {filteredData.map(({ id, images, label, title, auction, description, price, area, status, rooms, bathrooms, floors, link, phone, date, address, bid, maxbid }) => (
+            {filteredData.map(({ id, profilePhoto, firstName, lastName, requested }) => (
                 <div key={id} className={"Auction"} style={{ padding: "5px 15px", borderRadius: "15px", backgroundColor: "white", border: "1px solid #3498db", marginTop: "2px", width: "665px" }}>
                     <MDBox component="li" display="flex" alignItems="center" py={1} mb={1}>
                         <MDBox mr={2}>
-                            <MDAvatar src={images[0]} alt="something here" shadow="md" />
+                            <MDAvatar src={profilePhoto} alt="something here" shadow="md" />
                         </MDBox>
                         <MDBox display="flex" flexDirection="column" alignItems="flex-start" justifyContent="center">
                             <MDTypography variant="h7" fontWeight="medium">
-                                {title}
+                                {firstName} {lastName}
                             </MDTypography>
-                            <Button className={"Visit"} style={{ backgroundColor: "transparent", color: "#3498db", border: "none", cursor: "pointer", textDecoration: "underline", fontStyle: "italic" }}>
+                            <Button  onClick={()=> handleVisitProfile(id)} className={"Visit"} style={{ backgroundColor: "transparent", color: "#3498db", border: "none", cursor: "pointer", textDecoration: "underline", fontStyle: "italic" }}  >
                            Visit Profile
                             </Button>
                         </MDBox>
                         <MDBox ml="auto">
-                            <Button
-                                className="Button"
-                                style={{
-                                    padding: "8px 21px",
-                                    marginRight: "0px",
-                                    marginLeft: "0px",
-                                    backgroundColor: isPromoted(id) ? "grey" : "transparent",
-                                    color: isPromoted(id) ? "white" : "#3498db",
-                                }}
-                                onClick={() => handlePromoteClick(id)}
-                            >
-                                {isPromoted(id) ? "Requested" : "Promote"}
-                            </Button>
+                            {props.admin?(<>
+                                <Button
+                                    className="Button"
+                                    style={{
+                                        padding: "8px 21px",
+                                        marginRight: "0px",
+                                        marginLeft: "0px",
+                                        backgroundColor: isPromoted(id) ? "grey" : "transparent",
+                                        color: isPromoted(id) ? "white" : "#3498db",
+                                    }}
+                                    disabled={requested}
+                                    onClick={() => handlePromoteClick(id)}
+                                >
+                                    {requested ? "Requested" : isPromoted(id)? "requested":"Promote"}
+                                </Button>
+
+                            </>):(
+
+                                <Button
+                                    className="Button"
+                                    style={{
+                                        padding: "8px 21px",
+                                        marginRight: "0px",
+                                        marginLeft: "0px",
+                                        backgroundColor: isPromoted(id) ? "grey" : "transparent",
+                                        color: isPromoted(id) ? "white" : "#3498db",
+                                    }}
+                                    disabled={requested}
+                                    onClick={() => handlePromoteClick(id)}
+                                >
+                                    {requested ? "Requested" : isPromoted(id)? "requested":"Hire"}
+                                </Button>
+
+                            )}
+
                         </MDBox>
                     </MDBox>
                 </div>

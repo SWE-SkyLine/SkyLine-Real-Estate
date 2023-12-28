@@ -5,13 +5,36 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import  style from'../navbar/page.module.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Link from 'next/link';
+import axios from "axios";
 
 const NavbarComponent: React.FC = () => {
   const [showNotification, setShowNotification] = useState(false);
+  const [notifications, setNotifications] = useState([]);
 
-  const handleNotificationClick = () => {
+  const [answeredNotifications, setAnsweredNotifications] = useState<number[]>([]);
+  const [rejectedNotifications, setRejectedNotifications] = useState<number[]>([]);
+
+  const handleNotificationClick = async () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const userIdFromParams = urlParams.get("id");
+    const response = await axios.get(`http://localhost:8080/api/notifications?userId=${userIdFromParams}`);
+    const notificationData=response.data;
+    console.log(notificationData);
+    console.log(response);
+    setNotifications(notificationData);
     setShowNotification(!showNotification);
   };
+
+  const handleAcceptClick = async (id : number) => {
+    console.log(id);
+    const response = await axios.put(`http://localhost:8080/api/notifications/update/approve?NotificationId=${id}`);
+   setAnsweredNotifications([...answeredNotifications, id]);
+  }
+  const handleRejectClick = async (id : number) => {
+    const response = await axios.put(`http://localhost:8080/api/notifications/update/reject?NotificationId=${id}`);
+    setRejectedNotifications([...rejectedNotifications, id]);
+  }
+
 
   return (
     <>
@@ -68,9 +91,34 @@ const NavbarComponent: React.FC = () => {
         </Modal.Header>
         <Modal.Body>
           <ListGroup>
-            <ListGroup.Item>New notification 1</ListGroup.Item>
-            <ListGroup.Item>New notification 2</ListGroup.Item>
-            <ListGroup.Item>New notification 3</ListGroup.Item>
+            {notifications.map(({notificationId,responderId,date_requested,date_answered,requesterId,candidateId,message, decide})=> (
+
+                <ListGroup.Item key={notificationId}>
+                  <div>{message}</div>
+                  <div style={{ display: "flex", justifyContent: "space-between", marginTop: '2px', fontSize:"10px", marginBottom:"5px" }}>
+                    <div>Date Requested : {date_requested}</div>
+                    <div>Date Answered : {date_answered} </div>
+                      </div>
+                    {(decide && !answeredNotifications.includes(notificationId)&& !rejectedNotifications.includes(notificationId))?(
+                        <>
+                        <Button style={{marginRight:"3px", fontSize:"12px", marginLeft:"301px"}} onClick={() => handleAcceptClick(notificationId)}>
+                         Accept
+                        </Button>
+                        <Button style={{ fontSize:"12px"}} onClick={() => handleRejectClick(notificationId)}>
+                          Refuse
+                        </Button>
+                        </>
+                        ):(
+                            answeredNotifications.includes(notificationId)?(
+                                <div style={{color:"green", fontSize:"12px", marginLeft:"301px"}}>Accepted</div>
+                            ):(
+                                <div style={{color:"red", fontSize:"12px", marginLeft:"301px"}}>Rejected</div>
+                            )
+
+                            )}
+
+                </ListGroup.Item>
+            ))}
           </ListGroup>
         </Modal.Body>
       </Modal>

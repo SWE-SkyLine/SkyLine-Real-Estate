@@ -8,6 +8,18 @@
   .customheader{
  
   }
+  .TextBox{
+    background-color: white;
+    color: black;
+    border: 3px solid rgb(52, 50, 50);
+    height: 5vh;
+    width: 100%;
+    border-radius: .5rem;
+    padding-left: 5px;
+    font-size: 20px;
+    font-weight: 530;
+    font-family: Arial, Helvetica, sans-serif;
+}
   .customClose {
     /* Custom styles for the modal close button */
     /* ... */

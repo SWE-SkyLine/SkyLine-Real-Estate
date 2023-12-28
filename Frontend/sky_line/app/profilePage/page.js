@@ -7,6 +7,7 @@ import theme from "./theme";
 import Profile from "./profile/profile";
 import {MaterialUIControllerProvider} from "./context";
 
+
 export default function Page() {
     const profile = {
         type: "collapse",
@@ -18,9 +19,13 @@ export default function Page() {
     };
 
     return (
+        
         <MaterialUIControllerProvider>
+           
         <ThemeProvider theme={theme}>
+            
             <CssBaseline />
+            
            <Profile></Profile>
         </ThemeProvider>
             </MaterialUIControllerProvider>
