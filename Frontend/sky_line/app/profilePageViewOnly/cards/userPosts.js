@@ -17,63 +17,64 @@ import ViewPost from "../components/EditButton/ViewPost";
 
 function DefaultProjectCard({ posts }) {
 
-  return posts.map(({images, label, title, auction, description, price, area, status, rooms, bathrooms, floors, link, phone, date,address}) => (
-    <Grid key={label} item xs={12}  xl={3}>
-      <Card
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          backgroundColor: "transparent",
-          boxShadow: "none",
-          overflow: "visible",
-        }}
-      >
-        <MDBox position="relative" width="100.25%" shadow="xl" borderRadius="xl">
-          <CardMedia
-            src={images[0]}
-            component="img"
-            title={title}
-            sx={{
-              maxWidth: "100%",
-              margin: 0,
-              objectFit: "cover",
-              objectPosition: "center",
-            }}
-          />
-        </MDBox>
-        <MDBox mt={1} mx={0.5}>
-          <MDTypography
-            variant="button"
-            fontWeight="regular"
-            color="text"
-            textTransform="capitalize"
-          >
-            {label}
-          </MDTypography>
-          <MDBox mb={1}>
-              <MDTypography
-                textTransform="capitalize"
-              >
-                {title + " "}
-                <MDTypography variant="button" fontWeight={"light"}>
-                  {auction}
-                </MDTypography>
-              </MDTypography>
-          </MDBox>
-          <MDBox mb={3} lineHeight={0}>
-            <MDTypography variant="button" fontWeight="light" color="text">
-              {description}
-            </MDTypography>
-          </MDBox>
-          <MDBox display="flex" justifyContent="space-between" alignItems="center">
-              <ViewPost postInfo={{images, label, title, auction, description, price, area, status, rooms, bathrooms, floors, link, phone, date,address}}/>
-          </MDBox>
-        </MDBox>
-      </Card>
-    </Grid>
-  ));
-}
 
+
+    return posts.map(({id, publishDate, expiryDate, title, price, rent, area, description, estateType, bedroom, bathroom, level, mapLink,address, city, fullName, postCreatorUID,photosByteArray}) => (
+        <Grid key={id} item xs={12}  xl={3}>
+            <Card
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    backgroundColor: "transparent",
+                    boxShadow: "none",
+                    overflow: "visible",
+                }}
+            >
+                <MDBox position="relative" width="100.25%" shadow="xl" borderRadius="xl">
+                    <CardMedia
+                        src={photosByteArray[0]}
+                        component="img"
+                        title={title}
+                        sx={{
+                            maxWidth: "100%",
+                            margin: 0,
+                            objectFit: "cover",
+                            objectPosition: "center",
+                        }}
+                    />
+                </MDBox>
+                <MDBox mt={1} mx={0.5}>
+                    <MDTypography
+                        variant="button"
+                        fontWeight="regular"
+                        color="text"
+                        textTransform="capitalize"
+                    >
+                        {id}
+                    </MDTypography>
+                    <MDBox mb={1}>
+                        <MDTypography
+                            textTransform="capitalize"
+                        >
+                            {title + " "}
+                            <MDTypography variant="button" fontWeight={"light"}>
+                                {rent}
+                            </MDTypography>
+                        </MDTypography>
+                    </MDBox>
+                    <MDBox mb={3} lineHeight={0}>
+                        <MDTypography variant="button" fontWeight="light" color="text">
+                            {description}
+                        </MDTypography>
+                    </MDBox>
+                    <MDBox display="flex" justifyContent="space-between" alignItems="center">
+                        <ViewPost postInfo={{id, publishDate, expiryDate, title, price, rent, area, description, estateType, bedroom, bathroom, level, mapLink,address, city, fullName, postCreatorUID,photosByteArray}}/>
+                    </MDBox>
+                </MDBox>
+            </Card>
+        </Grid>
+    ));
+}
 
 // Typechecking props for the DefaultProjectCard
 DefaultProjectCard.propTypes = {

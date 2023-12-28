@@ -18,6 +18,7 @@ export default function Page() {
         component: <Profile />,
     };
 
+
     return (
         
         <MaterialUIControllerProvider>

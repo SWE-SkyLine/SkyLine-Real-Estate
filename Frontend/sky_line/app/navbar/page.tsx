@@ -18,7 +18,7 @@ const NavbarComponent: React.FC = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const userIdFromParams = urlParams.get("id");
     const response = await axios.get(`http://localhost:8080/api/notifications?userId=${userIdFromParams}`);
-    const notificationData=response.data;
+    const notificationData=response.data.reverse();
     console.log(notificationData);
     console.log(response);
     setNotifications(notificationData);

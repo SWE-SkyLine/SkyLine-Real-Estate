@@ -20,7 +20,9 @@ function Overview() {
   const [userId, setUserId] = useState("");
   const [postsListData, setPostsListData] = useState([]);
 
+
   useEffect(() => {
+
     const fetchProfileInfoData = async (id) => {
       try {
         const response = await axios.get(
@@ -47,6 +49,8 @@ function Overview() {
       setUserId(userIdFromParams);
       fetchProfileInfoData(userIdFromParams);
     }
+
+
   }, []);
 
   useEffect(() => {

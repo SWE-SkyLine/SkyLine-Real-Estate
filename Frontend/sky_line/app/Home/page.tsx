@@ -14,7 +14,7 @@ import {get_all_posts,get_all_Auctions, get_bid, add_bids} from "../Services/Pos
 import {filter_all_posts} from "../Services/PostService";
 import { sort_all_posts } from "../Services/PostService";
 import { search_all_posts } from "../Services/PostService";
-import { AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
 import { Popup_respone,Pop_addbid,Popu_show_score} from "../Utility/Popup/Popup";
 
@@ -40,7 +40,14 @@ export interface FilterData {
   let first_name="Nagui",last_name="Mostafa";
   let photo="/img.png"
   const x = '/assets/user.jpg';
- 
+   const [profile, setProfile] = useState({
+     profile_photo: "",
+     firstName: "",
+     lastName: "",
+     account_type: "",
+     mobile: "",
+     email: "",
+   });
 
   var post :Post_object=new Post_object();
 
@@ -54,7 +61,37 @@ export interface FilterData {
   let router = useRouter();
   // const [images, setImages] = useState<string[]>([]);
 
- 
+   useEffect(() => {
+
+     const fetchProfileInfoData = async (id:string) => {
+       try {
+         const response = await axios.get(
+             `http://localhost:8080/api/profile/getProfile/${id}`
+         );
+         const profileData = response.data;
+
+         // Update both profile and pfp in one go
+
+         let photoUrl = `data:image/jpeg;base64,${profileData.profile_photo}`;
+         // Create a data URL from the blob
+         //console.log(photoUrl);
+         profileData.profile_photo = photoUrl;
+         //setProfile(profile);
+         setProfile(profileData);
+       } catch (error) {
+         console.error("Error fetching profile:", error);
+       }
+     };
+     const urlParams = new URLSearchParams(window.location.search);
+     const userIdFromParams = urlParams.get("id");
+
+     if (userIdFromParams) {
+       setUserId(userIdFromParams);
+       fetchProfileInfoData(userIdFromParams);
+     }
+
+
+   }, []);
 
 
 
@@ -308,8 +345,8 @@ export interface FilterData {
      <div className={style.upperSlice}>
       <div className={style.contain_upper}> 
         <div className={style.user_data}>
-         <div className={style.photo} style={{ backgroundImage: `url(${photo})` }}></div>
-        <label className={style.name} >{first_name} {last_name}</label>
+         <div className={style.photo} style={{ backgroundImage: `url(${profile.profile_photo})` }}></div>
+        <label className={style.name} >{profile.firstName} {profile.lastName}</label>
         </div>
         {/* <div className={style.phone}><i className="fa-solid fa-phone"></i> <span>01202743255</span></div> */}
        {/* <div className={style.follow}><i className="fa-solid fa-user-group"></i> <span> Followers: 50</span></div>

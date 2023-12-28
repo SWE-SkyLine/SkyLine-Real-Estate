@@ -9,7 +9,7 @@ import MDBox from "../MDBoxindex";
 import MDTypography from "@/app/profilePage/components/MDtypoindex";
 
 function Component({ postInfo}) {
-    const{ images, label, title, auction, description, price, area, status, rooms, bathrooms, floors, link, phone, date,address} = postInfo;
+    const{ id, publishDate, expiryDate, title, price, rent, area, description, estateType, bedroom, bathroom, level, mapLink,address, city, fullName, postCreatorUID,photosByteArray} = postInfo;
     const [openModal, setOpenModal] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -18,7 +18,7 @@ function Component({ postInfo}) {
     }
 
     function handleNextImage() {
-        if (currentImageIndex < images.length - 1) {
+        if (currentImageIndex < photosByteArray.length - 1) {
             setCurrentImageIndex(currentImageIndex + 1);
         }
     }
@@ -28,6 +28,7 @@ function Component({ postInfo}) {
             setCurrentImageIndex(currentImageIndex - 1);
         }
     }
+
 
     return (
         <>
@@ -50,7 +51,7 @@ function Component({ postInfo}) {
                             borderRadius="xl"
                         >
                             <CardMedia
-                                src={images[currentImageIndex]}
+                                src={photosByteArray[currentImageIndex]}
                                 component="img"
                                 title={title}
                                 sx={{
@@ -73,7 +74,7 @@ function Component({ postInfo}) {
                             <Button
                                 style={{ borderRadius: "5px", padding: "5px 17px", cursor: "pointer" }}
                                 onClick={handleNextImage}
-                                disabled={currentImageIndex === images.length - 1}
+                                disabled={currentImageIndex === photosByteArray.length - 1}
                             >
                                 Next Photo &#8680;
                             </Button>
@@ -143,27 +144,15 @@ function Component({ postInfo}) {
 
 
                                     </Table.Row>
-                                    {/* (Status Row) */}
-                                    <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800" style={{ borderRadius: "10px" }}>
-                                        <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white" style={{ fontWeight: "bolder", backgroundColor: " #d0d0d0" }}>
-                                            Status
-                                        </Table.Cell>
-
-                                        <Table.Cell>
-                                            {status}
-                                        </Table.Cell>
 
 
-                                    </Table.Row>
-
-                                    {/* (Rooms Row) */}
                                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800" style={{ borderRadius: "10px" }}>
                                         <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white" style={{ fontWeight: "bolder", backgroundColor: " #d0d0d0" }}>
                                             Rooms
                                         </Table.Cell>
 
                                         <Table.Cell>
-                                            {rooms}
+                                            {bedroom}
                                         </Table.Cell>
 
 
@@ -176,7 +165,7 @@ function Component({ postInfo}) {
                                         </Table.Cell>
 
                                         <Table.Cell>
-                                            {bathrooms}
+                                            {bathroom}
                                         </Table.Cell>
 
 
@@ -191,21 +180,8 @@ function Component({ postInfo}) {
                                         </Table.Cell>
 
                                         <Table.Cell>
-                                            {floors}
+                                            {level}
                                         </Table.Cell>
-
-                                    </Table.Row>
-
-                                    {/* (Contact Row) */}
-                                    <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800" style={{ borderRadius: "10px" }}>
-                                        <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white" style={{ fontWeight: "bolder", backgroundColor: " #d0d0d0" }}>
-                                            Contact
-                                        </Table.Cell>
-
-                                        <Table.Cell>
-                                            {phone}
-                                        </Table.Cell>
-
 
                                     </Table.Row>
 
@@ -216,14 +192,14 @@ function Component({ postInfo}) {
                                         </Table.Cell>
 
                                         <Table.Cell>
-                                            {link}
+                                            {mapLink}
                                         </Table.Cell>
 
                                     </Table.Row>
                                 </Table.Body>
                             </Table>
                             <div className="whitespace-nowrap font-medium text-gray-900 dark:text-white" style={{fontWeight:"bolder" ,backgroundColor:" #d0d0d0", borderRadius:"2px"}}>
-                                <div style={{marginLeft:"10px"}}>Posted : {date} </div>
+                                <div style={{marginLeft:"10px"}}>Posted : {publishDate} </div>
                             </div>
                         </div>
 
