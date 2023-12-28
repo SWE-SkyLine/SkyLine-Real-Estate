@@ -14,8 +14,6 @@ public class BidDTO {
     private int bid_price;
     private int auction_id;
 
-    @Autowired
-    private UserRepository userRepository;
 
     @Override
     public String toString() {

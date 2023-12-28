@@ -107,6 +107,8 @@ public class NotificationService {
     public ArrayList<NotificationRequestDTO> getUserNotifications(int userID){
 
         UserRoleEnum role=userRepository.findUserById(userID).getUserRole();
+        System.out.println("user role = "+String.valueOf(role));
+        System.out.println("user id = "+String.valueOf(userID));
         if(role==UserRoleEnum.ADMIN){
             return getAdminNotifications(userID);
         }
@@ -190,9 +192,12 @@ public class NotificationService {
     }
 
     public ArrayList<NotificationRequestDTO> getClientNotifications(int ClientID){
+
         ArrayList<Notification> answeredRequests= notificationRepository.getClientAnsweredRequests(ClientID);
         ArrayList<Notification> pendingRequests= notificationRepository.getClientPendingRequests(ClientID);
         ArrayList<Notification> promotionRequests= notificationRepository.getClientPromotionNotification(ClientID);
+        System.out.println(promotionRequests.size());
+        System.out.println(ClientID);
         ArrayList<NotificationRequestDTO> requests=new ArrayList<>();
         for (Notification answeredRequest : answeredRequests) {
             String requesterName= userRepository.findUserById(answeredRequest.getRequester_id()).getFirstName();
