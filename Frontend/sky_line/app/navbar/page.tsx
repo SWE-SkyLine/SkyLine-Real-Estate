@@ -10,6 +10,10 @@ import axios from "axios";
 const NavbarComponent: React.FC = () => {
   const [showNotification, setShowNotification] = useState(false);
   const [notifications, setNotifications] = useState([]);
+
+  const [answeredNotifications, setAnsweredNotifications] = useState<number[]>([]);
+  const [rejectedNotifications, setRejectedNotifications] = useState<number[]>([]);
+
   const handleNotificationClick = async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const userIdFromParams = urlParams.get("id");
@@ -24,10 +28,11 @@ const NavbarComponent: React.FC = () => {
   const handleAcceptClick = async (id : number) => {
     console.log(id);
     const response = await axios.put(`http://localhost:8080/api/notifications/update/approve?NotificationId=${id}`);
-
+   setAnsweredNotifications([...answeredNotifications, id]);
   }
   const handleRejectClick = async (id : number) => {
     const response = await axios.put(`http://localhost:8080/api/notifications/update/reject?NotificationId=${id}`);
+    setRejectedNotifications([...rejectedNotifications, id]);
   }
 
 
@@ -94,7 +99,7 @@ const NavbarComponent: React.FC = () => {
                     <div>Date Requested : {date_requested}</div>
                     <div>Date Answered : {date_answered} </div>
                       </div>
-                    {!decide?(
+                    {(decide && !answeredNotifications.includes(notificationId)&& !rejectedNotifications.includes(notificationId))?(
                         <>
                         <Button style={{marginRight:"3px", fontSize:"12px", marginLeft:"301px"}} onClick={() => handleAcceptClick(notificationId)}>
                          Accept
@@ -103,7 +108,14 @@ const NavbarComponent: React.FC = () => {
                           Refuse
                         </Button>
                         </>
-                        ):(<></>)}
+                        ):(
+                            answeredNotifications.includes(notificationId)?(
+                                <div style={{color:"green", fontSize:"12px", marginLeft:"301px"}}>Accepted</div>
+                            ):(
+                                <div style={{color:"red", fontSize:"12px", marginLeft:"301px"}}>Rejected</div>
+                            )
+
+                            )}
 
                 </ListGroup.Item>
             ))}

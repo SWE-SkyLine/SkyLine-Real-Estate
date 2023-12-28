@@ -101,7 +101,7 @@ function Header({ profileInfo, profilesListData, postsListData, onUpdate, onUpda
                 </MDBox>
               </Grid>
             </Grid>
-            <Grid item x={10} md={10} xl={4}>
+            <Grid item x={10} md={10} xl={3.5}>
               <ProfileInfoCard
                   title="profile information"
                   info={{ image, account_type, firstName, lastName, mobile, email, location }}
@@ -109,11 +109,22 @@ function Header({ profileInfo, profilesListData, postsListData, onUpdate, onUpda
                   onUpdate={onUpdate}
               />
             </Grid>
-            <Grid item xs={12} xl={4.5}>
+            <Grid item xs={13} xl={4.5}>
               <ProfilesList title="Auctions You Bid In" profiles={profilesListData} shadow={false} />
             </Grid >
             <Grid item py={55}>
-              <ViewUsers profiles={users} title="Promote To Admin"></ViewUsers>
+                {account_type==="ADMIN"?(
+                    <>
+                        <ViewUsers profiles={users} title="Promote To Admin"></ViewUsers>
+                    </>
+                ):( account_type==="COMPANY"?(
+                    <>
+                        <ViewUsers profiles={users} title="Hire Agents"></ViewUsers>
+                    </>
+                ):(
+                    <></>
+                ) )  }
+
             </Grid>
           </Grid>
           <MDBox pt={0} px={2} lineHeight={1.25}>

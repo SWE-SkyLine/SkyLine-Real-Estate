@@ -24,11 +24,11 @@ public class NotificationController {
 
 
 
-@GetMapping()
-public ArrayList<NotificationRequestDTO> getNotifications(@RequestParam int userId){
+    @GetMapping()
+    public ArrayList<NotificationRequestDTO> getNotifications(@RequestParam int userId){
 
         return this.notificationService.getUserNotifications(userId);
-}
+    }
 
 
     @PutMapping("/update/approve")
@@ -52,9 +52,9 @@ public ArrayList<NotificationRequestDTO> getNotifications(@RequestParam int user
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<UserPromoteDTO>> searchUsersforPromotion(@RequestParam String query) {
+    public ResponseEntity<List<UserPromoteDTO>> searchUsersforPromotion(@RequestParam String query,@RequestParam int Id ) {
         try {
-            List<UserPromoteDTO> matchingUsers = notificationService.searchClientUsers(query);
+            List<UserPromoteDTO> matchingUsers = notificationService.searchClientUsers(query, Id);
             System.out.println("Matching users: " + matchingUsers);
             return ResponseEntity.ok(matchingUsers);
         } catch (Exception e) {
