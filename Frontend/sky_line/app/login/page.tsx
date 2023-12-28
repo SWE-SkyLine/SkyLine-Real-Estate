@@ -76,9 +76,9 @@ const LoginForm = () => {
     localStorage.setItem('userDetails', JSON.stringify(userDetails));
     //console.log("userDetaels before saving : " );
     //console.log(userDetails)
-    //const detailsSaved = JSON.parse(localStorage.getItem('userDetails') as string);
-    //console.log("userDetaels after saving : " );
-    //console.log(detailsSaved)
+    const detailsSaved = JSON.parse(localStorage.getItem('userDetails') as string);
+    console.log("userDetaels after saving : " );
+    console.log(detailsSaved)
 
     if((res as Response).status ==200){
         // id first, last name

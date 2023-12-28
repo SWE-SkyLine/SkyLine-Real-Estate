@@ -31,7 +31,7 @@ const publishPostRequest = async (post : FormData) => {
 
     const makeRequest = async(url: string, post : FormData) =>{
         try {
-            const response = await axios.post(url, post);
+            const response = await axios.post(url, post, {withCredentials: true});
             return response;
         } catch (error) {
             console.error(error);

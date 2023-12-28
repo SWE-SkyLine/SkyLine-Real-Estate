@@ -18,6 +18,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,8 +31,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@CrossOrigin
 @RequestMapping("/api")
+@PreAuthorize("hasRole('CLIENT')")
 public class PostController {
     @Autowired
     private PostCreationService postCreationService;
@@ -39,7 +40,6 @@ public class PostController {
     private PostRepository postRepository;
     @Autowired
     private PostService postService;
-    //
 
     @PostMapping("/publish_post")
     public ResponseEntity<?> publishPost(
@@ -55,7 +55,7 @@ public class PostController {
             @RequestParam("bedroom") String bedroom,
             @RequestParam("bathroom") String bathroom,
             @RequestParam("level") String level,
-            @NonNull @RequestParam("UID") String postCreatorUID,
+            @RequestParam("UID") String postCreatorUID,
             @RequestPart("photos") MultipartFile[] photos) {
 
         System.out.println("there is a request to publish a post");
