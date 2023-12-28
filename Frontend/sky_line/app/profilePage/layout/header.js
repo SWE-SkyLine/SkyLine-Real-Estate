@@ -22,6 +22,7 @@ import ProfileInfoCard from "../cards/userInfo.js";
 import ProfilesList from "../cards/userAuctions.js";
 import DefaultProjectCard from "../cards/userPosts.js";
 import ViewUsers from "../components/EditButton/ViewUsers";
+import HomeButton from "../components/HomeButton";
 
 
 function Header({ profileInfo, profilesListData, postsListData, onUpdate, onUpdatePhoto, users}) {
@@ -56,7 +57,7 @@ function Header({ profileInfo, profilesListData, postsListData, onUpdate, onUpda
   return (
       
       <MDBox key={email} position="relative" mb={5}>
-        
+        <HomeButton />  
         <MDBox
             display="flex"
             alignItems="center"
@@ -104,7 +105,7 @@ function Header({ profileInfo, profilesListData, postsListData, onUpdate, onUpda
             <Grid item x={10} md={10} xl={3.5}>
               <ProfileInfoCard
                   title="profile information"
-                  info={{ image, account_type, firstName, lastName, mobile, email, location }}
+                  info={{ image, account_type, firstName, lastName, mobile, email }}
                   shadow={false}
                   onUpdate={onUpdate}
               />
