@@ -9,7 +9,7 @@ import MDBox from "../MDBoxindex";
 import MDTypography from "@/app/profilePage/components/MDtypoindex";
 
 function Component({ postInfo}) {
-    const{ images, label, title, auction, description, price, area, status, rooms, bathrooms, floors, link, phone, date,address} = postInfo;
+    const{ id, publishDate, expiryDate, title, price, rent, area, description, estateType, bedroom, bathroom, level, mapLink,address, city, fullName, postCreatorUID,photosByteArray} = postInfo;
     const [openModal, setOpenModal] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -19,12 +19,10 @@ function Component({ postInfo}) {
         description: description,
         price: price,
         area: area,
-        status: status,
-        rooms: rooms,
-        bathrooms: bathrooms,
-        floors: floors,
-        phone: phone,
-        link: link,
+        rooms: bedroom,
+        bathrooms: bathroom,
+        floors: level,
+        link: mapLink,
         address:address
         // Add other properties as needed
     });
@@ -35,11 +33,11 @@ function Component({ postInfo}) {
         description: false,
         price: false,
         area: false,
-        status: false,
+
         rooms: false,
         bathrooms: false,
         floors: false,
-        phone: false,
+
         link: false,
         address: false,
         // Add other properties as needed
@@ -47,11 +45,39 @@ function Component({ postInfo}) {
 
 
     function onCloseModal() {
+        const data = {
+            id: id,
+            title: editedValues.title,
+            description: editedValues.description,
+            bedroom: editedValues.rooms,
+            mapLink: editedValues.link,
+            price: editedValues.price,
+            area: editedValues.area,
+            address:editedValues.address,
+            level: editedValues.floors
+        };
+        console.log(data);
+        fetch(`http://localhost:8080/api/profile/updatePost`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then(response => response.text())
+            .then(result => {
+                console.log(result);
+                // Handle success response
+            })
+            .catch(error => {
+                console.error('Error updating profile information:', error);
+                // Handle error
+            });
         setOpenModal(false);
     }
 
     function handleNextImage() {
-        if (currentImageIndex < images.length - 1) {
+        if (currentImageIndex < photosByteArray.length - 1) {
             setCurrentImageIndex(currentImageIndex + 1);
         }
     }
@@ -102,7 +128,7 @@ function Component({ postInfo}) {
                             borderRadius="xl"
                         >
                             <CardMedia
-                                src={images[currentImageIndex]}
+                                src={photosByteArray[currentImageIndex]}
                                 component="img"
                                 title={title}
                                 sx={{
@@ -125,7 +151,7 @@ function Component({ postInfo}) {
                             <Button
                                 style={{ borderRadius: "5px", padding: "5px 17px", cursor: "pointer" }}
                                 onClick={handleNextImage}
-                                disabled={currentImageIndex === images.length - 1}
+                                disabled={currentImageIndex === photosByteArray.length - 1}
                             >
                                 Next Photo &#8680;
                             </Button>
@@ -297,38 +323,7 @@ function Component({ postInfo}) {
                                             </>
                                         )}
                                     </Table.Row>
-                                    {/* (Status Row) */}
-                                    <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800" style={{ borderRadius: "10px" }}>
-                                        <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white" style={{ fontWeight: "bolder", backgroundColor: " #d0d0d0" }}>
-                                            Status
-                                        </Table.Cell>
-                                        {editMode.status ? (
-                                            <>
-                                                <Table.Cell>
-                                                    <TextInput
-                                                        value={editedValues.status}
-                                                        onChange={(e) => handleInputChange(e, 'status')}
-                                                        style={{backgroundColor:"white" , border:"1px solid black",borderRadius:"8px", color:"black", padding:"8px 30px", fontsize:"50px", width:"540px"}}/>
-                                                </Table.Cell>
-                                                <Table.Cell>
-                                                    <Button className="EditPostButton" onClick={() => handleSave('status')} style={{ rotate: "none"}}>
-                                                        &#10003;
-                                                    </Button>
-                                                </Table.Cell>
-                                            </>
-                                        ) : (
-                                            <>
-                                                <Table.Cell>
-                                                    {status}
-                                                </Table.Cell>
-                                                <Table.Cell>
-                                                    <Button className="EditPostButton" onClick={() => handleEdit('status')}>
-                                                        &#9998;
-                                                    </Button>
-                                                </Table.Cell>
-                                            </>
-                                        )}
-                                    </Table.Row>
+                                    
 
                                     {/* (Rooms Row) */}
                                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800" style={{ borderRadius: "10px" }}>
@@ -352,7 +347,7 @@ function Component({ postInfo}) {
                                         ) : (
                                             <>
                                                 <Table.Cell>
-                                                    {rooms}
+                                                    {bedroom}
                                                 </Table.Cell>
                                                 <Table.Cell>
                                                     <Button className="EditPostButton" onClick={() => handleEdit('rooms')}>
@@ -385,7 +380,7 @@ function Component({ postInfo}) {
                                         ) : (
                                             <>
                                                 <Table.Cell>
-                                                    {bathrooms}
+                                                    {bathroom}
                                                 </Table.Cell>
                                                 <Table.Cell>
                                                     <Button className="EditPostButton" onClick={() => handleEdit('bathrooms')}>
@@ -420,7 +415,7 @@ function Component({ postInfo}) {
                                         ) : (
                                             <>
                                                 <Table.Cell>
-                                                    {floors}
+                                                    {level}
                                                 </Table.Cell>
                                                 <Table.Cell>
                                                     <Button className="EditPostButton" onClick={() => handleEdit('floors')}>
@@ -431,39 +426,7 @@ function Component({ postInfo}) {
                                         )}
                                     </Table.Row>
 
-                                    {/* (Contact Row) */}
-                                    <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800" style={{ borderRadius: "10px" }}>
-                                        <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white" style={{ fontWeight: "bolder", backgroundColor: " #d0d0d0" }}>
-                                            Contact
-                                        </Table.Cell>
-                                        {editMode.phone ? (
-                                            <>
-                                                <Table.Cell>
-                                                    <TextInput
-                                                        value={editedValues.phone}
-                                                        onChange={(e) => handleInputChange(e, 'phone')}
-                                                        style={{backgroundColor:"white" , border:"1px solid black",borderRadius:"8px", color:"black", padding:"8px 30px", fontsize:"50px", width:"540px"}} />
-                                                </Table.Cell>
-                                                <Table.Cell>
-                                                    <Button className="EditPostButton" onClick={() => handleSave('phone')} style={{ rotate: "none" }}>
-                                                        &#10003;
-                                                    </Button>
-                                                </Table.Cell>
-                                            </>
-                                        ) : (
-                                            <>
-                                                <Table.Cell>
-                                                    {phone}
-                                                </Table.Cell>
-                                                <Table.Cell>
-                                                    <Button className="EditPostButton" onClick={() => handleEdit('phone')}>
-                                                        &#9998;
-                                                    </Button>
-                                                </Table.Cell>
-                                            </>
-                                        )}
-                                    </Table.Row>
-
+                                   
                                     {/* (Maps Link Row) */}
                                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800" style={{ borderRadius: "10px" }}>
                                         <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white" style={{ fontWeight: "bolder", backgroundColor: " #d0d0d0" }}>
@@ -486,7 +449,7 @@ function Component({ postInfo}) {
                                         ) : (
                                             <>
                                                 <Table.Cell>
-                                                    {link}
+                                                    {mapLink}
                                                 </Table.Cell>
                                                 <Table.Cell>
                                                     <Button className="EditPostButton" onClick={() => handleEdit('link')}>
@@ -499,7 +462,7 @@ function Component({ postInfo}) {
                                 </Table.Body>
                             </Table>
                             <div className="whitespace-nowrap font-medium text-gray-900 dark:text-white" style={{fontWeight:"bolder" ,backgroundColor:" #d0d0d0", borderRadius:"2px"}}>
-                                <div style={{marginLeft:"10px"}}>Posted : {date} </div>
+                                <div style={{marginLeft:"10px"}}>Posted : {publishDate} </div>
                             </div>
                         </div>
                             </ul>
@@ -519,7 +482,7 @@ function Component({ postInfo}) {
 }
 Component.propTypes = {
     postInfo: PropTypes.shape({
-        images: PropTypes.arrayOf(PropTypes.string).isRequired,
+        photosByteArray: PropTypes.arrayOf(PropTypes.string).isRequired,
         title: PropTypes.string.isRequired,
         label: PropTypes.string.isRequired,
         description: PropTypes.string.isRequired,

@@ -41,42 +41,42 @@ public class NotificationService {
         ArrayList<Integer> SuperAdminsIDs=userRepository.getSuperAdminsID("SUPERADMIN");
         System.out.println("SuperAdminsIDs= "+SuperAdminsIDs.size());
         for (Integer SuperAdminsID : SuperAdminsIDs
-             ) {
+        ) {
             Notification request=new Notification(requesterID,candidateID,SuperAdminsID);
             notificationRepository.save(request);
         }
 
         return true;
 
-        
+
     }
 
     public boolean request(int requesterId, int candidateId){
         UserRoleEnum role=userRepository.findUserById(requesterId).getUserRole();
         if (role==UserRoleEnum.ADMIN){
             System.out.println("here ");
-           return notify(requesterId,candidateId);
+            return notify(requesterId,candidateId);
         }
         else if(role==UserRoleEnum.COMPANY){
-           Notification request=new Notification(requesterId,candidateId);
-              notificationRepository.save(request);
-              return true;
+            Notification request=new Notification(requesterId,candidateId);
+            notificationRepository.save(request);
+            return true;
         }
         else {
-           System.out.println("You are not allowed to request ");
-           return false;
+            System.out.println("You are not allowed to request ");
+            return false;
         }
 
 
     }
- public void approveRequest(int NotificationId) {
+    public void approveRequest(int NotificationId) {
         Notification request=notificationRepository.findNotificationById(NotificationId);
 
 
         int responderId=request.getResponder_id();
-     System.out.println("Responder id= "+responderId);
+        System.out.println("Responder id= "+responderId);
         UserRoleEnum role=userRepository.findUserById(responderId).getUserRole();
-     System.out.println("user role = "+String.valueOf(role));
+        System.out.println("user role = "+String.valueOf(role));
         if(role==UserRoleEnum.SUPERADMIN){
             int candidateId=request.getCandidate_id();
             int requesterId=request.getRequester_id();
@@ -97,7 +97,7 @@ public class NotificationService {
 
         }
 
- }
+    }
     public void rejectRequest(int NotificationId){
         notificationRepository.updateNotificationById(NotificationId, false, new java.sql.Date(System.currentTimeMillis()) );
     }
@@ -107,6 +107,8 @@ public class NotificationService {
     public ArrayList<NotificationRequestDTO> getUserNotifications(int userID){
 
         UserRoleEnum role=userRepository.findUserById(userID).getUserRole();
+        System.out.println("user role = "+String.valueOf(role));
+        System.out.println("user id = "+String.valueOf(userID));
         if(role==UserRoleEnum.ADMIN){
             return getAdminNotifications(userID);
         }
@@ -130,10 +132,10 @@ public class NotificationService {
         ArrayList<Notification> pendingRequests= notificationRepository.getAdminPendingRequests(AdminID);
         ArrayList<NotificationRequestDTO> requests=new ArrayList<>();
         for (Notification answeredRequest : answeredRequests) {
-           String candidateName= userRepository.findUserById(answeredRequest.getCandidate_id()).getFirstName();
-           String msg="Your request to promote "+candidateName+" has been "+(answeredRequest.isApproved()?"approved":"rejected");
+            String candidateName= userRepository.findUserById(answeredRequest.getCandidate_id()).getFirstName();
+            String msg="Your request to promote "+candidateName+" has been "+(answeredRequest.isApproved()?"approved":"rejected");
             NotificationRequestDTO request=new NotificationRequestDTO(answeredRequest.getId(), answeredRequest.getResponder_id(),answeredRequest.getRequester_id(),answeredRequest.getCandidate_id(),msg,answeredRequest.getDate_requested().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),answeredRequest.getDate_answered().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(), false);
-           requests.add(request);
+            requests.add(request);
         }
         for (Notification pendingRequest : pendingRequests) {
             String candidateName= userRepository.findUserById(pendingRequest.getCandidate_id()).getFirstName();
@@ -142,7 +144,7 @@ public class NotificationService {
             requests.add(request);
         }
 
-return requests;
+        return requests;
     }
 
     public ArrayList<NotificationRequestDTO> getCompanyNotifications(int CompanyID){
@@ -190,9 +192,12 @@ return requests;
     }
 
     public ArrayList<NotificationRequestDTO> getClientNotifications(int ClientID){
+
         ArrayList<Notification> answeredRequests= notificationRepository.getClientAnsweredRequests(ClientID);
         ArrayList<Notification> pendingRequests= notificationRepository.getClientPendingRequests(ClientID);
         ArrayList<Notification> promotionRequests= notificationRepository.getClientPromotionNotification(ClientID);
+        System.out.println(promotionRequests.size());
+        System.out.println(ClientID);
         ArrayList<NotificationRequestDTO> requests=new ArrayList<>();
         for (Notification answeredRequest : answeredRequests) {
             String requesterName= userRepository.findUserById(answeredRequest.getRequester_id()).getFirstName();
@@ -227,24 +232,39 @@ return requests;
 //        notificationRepository.updateNotificationById(notification.getNotification_id(), notification );
         //mark the seen attribute true in the notification table
     }
-    public List<UserPromoteDTO> searchClientUsers(String query) {
+    public List<UserPromoteDTO> searchClientUsers(String query, int Id) {
+
+
         List<User> matchingUsers = userRepository.findClientsByFirstNameOrLastName(query, UserRoleEnum.CLIENT);
 
         List<UserPromoteDTO> userDTOs = new ArrayList<>();
+        UserRoleEnum role=userRepository.findUserById(Id).getUserRole();
+        if(role==UserRoleEnum.ADMIN){
+            for (User user : matchingUsers) {
+                int previousRequests= (int) notificationRepository.countCandidatePreviousRequests(user.getId());
+                boolean requested= previousRequests != 0;
+                // Assuming User entity has getters for first name, last name, and profile photo
+                UserPromoteDTO userDTO = new UserPromoteDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getProfile_photo(), requested);
+                userDTOs.add(userDTO);
+            }}
+        else {
 
-        for (User user : matchingUsers) {
-            int previousRequests= (int) notificationRepository.countCandidatePreviousRequests(user.getId());
-            boolean requested= previousRequests != 0;
-                    // Assuming User entity has getters for first name, last name, and profile photo
-            UserPromoteDTO userDTO = new UserPromoteDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getProfile_photo(), requested);
-            userDTOs.add(userDTO);
+            for (User user : matchingUsers) {
+                int previousRequests= (int) notificationRepository.countCompanyPreviousRequests(Id, user.getId());
+                boolean requested= previousRequests != 0;
+                // Assuming User entity has getters for first name, last name, and profile photo
+                UserPromoteDTO userDTO = new UserPromoteDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getProfile_photo(), requested);
+                userDTOs.add(userDTO);
+            }
+
+
         }
 
         return userDTOs;
     }
 
 
-    
+
 
 
 }

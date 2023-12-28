@@ -1,5 +1,6 @@
 package com.example.SkyLine.DTO;
 
+import com.example.SkyLine.entity.Auction;
 import com.example.SkyLine.entity.Photo;
 import com.example.SkyLine.entity.Post;
 import com.example.SkyLine.enums.EstateTypeEnum;
@@ -40,6 +41,10 @@ public class PostRetrievalDTO {
     private String city;
     private String fullName;
     private int postCreatorUID;
+    private String post_type;
+
+
+
     public List<byte[]> photosByteArray = new ArrayList<>();
 
     public PostRetrievalDTO(Post post) throws MalformedURLException {
@@ -60,6 +65,7 @@ public class PostRetrievalDTO {
         this.city = post.getCity();
         this.postCreatorUID = post.getClient().getId();
         this.fullName = post.getClient().getFirstName() + " " + post.getClient().getLastName();
+        this.post_type="post";
 
 
         try {

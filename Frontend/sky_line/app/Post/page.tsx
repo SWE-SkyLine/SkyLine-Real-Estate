@@ -20,7 +20,7 @@ import CreateIcon from '@mui/icons-material/Create';
 import style from '../Post/page.module.css'
 import { CSSTransition } from 'react-transition-group';
 // import publishPostRequest from '../Services/PublishPostService';
-import { publishPostRequest, testPhotoApi } from '../Services/PublishPostService';
+import { publishPostRequest,publishAuctionRequest, testPhotoApi } from '../Services/PublishPostService';
 import { Alert } from 'react-bootstrap';
 import testHttpOnlyCookie from '../Services/HttpOnlyCookieTest';
 
@@ -52,6 +52,9 @@ interface FormDataState {
     bathroom: string;
     level: string;
     photos: File[];
+    start_time:any
+    end_time:any,
+    start_bid:any
 }
 
 
@@ -67,6 +70,8 @@ function Post({ userId }: { userId: string }) {
     const [isHovered, setIsHovered] = useState(false);
     const [isValid, setIsValid] = useState(true);
     const [isSend, setIsSend] = useState(0);
+    const [Auction, setAuction] = useState(false);
+
 
     //console.log("userid: " + userId)
 
@@ -84,6 +89,9 @@ function Post({ userId }: { userId: string }) {
         bathroom: '',
         level: '',
         photos: [],
+        start_time:'',
+        end_time:'2023-05-08',
+        start_bid:''
     });
     const handleButtonClick = () => {
         setShowModal(true);
@@ -113,8 +121,14 @@ function Post({ userId }: { userId: string }) {
                 data.append(key, formData[key as keyof FormDataState] as string);
             }
         }
+        let res:any
+        if(Auction==true){
+            res = await publishAuctionRequest(data);
+        }
+        else{
+            res = await publishPostRequest(data);
 
-        const res = await publishPostRequest(data);
+        }
         console.log("post request formData : " + data.get(`UID`));
         console.log(data.values);
 
@@ -207,6 +221,22 @@ function Post({ userId }: { userId: string }) {
         }));
         //setLevel(event.target.value);
     };
+    
+    const handleEndDate = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData(prevState => ({
+            ...prevState,
+            end_time: event.target.value,
+            start_time: new Date().toISOString().split('T')[0]
+        }));
+        //setLevel(event.target.value);
+    };
+    const handleMinBid = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData(prevState => ({
+            ...prevState,
+            start_bid: event.target.value
+        }));
+        //setLevel(event.target.value);
+    };
 
     const handleDescChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setFormData(prevState => ({
@@ -222,6 +252,11 @@ function Post({ userId }: { userId: string }) {
             ...prevState,
             isRent: event.target.value === 'rent'
         }));
+        //setDesc(event.target.value);
+    };
+    const handlePostAuction = (event: React.ChangeEvent<HTMLInputElement>) => {
+        console.log("changed")
+        setAuction(event.target.value === 'Auction')
         //setDesc(event.target.value);
     };
 
@@ -252,7 +287,7 @@ function Post({ userId }: { userId: string }) {
                 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
             </button>
             <button className={style['create-post-button']} onClick={handleButtonClick}>
-                <span>Create Post</span>
+                <span>Post / Auction</span>
                 <CreateIcon className={style['create-icon']} />
 
             </button>
@@ -367,11 +402,23 @@ function Post({ userId }: { userId: string }) {
                                         <FormControl>
                                             <RadioGroup
                                                 defaultValue="Sale"
-                                                name="radio-buttons-group"
+                                                name="radio-buttons"
                                                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleRentOrBuyChange(event)}
                                             >
                                                 <FormControlLabel value="sale" control={<Radio />} label="Sale" />
                                                 <FormControlLabel value="rent" control={<Radio />} label="Rent" />
+                                            </RadioGroup>
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <FormControl>
+                                            <RadioGroup
+                                                defaultValue="Post"
+                                                name="radio-buttons-group"
+                                                onChange={(event: React.ChangeEvent<HTMLInputElement>) => handlePostAuction(event)}
+                                            >
+                                                <FormControlLabel value="Post" control={<Radio />} label="Post" />
+                                                <FormControlLabel value="Auction" control={<Radio />} label="Auction" />
                                             </RadioGroup>
                                         </FormControl>
                                     </Grid>
@@ -451,6 +498,26 @@ function Post({ userId }: { userId: string }) {
                                             onChange={handleLevelChange}
                                         />
                                     </Grid>
+                                    {Auction && <Grid item xs={6} sm={4}>
+                                       <InputLabel htmlFor="outlined-adornment-date">Date</InputLabel>
+                                        <OutlinedInput
+                                            id="outlined-adornment-date"
+                                            type="date"  // Set the type to "date" for date input
+                                            onChange={handleEndDate}
+                                            fullWidth
+                                         />
+                                   </Grid>}
+                                   {Auction && <Grid item xs={6} sm={4}>
+                                       <InputLabel htmlFor="outlined-adornment-date">Minimum  Bid</InputLabel>
+                                        <OutlinedInput
+                                            id="outlined-adornment-date"
+                                            type="text"  // Set the type to "date" for date input
+                                            onChange={handleMinBid}
+                                            fullWidth 
+                                            label="Minimum  Bid"                                           
+                                         />
+                                   </Grid>}
+                                                               
                                     <Grid item xs={12}>
                                         <TextField
                                             required
