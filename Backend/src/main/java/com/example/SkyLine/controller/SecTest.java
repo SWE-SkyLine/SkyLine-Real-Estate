@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/security")
 public class SecTest {
     @GetMapping ("/sec")
+    @PreAuthorize("hasRole('CLIENT')")
     public String login(){
         return "hello security";
     }
