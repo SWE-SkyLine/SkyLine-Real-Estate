@@ -206,6 +206,20 @@
   .btn{
     width: 11vw;
   }
+
+  .score_div{
+    margin-top: 1rem;
+    margin-left: 1rem;
+  }
+  .score_btn{
+    width: 95%;
+    height: 5vh;
+    background-color: rgb(40, 167, 222);
+    color: #000;
+    font-weight: 500;
+    font-size: larger;
+    border-radius:5px;
+  }
   
   
   /* .post_img {
