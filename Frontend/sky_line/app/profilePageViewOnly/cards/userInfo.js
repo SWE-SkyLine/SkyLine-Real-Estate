@@ -14,7 +14,8 @@ import Rating  from "../../rating/page";
 function ProfileInfoCard({ title, info, shadow }) {
   const { firstName, lastName, image, role, ...restInfo } = info;
   const urlParams = new URLSearchParams(window.location.search);
-  const userIdFromParams = urlParams.get("id");
+  const userIdFromParams = urlParams.get("user");
+  const targetIdFromParams = urlParams.get("id");
   const labels = ["fullName", ...Object.keys(restInfo)];
   const values = [`${firstName} ${lastName}`, ...Object.values(restInfo)];
 
@@ -40,7 +41,7 @@ function ProfileInfoCard({ title, info, shadow }) {
         <MDBox opacity={10}></MDBox>
         <MDBox pt={0} px={4}>
           {renderItems}
-          <Rating targetId={userIdFromParams}/>
+          <Rating targetId={targetIdFromParams} userId={userIdFromParams}/>
         </MDBox>
       </MDBox>
     </Card>
