@@ -9,6 +9,8 @@ import com.example.SkyLine.repository.UserRepository;
 import com.example.SkyLine.security.JwtService;
 import com.example.SkyLine.service.EmailService;
 import com.example.SkyLine.service.RegistrationService;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@CrossOrigin
+//
 @RequestMapping("/register")
 public class RegisterationController {
     @Autowired
@@ -42,11 +44,12 @@ public class RegisterationController {
         }
     }
 
+   //TODO : Handle unchecked exception caused by auth manager
     @PostMapping("/user/login")
-    public ResponseEntity<?> signIn(@RequestBody LogInRequestDTO login) {
+    public ResponseEntity<?> signIn(@RequestBody LogInRequestDTO login, @NonNull HttpServletResponse response) {
         System.out.println("In LogIn controller - Email : " + login.getEmail()
                 + " Password : " + login.getPassword());
-        return new ResponseEntity<LogInResponseDTO>(registrationService.signIn(login), HttpStatus.OK);
+        return new ResponseEntity<LogInResponseDTO>(registrationService.signIn(login, response), HttpStatus.OK);
     }
 
     @PostMapping("/user/sendVerifyCodeAgain")

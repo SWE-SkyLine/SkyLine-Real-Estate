@@ -2,7 +2,7 @@ package com.example.SkyLine.DTO;
 
 public class LogInRequestDTO {
     private String email;
-    private String password;
+    private String password;    
 
     public String getEmail() {
         return email;

@@ -10,9 +10,11 @@ import com.example.SkyLine.security.JwtService;
 import com.example.SkyLine.utility.RepositoryFactory;
 import com.example.SkyLine.utility.UserFactory;
 import com.example.SkyLine.utility.VerificationCodeGenerator;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -90,20 +92,27 @@ public class RegistrationService {
         return false;
     }
 
-    public LogInResponseDTO signIn(LogInRequestDTO login) {
+    public LogInResponseDTO signIn(LogInRequestDTO login, @NonNull HttpServletResponse response) {
         System.out.println("logged in " + login.getEmail() + " " + login.getPassword());
         var authenticationResponse = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(login.getEmail(), login.getPassword())
         );
         SecurityContextHolder.getContext().setAuthentication(authenticationResponse); //throws unchecked exception
-        return generateResponse(login, (UserDetails) authenticationResponse.getPrincipal());
+        String jwtToken = jwtService.generateToken((UserDetails) authenticationResponse.getPrincipal());
+        createHttpOnlyCookie(response, jwtToken);
+        return generateResponse(login, jwtToken);
     }
-
-    private LogInResponseDTO generateResponse(LogInRequestDTO login, UserDetails userDetails) {
+    private void createHttpOnlyCookie(@NonNull HttpServletResponse response, String jwtToken){
+        Cookie cookie = new Cookie("Authorization", jwtToken); // bearer
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+    }
+    private LogInResponseDTO generateResponse(LogInRequestDTO login, String jwtToken) {
         User user = userRepository.findByEmail(login.getEmail());
         return new LogInResponseDTO().setId(user.getId()).setEmail(user.getEmail())
                 .setName(user.getFirstName() + " " + user.getLastName())
-                .setJwtToken(jwtService.generateToken(userDetails));
+                .setJwtToken(jwtToken);
     }
 
     public boolean signInOauth(String emailOauth) {

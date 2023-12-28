@@ -2,6 +2,8 @@ package com.example.SkyLine.security.Filter;
 
 import com.example.SkyLine.security.JwtService;
 import jakarta.servlet.FilterChain;
+
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,6 +22,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+import jakarta.servlet.http.Cookie;
+
+
 @Component
 @Slf4j
 public class JwtFilter extends OncePerRequestFilter {
@@ -36,7 +41,7 @@ public class JwtFilter extends OncePerRequestFilter {
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain)
             throws ServletException, IOException {
-        final String jwt = getJwtFromRequest(request);
+        final String jwt = getJwtFromRequestFromHttpOnlyCookie(request);
         final String userEmail;
         if (!StringUtils.hasText(jwt)) {
             filterChain.doFilter(request, response);
@@ -64,5 +69,21 @@ public class JwtFilter extends OncePerRequestFilter {
             return bearerToken.substring(7);
         }
         return null;
+    }
+
+    // if I use httpOnly cookie
+    private String getJwtFromRequestFromHttpOnlyCookie(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        String jwtToken = null;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("Authorization")) {
+                    jwtToken = cookie.getValue();
+                    break;
+                }
+            }
+        }
+        return jwtToken;
     }
 }
