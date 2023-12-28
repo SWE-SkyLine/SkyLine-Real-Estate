@@ -67,6 +67,10 @@ public interface NotificationRepository extends JpaRepository<Notification, Inte
     @Query("SELECT COUNT(n) FROM Notification n WHERE n.candidate_id = :Candidate_id")
     long countCandidatePreviousRequests(@Param("Candidate_id") int Candidate_id);
 
+
+    @Query("SELECT COUNT(n) FROM Notification n WHERE n.requester_id = :Company_id AND n.responder_id=:User_id")
+    long countCompanyPreviousRequests(@Param("Company_id") int Company_id, @Param("User_id") int User_id);
+
     //mark the seen attribute true in the notification table
 
 

@@ -26,7 +26,7 @@ import { useRouter } from "next/navigation";
 function Component({ title, profiles, shadow }) {
   const [openModal, setOpenModal] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
-
+   let admin=title === "Promote To Admin";
   function onCloseModal() {
     setOpenModal(false);
   }
@@ -39,8 +39,9 @@ function Component({ title, profiles, shadow }) {
 
   const handleSearch = async () => {
     try {
-        const response = await axios.get(`http://localhost:8080/api/notifications/search?query=${inputText}`);
-
+        const urlParams = new URLSearchParams(window.location.search);
+        const userIdFromParams = urlParams.get("id");
+        const response = await axios.get(`http://localhost:8080/api/notifications/search?query=${inputText}&Id=${userIdFromParams}`);
         const profileData = response.data;
         let photoUrl = `data:image/jpeg;base64,${profileData[0].profilePhoto}`
         profileData[0].profilePhoto = photoUrl;
@@ -60,7 +61,7 @@ function Component({ title, profiles, shadow }) {
         style={{ padding: "8px 21px", marginRight: "0px", marginLeft: "0px" }}
         onClick={() => setOpenModal(true)}
       >
-        Promote Users
+          {admin?"Promote Users": "Hire Agents"}
       </Button>
       <Modal
         show={openModal}
@@ -154,7 +155,7 @@ function Component({ title, profiles, shadow }) {
                       backgroundColor: "transparent",
                     }}
                   >
-                    <UsersList input={inputText} profiles={searchResults} />
+                    <UsersList input={inputText} profiles={searchResults} admin={admin} />
                   </div>
                 </MDBox>
               </MDBox>

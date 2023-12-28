@@ -48,6 +48,32 @@ const publishPostRequest = async (post : FormData) => {
   return sendRequest()
 };
 
+const publishAuctionRequest = async (post : FormData) => {
+
+    const url = `${apiUrl}/api/publish_auction`
+
+    const makeRequest = async(url: string, post : FormData) =>{
+        try {
+            const response = await axios.post(url, post);
+            return response;
+        } catch (error) {
+            console.error(error);
+            alert("Post is not published")
+            return "Post is not published";
+        }
+    }
+
+    const sendRequest = async () =>{
+        const response = await makeRequest(url, post);
+        return response; 
+    }
+
+  return sendRequest()
+};
+
+
+
+
 const testPhotoApi = async (files: File[]) => {
     const url = `${apiUrl}/api/upload`;
 
@@ -72,4 +98,4 @@ const testPhotoApi = async (files: File[]) => {
 };
 
 // export default publishPostRequest;
-export { publishPostRequest, testPhotoApi };
+export { publishPostRequest, testPhotoApi,publishAuctionRequest };

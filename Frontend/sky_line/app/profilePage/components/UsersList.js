@@ -26,8 +26,8 @@ function List(props) {
         }
     };
     const handleVisitProfile = (userId) => {
-        router.push(`/profilePage?id=${userId}`)
-        location.reload();
+        router.push(`/profilePageViewOnly?id=${userId}`)
+        // location.reload();
     }
 
 
@@ -58,20 +58,41 @@ function List(props) {
                             </Button>
                         </MDBox>
                         <MDBox ml="auto">
-                            <Button
-                                className="Button"
-                                style={{
-                                    padding: "8px 21px",
-                                    marginRight: "0px",
-                                    marginLeft: "0px",
-                                    backgroundColor: isPromoted(id) ? "grey" : "transparent",
-                                    color: isPromoted(id) ? "white" : "#3498db",
-                                }}
-                                disabled={requested}
-                                onClick={() => handlePromoteClick(id)}
-                            >
-                                {requested ? "Requested" : isPromoted(id)? "requested":"Promote"}
-                            </Button>
+                            {props.admin?(<>
+                                <Button
+                                    className="Button"
+                                    style={{
+                                        padding: "8px 21px",
+                                        marginRight: "0px",
+                                        marginLeft: "0px",
+                                        backgroundColor: isPromoted(id) ? "grey" : "transparent",
+                                        color: isPromoted(id) ? "white" : "#3498db",
+                                    }}
+                                    disabled={requested}
+                                    onClick={() => handlePromoteClick(id)}
+                                >
+                                    {requested ? "Requested" : isPromoted(id)? "requested":"Promote"}
+                                </Button>
+
+                            </>):(
+
+                                <Button
+                                    className="Button"
+                                    style={{
+                                        padding: "8px 21px",
+                                        marginRight: "0px",
+                                        marginLeft: "0px",
+                                        backgroundColor: isPromoted(id) ? "grey" : "transparent",
+                                        color: isPromoted(id) ? "white" : "#3498db",
+                                    }}
+                                    disabled={requested}
+                                    onClick={() => handlePromoteClick(id)}
+                                >
+                                    {requested ? "Requested" : isPromoted(id)? "requested":"Hire"}
+                                </Button>
+
+                            )}
+
                         </MDBox>
                     </MDBox>
                 </div>

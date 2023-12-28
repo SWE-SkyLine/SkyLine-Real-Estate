@@ -10,12 +10,13 @@ import Navbar from '../navbar/page'
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import SortFilter from "../sortFilter/page";
 import { Post_object } from "../objects/Post_object";
-import {get_all_posts} from "../Services/PostService";
+import {get_all_posts,get_all_Auctions, get_bid, add_bids} from "../Services/PostService";
 import {filter_all_posts} from "../Services/PostService";
 import { sort_all_posts } from "../Services/PostService";
 import { search_all_posts } from "../Services/PostService";
 import { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
+import { Popup_respone,Pop_addbid,Popu_show_score} from "../Utility/Popup/Popup";
 
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -48,6 +49,8 @@ export interface FilterData {
   const [all_posts1, setAllPosts1] = useState<Post_object[]>([]);
   const [indexArray, setIndexArray] = useState<number[]>(initialIndexArray);
   const [userId,setUserId] = useState("");
+  let [inputValue, setInputValue] = useState<string>('');
+
   let router = useRouter();
   // const [images, setImages] = useState<string[]>([]);
 
@@ -68,7 +71,16 @@ export interface FilterData {
       try {
         const res = await get_all_posts();
         if (res.status === 200) {
-          setAllPosts(res.data);
+          console.log(res.data)
+          // setAllPosts(res.data);
+          const res2 =await get_all_Auctions();
+          if (res2.status === 200) {
+            console.log(res2.data)
+            const combinedPosts = res.data.concat(res2.data);
+            // Assuming setAllPosts is a state-setting function
+            setAllPosts(combinedPosts);          } else {
+            // Handle error
+          }
 
         } else {
           // Handle error
@@ -87,7 +99,6 @@ export interface FilterData {
   useEffect(() => {
 
 
-    console.log("ss");
     for (let i=0; i<all_posts.length; i++) {
       for (let j=0; j<all_posts[i].photosByteArray.length; j++) {
         let photoUrl = `data:image/jpeg;base64,${all_posts[i].photosByteArray[j]}`;
@@ -133,6 +144,51 @@ export interface FilterData {
   const [areaSortOrder, setAreaSortOrder] = useState<boolean>(false);
 
   
+  const [showModal, setShowModal] = useState(false);
+  const [showModalbid, setShowModalbid] = useState(false);
+  const [bid_auction, setbid_auction] = useState<Post_object>(null);
+
+
+  const handleShow = async (auction_id:any) =>{
+    console.log(auction_id)
+    setauction_id(auction_id)
+    const res =await get_bid(auction_id);
+    if (res.status === 200) {
+      set_bids(res.data);
+      // Assuming setAllPosts is a state-setting function
+       } else {
+      // Handle error
+    }
+
+    setShowModal(true)
+  };
+
+
+  const handleadd = async (auction:any) => {
+    setbid_auction(auction)
+    setShowModalbid(true);
+    
+  };
+
+  let [bids,set_bids]=useState([])
+  let [auction_id,setauction_id]=useState()
+
+ 
+  const btn_action_add= async ()=>{
+
+    console.log(userId)
+    console.log(inputValue)
+    console.log(bid_auction)
+
+    const res =await add_bids(userId,inputValue,bid_auction.id);
+    if (res.status === 200) {
+      // Assuming setAllPosts is a state-setting function
+      setShowModalbid(false);
+       } else {
+      // Handle error
+      console.error("Error");
+    }    
+}
 
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -239,7 +295,12 @@ export interface FilterData {
     <>
     <Post userId={userId}/>
     <Navbar/>
-    
+    <Popu_show_score showModal={showModal} setShowModal={setShowModal}
+            title={"Score Board"} bids={bids} myid={userId}
+            />
+    <Pop_addbid showModal={showModalbid} setShowModal={setShowModalbid}
+            title={"Add Bid"} setinput={setInputValue} btn_text={"Add +"} btn_action={btn_action_add}
+            />
   <div className={style.container}>
 
     <div className={style.left}>
@@ -390,37 +451,50 @@ export interface FilterData {
        {/* wael search filter */}
 
 
-      {all_posts1.map((p, index) => (
+      {all_posts1.map((p, index) => ( 
             <div key={index} className={style.contain_post}>
               <div>
                 <div className={`${style.photo}`} style={{ backgroundImage: `url(${x})` }}></div>
-                <label className={style.post_owner}>{p.fullName}</label>
+                <button onClick={()=>{router.push(`/profilePageViewOnly?id=${p.postCreatorUID}&user=${userId}`)}}  className={style.post_owner}><u>{p.fullName}</u></button>
               </div>
-               <div className={style.post_body}>
+
+            <div className={style.post_body}>
+            <div className={style.post_head}> <label>Type:<span className={style.under_head}>{p.post_type}</span></label> </div>
+
              <div className={style.post_head}> <label>Title:</label> </div>
-             <label className={style.under_head}>{p.title} (<span className={style.post_type}>{p.rent && "rent"}{!p.rent && "Buy"}</span>)</label>
-             <div className={style.post_head}> <label>Description:</label> </div>
-             <label className={style.under_head}>{p.description}</label>   
-             <div className={style.post_head}> <label>EstateType</label> : <span className={style.under_head}>{p.estate_type}</span> </div>
+             <label className={style.under_head}>{p.title} (<span className={style.post_type}>{p.rent && "For rent"}{!p.rent && "For sale"}</span>)</label>   
+             <div className={style.post_head}> <label>EstateType</label> : <span className={style.under_head}>{p.estateType}</span> </div>
              <div className={style.post_head}> <label>City</label> : <span className={style.under_head}>{p.city}</span> </div>
-             <div className={style.post_head}> <label>Adress</label> : <span className={style.under_head}>{p.adress}</span> </div>
+             <div className={style.post_head}> <label>Adress</label> : <span className={style.under_head}>{p.address}</span> </div>
              <div className={style.post_head}> <label>Price</label> : <span className={style.under_head}>{p.price} <i className="fa-solid fa-dollar-sign"> </i></span> </div>
              <div className={style.post_head}> <label>Number OF Bathroom</label> : <span className={style.under_head}>{p.bathroom} </span> </div>
              <div className={style.post_head}> <label>Number OF Bedroom</label> : <span className={style.under_head}>{p.bedroom}</span> </div>
              <div className={style.post_head}> <label>Number OF Level</label> : <span className={style.under_head}>{p.level} </span> </div>
              <div className={style.post_head}> <label>Area</label>: <span className={style.under_head}>{p.area}m<sup>2</sup></span> </div>
              <div className={style.post_head}> <label>Map Link:</label> <a href={p.map_link} target="_blank">Location</a> </div>
-             
+             <div className={style.post_head}> <label>Description:</label> </div>
+             <label className={style.under_head}>{p.description}</label>
              </div>
                  <div className={style.post_imgs}>
-                <button
+                  <div style={{display:"block",width:"100%"}}>  
+                    <button
                   className={style.btn}
-                  style={{ borderRadius: "5px", padding: "5px 10px", cursor: "pointer", fontWeight: "500" }}
+                  style={{ borderRadius: "5px", padding: "5px 10px", cursor: "pointer", fontWeight: "500"}}
                   onClick={() => handlePreviousImage(index)}
                   disabled={indexArray[index] === 0}
                 >
                   &#8678; Previous Photo
                 </button>
+                <button
+                  className={style.btn}
+                  style={{ borderRadius: "5px", padding: "5px 10px", cursor: "pointer", fontWeight: "500", right:"0"  }}
+                  onClick={() => handleNextImage(index)}
+                  disabled={indexArray[index] === all_posts1[index]?.photosByteArray.length- 1}
+                >
+                  Next Photo &#8680;
+                </button>
+                </div>
+               
                 <img
               src={all_posts1[index]?.photosByteArray[indexArray[index]]}
               style={{
@@ -433,16 +507,20 @@ export interface FilterData {
                     border: "3px solid rgb(27, 31, 33)"
                   }}
                 />
-                <button
-                  className={style.btn}
-                  style={{ borderRadius: "5px", padding: "5px 10px", cursor: "pointer", fontWeight: "500" }}
-                  onClick={() => handleNextImage(index)}
-                  disabled={indexArray[index] === all_posts1[index]?.photosByteArray.length- 1}
-                >
-                  Next Photo &#8680;
-                </button>
+
               </div>
+
+              {p.post_type=="auction"&&
+              <div className={style.score_div}>
+                <button className={style.score_btn} onClick={() => handleShow(p.id)}>Score Board</button>
+                <button className={style.score_btn} onClick={() => handleadd(p)} style={{marginTop:"1rem"}} >Add Bid</button>
+
+              </div>
+              }
             </div>
+            
+
+
           ))}
 
       </div>

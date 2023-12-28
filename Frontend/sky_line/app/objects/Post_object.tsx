@@ -5,7 +5,7 @@ export class Post_object {
     bathroom: any | undefined;
     bedroom: any | undefined;
     description: any | undefined;
-    estate_type: any | undefined;
+    estateType: any | undefined;
     expiry_date: any | undefined;
     level: any | undefined;
     map_link: any | undefined;
@@ -16,11 +16,12 @@ export class Post_object {
     end_time: any | undefined;
     start_time: any | undefined;
     status: any | undefined;
-    client_id: any | undefined;
+    postCreatorUID: any | undefined;
     city: any | undefined;
-    adress: any | undefined;
+    address: any | undefined;
     photosByteArray: string[]=[];
     photos: string[] = [];
     fullName:any;
+    start_bid:any;
 
 }

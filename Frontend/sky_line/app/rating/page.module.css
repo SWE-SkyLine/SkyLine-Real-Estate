@@ -1,0 +1,31 @@
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    user-select: none;
+    justify-content: flex-end;
+    /* background-color: red; */
+}
+
+.avgRate{
+    margin: 4px;
+    font-size: 20px;
+    color: green
+}
+
+.rating input {
+    display: none;
+}
+
+.rating label {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    margin: 4px;
+    background-image: url('../../assets/grayStar.png'); 
+    background-size: cover;
+}
+
+.rating input:checked ~ label,
+.rating input:checked ~ label ~ label {
+    background-image: url('../../assets/goldStar.png'); 
+}
