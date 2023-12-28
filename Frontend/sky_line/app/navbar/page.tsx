@@ -112,7 +112,8 @@ const NavbarComponent: React.FC = () => {
                             answeredNotifications.includes(notificationId)?(
                                 <div style={{color:"green", fontSize:"12px", marginLeft:"301px"}}>Accepted</div>
                             ):(
-                                <div style={{color:"red", fontSize:"12px", marginLeft:"301px"}}>Rejected</div>
+                                rejectedNotifications.includes(notificationId)?(<div style={{color:"red", fontSize:"12px", marginLeft:"301px"}}>Rejected</div>):(<></>)
+
                             )
 
                             )}
