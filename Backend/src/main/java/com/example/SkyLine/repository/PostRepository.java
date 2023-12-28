@@ -11,6 +11,9 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Integer> {
+
+        List<Post> findAll();
+
     @Query("SELECT p FROM Post p WHERE TYPE(p) <> Auction")
     List<Post> findAllNonAuctionPosts();
 
@@ -18,21 +21,23 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     List<Auction> findAllAuctions();
     Auction findById(int auctionId);
 
-    List<Post> findByTitleContainingIgnoreCase(String query);
 
-    // PostRepository.java
-    List<Post> findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String title, String description);
+        List<Post> findByTitleContainingIgnoreCase(String query);
 
-    @Query("SELECT p FROM Post p WHERE " +
-            "(:priceFrom IS NULL OR p.price >= :priceFrom) " +
-            "AND (:priceTo IS NULL OR p.price <= :priceTo) " +
-            "AND (:estateType IS NULL OR p.estateType = :estateType) " +
-            "AND (:rent IS NULL OR p.rent = :rent)")
-    List<Post> findFilteredPosts(
-            @Param("priceFrom") Integer priceFrom,
-            @Param("priceTo") Integer priceTo,
-            @Param("estateType") EstateTypeEnum estateType,
-            @Param("rent") Boolean rent);
+        // PostRepository.java
+        List<Post> findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String title, String description);
 
+        @Query("SELECT p FROM Post p WHERE " +
+                        "(:priceFrom IS NULL OR p.price >= :priceFrom) " +
+                        "AND (:priceTo IS NULL OR p.price <= :priceTo) " +
+                        "AND (:estateType IS NULL OR p.estateType = :estateType) " +
+                        "AND (:rent IS NULL OR p.rent = :rent)")
+        List<Post> findFilteredPosts(
+                        @Param("priceFrom") Integer priceFrom,
+                        @Param("priceTo") Integer priceTo,
+                        @Param("estateType") EstateTypeEnum estateType,
+                        @Param("rent") Boolean rent);
+
+        List<Post> findByClient_Id(Integer userId);
 
 }

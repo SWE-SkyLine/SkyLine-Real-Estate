@@ -19,7 +19,7 @@ function Component({ info, onUpdate }) {
   function onCloseModal() {
     setOpenModal(false);
   }
-  function onSave() {
+  const onSave = () => {
 
     const urlParams = new URLSearchParams(window.location.search);
     const userIdFromParams = urlParams.get("id");
@@ -51,7 +51,8 @@ function Component({ info, onUpdate }) {
       });
     // Close the modal
     setOpenModal(false)
-  }
+    //location.reload();
+  };
 
   Component.defaultProps = {
     onUpdate: () => {},

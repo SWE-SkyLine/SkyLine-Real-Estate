@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PostService {
@@ -28,12 +29,14 @@ public class PostService {
         return postRepository.findAll();
     }
 
+    public List<Post> getPostsByUserId(Integer userId) {
+        return postRepository.findByClient_Id(userId);
+    }
 
     public List<Post> getSortedPosts(String sortBy, String sortOrder) {
         Sort sort = Sort.by(Sort.Direction.fromString(sortOrder), sortBy);
         return postRepository.findAll(sort);
     }
-
 
     // New method for handling search requests
     public List<Post> search(String query) {
@@ -44,17 +47,14 @@ public class PostService {
     // New method for handling filter requests
     public List<Post> filter(FilterData filterData) {
         // Perform filter logic here, using priceFrom and priceTo
-        
-        
+
         System.out.println(filterData.isRent());
         return postRepository.findFilteredPosts(
                 filterData.getPriceFrom(),
                 filterData.getPriceTo(),
                 filterData.getEstateType(),
-                filterData.isRent()
-        );
+                filterData.isRent());
     }
-    
 
     // New method for handling sort requests
     public List<Post> sort(String sortBy, String sortOrder) {
@@ -67,7 +67,13 @@ public class PostService {
         return postRepository.findAll(sort);
     }
 
+    public Post getPostById(Integer postId) {
+        Optional<Post> postOptional = postRepository.findById(postId);
+        return postOptional.orElse(null);
+    }
 
-
+    public void updatePost(Post post) {
+        postRepository.save(post);
+    }
 
 }
